@@ -1,13 +1,13 @@
 <script>
-import AppLayout from "../Layouts/AppLayout";
+import FullWidthAppLayout from "./FullWidthAppLayout";
 
 export default {
-    components: {AppLayout}
+    components: {FullWidthAppLayout}
 }
 </script>
 
 <template>
-    <AppLayout>
+    <FullWidthAppLayout>
         <main class="h-[calc(100vh-65px)] flex overflow-x-scroll">
             <div class="bg-white h-full min-w-[300px] md:min-w-[500px] border-r border-gray-200">
                 <slot name="leftColumn" />
@@ -21,5 +21,5 @@ export default {
                 <slot name="rightColumn" />
             </div>
         </main>
-    </AppLayout>
+    </FullWidthAppLayout>
 </template>

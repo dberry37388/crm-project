@@ -8,8 +8,7 @@ import JetDropdown from '@/Jetstream/Dropdown.vue';
 import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
 import JetNavLink from '@/Jetstream/NavLink.vue';
 import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
-import {Popover, PopoverButton, PopoverOverlay, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
-import { AcademicCapIcon, BadgeCheckIcon, BellIcon, CashIcon, ClockIcon, MenuIcon, ReceiptRefundIcon, UsersIcon, XIcon, } from '@heroicons/vue/outline'
+import {PopoverButton, PopoverOverlay, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import PopoverResponsiveMenu from "../Components/PopoverResponsiveMenu";
 
 defineProps({
@@ -211,6 +210,7 @@ const logout = () => {
                         </div>
                     </div>
                 </div>
+
 
                 <PopoverResponsiveMenu :show="showingNavigationDropdown" @close="showingNavigationDropdown = false" />
             </nav>
