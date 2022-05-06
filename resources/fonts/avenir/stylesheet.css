@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'Avenir Next Demi';
+    src: local('Avenir Next Demi Bold'), local('AvenirNext-DemiBold'),
+        url('../fonts/avenir/avenir-next/AvenirNext-DemiBold.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-DemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Bold'), local('AvenirNext-Bold'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Bold.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next Demi';
+    src: local('Avenir Next Demi Bold Italic'), local('AvenirNext-DemiBoldItalic'),
+        url('../fonts/avenir/avenir-next/AvenirNext-DemiBoldItalic.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-DemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Bold Italic'), local('AvenirNext-BoldItalic'),
+        url('../fonts/avenir/avenir-next/AvenirNext-BoldItalic.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Medium'), local('AvenirNext-Medium'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Medium.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Heavy Italic'), local('AvenirNext-HeavyItalic'),
+        url('../fonts/avenir/avenir-next/AvenirNext-HeavyItalic.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-HeavyItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Heavy'), local('AvenirNext-Heavy'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Heavy.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Heavy.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Italic'), local('AvenirNext-Italic'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Italic.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Medium Italic'), local('AvenirNext-MediumItalic'),
+        url('../fonts/avenir/avenir-next/AvenirNext-MediumItalic.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next Ultra';
+    src: local('AvenirNext-UltraLight'),
+        url('../fonts/avenir/avenir-next/AvenirNext-UltraLight.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-UltraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next Ultra';
+    src: local('Avenir Next Ultra Light Italic'), local('AvenirNext-UltraLightItalic'),
+        url('../fonts/avenir/avenir-next/AvenirNext-UltraLightItalic.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-UltraLightItalic.woff') format('woff');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Regular'), local('AvenirNext-Regular'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Regular.woff2') format('woff2'),
+        url('../fonts/avenir/avenir-next/AvenirNext-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue';
 import JetSectionBorder from '@/Jetstream/SectionBorder.vue';
 import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Team Settings">
+    <DefaultLayout title="Team Settings">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Team Settings
@@ -38,5 +38,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </DefaultLayout>
 </template>

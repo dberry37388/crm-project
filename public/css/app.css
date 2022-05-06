@@ -32,7 +32,7 @@ html {
   -moz-tab-size: 4; /* 3 */
   -o-tab-size: 4;
      tab-size: 4; /* 3 */
-  font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-family: Avenir Next, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
 }
 
 /*
@@ -1132,6 +1132,12 @@ select {
 .h-20 {
   height: 5rem;
 }
+.h-\[calc\(100vh-65px\)\] {
+  height: calc(100vh - 65px);
+}
+.h-full {
+  height: 100%;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1182,6 +1188,12 @@ select {
 }
 .min-w-0 {
   min-width: 0px;
+}
+.min-w-\[300px\] {
+  min-width: 300px;
+}
+.min-w-\[600px\] {
+  min-width: 600px;
 }
 .max-w-screen-xl {
   max-width: 1280px;
@@ -1297,6 +1309,9 @@ select {
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
+.overflow-auto {
+  overflow: auto;
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1305,6 +1320,9 @@ select {
 }
 .overflow-y-hidden {
   overflow-y: hidden;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
 }
 .truncate {
   overflow: hidden;
@@ -1359,6 +1377,9 @@ select {
 }
 .border-r {
   border-right-width: 1px;
+}
+.border-l {
+  border-left-width: 1px;
 }
 .border-gray-300 {
   --tw-border-opacity: 1;
@@ -1555,7 +1576,7 @@ select {
   text-align: right;
 }
 .font-sans {
-  font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Avenir Next, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .font-mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -1781,6 +1802,114 @@ select {
 }
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+@font-face {
+    font-family: 'Avenir Next Demi';
+    src: local('Avenir Next Demi Bold'), local('AvenirNext-DemiBold'),
+        url(/fonts/AvenirNext-DemiBold.woff2?e373fe10c8e0e123e6d70334459dbe9e) format('woff2'),
+        url(/fonts/AvenirNext-DemiBold.woff?3e4064119316eb84757f3cde6a115c3e) format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Bold'), local('AvenirNext-Bold'),
+        url(/fonts/AvenirNext-Bold.woff2?ff34206e21903acae69c0594bc0fd67d) format('woff2'),
+        url(/fonts/AvenirNext-Bold.woff?2952ce4df8ab7ab00daf7a547dcf991e) format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next Demi';
+    src: local('Avenir Next Demi Bold Italic'), local('AvenirNext-DemiBoldItalic'),
+        url(/fonts/AvenirNext-DemiBoldItalic.woff2?254d58270c5b86096e61e7f194346a0e) format('woff2'),
+        url(/fonts/AvenirNext-DemiBoldItalic.woff?d773da99ecac853f5c87c47b8fb4b2c5) format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Bold Italic'), local('AvenirNext-BoldItalic'),
+        url(/fonts/AvenirNext-BoldItalic.woff2?65dd631a600f19f52a76c0ae822a3207) format('woff2'),
+        url(/fonts/AvenirNext-BoldItalic.woff?d1e9f903536bc92e90064f403dcdf82b) format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Medium'), local('AvenirNext-Medium'),
+        url(/fonts/AvenirNext-Medium.woff2?a92c9afd7e9d034847cf10a6ef17372e) format('woff2'),
+        url(/fonts/AvenirNext-Medium.woff?c9f5a1725bc392f34ad32aee2f8098c5) format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Heavy Italic'), local('AvenirNext-HeavyItalic'),
+        url(/fonts/AvenirNext-HeavyItalic.woff2?43da13e82fcd5d24ac59276e26be54fd) format('woff2'),
+        url(/fonts/AvenirNext-HeavyItalic.woff?fc541c9a55b79bd2f94cce4c613fa2e2) format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Heavy'), local('AvenirNext-Heavy'),
+        url(/fonts/AvenirNext-Heavy.woff2?cee88b3657cbd56a6e16626685d3cd75) format('woff2'),
+        url(/fonts/AvenirNext-Heavy.woff?625ac3df159b9c9dbcb88888ba4cc012) format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Italic'), local('AvenirNext-Italic'),
+        url(/fonts/AvenirNext-Italic.woff2?d732b4eeccf39c98116fd3cd90c88e72) format('woff2'),
+        url(/fonts/AvenirNext-Italic.woff?804dcc88b6b3a2bcf1d94f85b6721f7b) format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Medium Italic'), local('AvenirNext-MediumItalic'),
+        url(/fonts/AvenirNext-MediumItalic.woff2?d252f1e99c11b9072c73a12cb894685a) format('woff2'),
+        url(/fonts/AvenirNext-MediumItalic.woff?08156da27a12da10fee5465eeb297f55) format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next Ultra';
+    src: local('AvenirNext-UltraLight'),
+        url(/fonts/AvenirNext-UltraLight.woff2?9d1b048d34b4f9e43ce6cc5d7634578a) format('woff2'),
+        url(/fonts/AvenirNext-UltraLight.woff?e306264f41db7fc45e4e30ddb1982252) format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next Ultra';
+    src: local('Avenir Next Ultra Light Italic'), local('AvenirNext-UltraLightItalic'),
+        url(/fonts/AvenirNext-UltraLightItalic.woff2?46b57a75434073e2b23ddc936535c560) format('woff2'),
+        url(/fonts/AvenirNext-UltraLightItalic.woff?2d119ca32219b6bc9dfa4f59381a1a47) format('woff');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Regular'), local('AvenirNext-Regular'),
+        url(/fonts/AvenirNext-Regular.woff2?f33947353d78e5d892527321aa562efd) format('woff2'),
+        url(/fonts/AvenirNext-Regular.woff?f7bd4cc9e3265fbbccd492922d023a12) format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
@@ -2192,6 +2321,14 @@ select {
 
   .md\:grid {
     display: grid;
+  }
+
+  .md\:min-w-\[500px\] {
+    min-width: 500px;
+  }
+
+  .md\:flex-grow {
+    flex-grow: 1;
   }
 
   .md\:grid-cols-3 {

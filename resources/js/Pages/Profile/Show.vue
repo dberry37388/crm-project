@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import DefaultLayout from "../../Layouts/DefaultLayout";
 import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
 import JetSectionBorder from '@/Jetstream/SectionBorder.vue';
 import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
@@ -14,7 +14,7 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profile">
+    <DefaultLayout title="Profile">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Profile
@@ -36,9 +36,9 @@ defineProps({
                 </div>
 
                 <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
-                    <TwoFactorAuthenticationForm 
+                    <TwoFactorAuthenticationForm
                         :requires-confirmation="confirmsTwoFactorAuthentication"
-                        class="mt-10 sm:mt-0" 
+                        class="mt-10 sm:mt-0"
                     />
 
                     <JetSectionBorder />
@@ -53,5 +53,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </DefaultLayout>
 </template>
