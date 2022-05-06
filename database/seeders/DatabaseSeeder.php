@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $adminUser = User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'jdoe@example.org'
+        ]);
+
+        // create two teams for the admin user
+        $teams = Team::factory(2)->create([
+            'user_id' => $adminUser->id
+        ]);
     }
 }
