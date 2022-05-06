@@ -8,7 +8,9 @@ use App\Http\Resources\Api\V1\CompanyResource;
 use App\Http\Resources\Api\V1\CompanyResourceCollection;
 use App\Models\Company;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Response;
 
 class CompanyApiController extends BaseApiController
@@ -59,13 +61,15 @@ class CompanyApiController extends BaseApiController
      *
      * @param UpdateCompanyRequest $request
      * @param Company $company
-     * @return CompanyResource
+     * @return CompanyResource|RedirectResponse
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
         $company->update($request->validated());
 
-        return new CompanyResource($company);
+        return $request->wantsJson()
+            ? new CompanyResource($company)
+            : back()->with('status', 'company-updated');
     }
 
     /**

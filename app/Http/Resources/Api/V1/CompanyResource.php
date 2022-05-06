@@ -18,9 +18,12 @@ class CompanyResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'name' => $this->name,
-            'team' => new TeamResource($this->team),
+            'team' => new TeamResource($this->whenLoaded('team')),
             'created_by' => new UserResource($this->createdBy),
+            'assigned_to' => new UserResource($this->assignedTo),
             'description' => $this->description,
             'city' => $this->city,
             'state' => $this->state,

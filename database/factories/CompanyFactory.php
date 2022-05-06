@@ -19,9 +19,18 @@ class CompanyFactory extends Factory
      */
     public function definition()
     {
+        if (! $user = User::inRandomOrder()->first()) {
+            $user = User::factory()->create();
+        }
+
+        if (! $team = Team::inRandomOrder()->first()) {
+            $team = Team::factory()->create();
+        }
+
         return [
             'team_id' => Team::factory(),
-            'created_by_id' => User::factory(),
+            'created_by_id' => $user,
+            'assigned_to_id' => $user,
             'name' => $this->faker->company,
             'description' => $this->faker->paragraph,
             'city' => $this->faker->city,

@@ -15,6 +15,12 @@ export default {
             </div>
         </header>
 
+        <header v-if="$slots.headerFull" class="bg-white shadow">
+            <div class="py-6 px-4 sm:px-6 lg:px-8">
+                <slot name="headerFull" />
+            </div>
+        </header>
+
         <!-- Page Content -->
         <main>
             <slot />

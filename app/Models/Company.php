@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\AssignedToAUser;
 use App\Traits\BelongsToTeam;
 use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,7 @@ use Laravel\Scout\Searchable;
 
 class Company extends Model
 {
+    use AssignedToAUser;
     use CreatedByAUser;
     use BelongsToTeam;
     use HasFactory;

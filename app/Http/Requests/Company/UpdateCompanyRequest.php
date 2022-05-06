@@ -33,7 +33,8 @@ class UpdateCompanyRequest extends FormRequest
             'postal_code' => ['sometimes', 'max:255'],
             'number_of_employees' => ['sometimes', 'max:255'],
             'timezone' => ['sometimes', 'max:255'],
-            'industry_id' => ['sometimes', Rule::exists('industries')],
+            'industry_id' => ['sometimes', Rule::exists('industries', 'id')],
+            'assigned_to_id' => ['sometimes', Rule::exists('users', 'id')],
         ];
     }
 }

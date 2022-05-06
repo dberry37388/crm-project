@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('team_id')->constrained('teams');
             $table->foreignId('created_by_id')->constrained('users');
+            $table->foreignId('assigned_to_id')->nullable()->constrained('users');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('description', 1000)->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('postal_code')->nullable();

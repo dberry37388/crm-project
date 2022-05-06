@@ -16,8 +16,8 @@ class TeamResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'companies' => new CompanyResourceCollection($this->companies),
-            'industries' => new CompanyResourceCollection($this->industries),
+            'companies' => new CompanyResourceCollection($this->whenLoaded('companies')),
+            'industries' => new CompanyResourceCollection($this->whenLoaded('industries')),
         ];
     }
 }
