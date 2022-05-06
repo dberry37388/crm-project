@@ -13,3 +13,6 @@ yarn-error.log
 /.idea
 /.vscode
 horizon.log
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
