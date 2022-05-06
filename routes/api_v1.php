@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Industry\GetIndustriesApiController;
-use App\Http\Controllers\Api\V1\Industry\ShowIndustryApiController;
-use App\Http\Controllers\Api\V1\Industry\StoreIndustryApiController;
-use App\Http\Controllers\Api\V1\Industry\UpdateIndustryApiController;
+use App\Http\Controllers\Api\V1\CompanyApiController;
+use App\Http\Controllers\Api\V1\IndustryApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,12 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('industries')->name('industries.')->group(function () {
-    Route::get('/', GetIndustriesApiController::class)->name('index');
-    Route::post('/', StoreIndustryApiController::class)->name('store');
-    Route::get('{industry}', ShowIndustryApiController::class)->name('show');
-    Route::put('{industry}', UpdateIndustryApiController::class)->name('update');
-});
+Route::resource('industries', IndustryApiController::class);
+Route::resource('companies', CompanyApiController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

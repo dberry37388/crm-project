@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,5 +26,12 @@ class DatabaseSeeder extends Seeder
         $teams = Team::factory(2)->create([
             'user_id' => $adminUser->id
         ]);
+
+        foreach ($teams as $team) {
+            Company::factory(rand(2,20))->create([
+                'team_id' => $team->id,
+                'created_by_id' => $adminUser->id
+            ]);
+        }
     }
 }

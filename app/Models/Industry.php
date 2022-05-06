@@ -6,6 +6,7 @@ use App\Traits\BelongsToTeam;
 use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 
 class Industry extends Model
@@ -40,5 +41,10 @@ class Industry extends Model
                 'name' => $industry
             ]);
         }
+    }
+
+    public function companies(): HasMany
+    {
+        return $this->hasMany(Company::class);
     }
 }
