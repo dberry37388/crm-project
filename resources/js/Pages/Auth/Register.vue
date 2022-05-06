@@ -13,6 +13,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    team_name: '',
     terms: false,
 });
 
@@ -34,7 +35,18 @@ const submit = () => {
         <JetValidationErrors class="mb-4" />
 
         <form @submit.prevent="submit">
-            <div>
+            <div class="mt-4">
+                <JetLabel for="team_name" value="Team Name" />
+                <JetInput
+                    id="team_name"
+                    v-model="form.team_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+            </div>
+
+            <div class="mt-4">
                 <JetLabel for="name" value="Name" />
                 <JetInput
                     id="name"
