@@ -10,9 +10,12 @@ import {useForm} from "@inertiajs/inertia-vue3";
 import Label from "../../../Jetstream/Label";
 import TeamUserComboBox from "../../../Components/TeamUserComboBox";
 import IndustriesComboBox from "../../../Components/IndustriesComboBox";
+import TextArea from "../../../Components/TextArea";
 
 export  default {
-    components: {IndustriesComboBox, TeamUserComboBox, Label, Input, Button, SecondaryButton, InputError, DialogModal},
+    components: {
+        TextArea,
+        IndustriesComboBox, TeamUserComboBox, Label, Input, Button, SecondaryButton, InputError, DialogModal},
     props: {
         company: {
             type: Object,
@@ -34,6 +37,7 @@ export  default {
                 number_of_employees: '',
                 assigned_to: '',
                 industry: '',
+                description: '',
             }),
         }
     },
@@ -117,6 +121,12 @@ export  default {
                     <Label for="form.number_of_employees">Number of Employees</Label>
                     <Input v-model="form.number_of_employees" type="text" class="mt-1 block w-3/4" placeholder="Number of Employees"/>
                     <InputError :message="form.errors.number_of_employees" class="mt-2" />
+                </div>
+
+                <div>
+                    <Label for="form.number_of_employees">Description</Label>
+                    <TextArea v-model="form.description" type="text" class="mt-1 block w-3/4" placeholder="Description"/>
+                    <InputError :message="form.errors.description" class="mt-2" />
                 </div>
             </div>
         </template>

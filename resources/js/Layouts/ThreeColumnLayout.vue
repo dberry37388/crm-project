@@ -9,7 +9,7 @@ export default {
 <template>
     <FullWidthAppLayout>
         <main class="h-[calc(100vh-65px)] flex overflow-x-scroll">
-            <div class="bg-white h-full min-w-[300px] md:min-w-[500px] border-r border-gray-200 overflow-auto">
+            <div class="bg-white h-full min-w-[400px] w-[400px] md:w-[500px] border-r border-gray-200 overflow-auto">
                 <slot name="leftColumn" />
             </div>
 
@@ -17,7 +17,7 @@ export default {
                 <slot name="middleColumn" />
             </div>
 
-            <div class="bg-white h-full min-w-[300px] md:min-w-[500px] border-l border-gray-200">
+            <div class="bg-white h-full min-w-[400px] w-[400px] md:min-w-[500px] border-l border-gray-200">
                 <slot name="rightColumn" />
             </div>
         </main>

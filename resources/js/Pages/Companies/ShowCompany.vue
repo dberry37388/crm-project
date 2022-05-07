@@ -82,6 +82,7 @@ export default {
                     <SidebarAttribute label="Postal Code" :content="currentCompany.postal_code" />
                     <SidebarAttribute label="Timezone" :content="currentCompany.timezone" />
                     <SidebarAttribute label="Number of Employees" :content="currentCompany.number_of_employees" />
+                    <SidebarAttribute label="Description" :content="currentCompany.description" class="max-w-" />
                 </div>
             </div>
 

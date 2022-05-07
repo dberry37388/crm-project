@@ -1235,6 +1235,12 @@ select {
 .w-1\/4 {
   width: 25%;
 }
+.w-\[300px\] {
+  width: 300px;
+}
+.w-\[400px\] {
+  width: 400px;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1246,6 +1252,9 @@ select {
 }
 .min-w-full {
   min-width: 100%;
+}
+.min-w-\[400px\] {
+  min-width: 400px;
 }
 .max-w-screen-xl {
   max-width: 1280px;
@@ -2577,6 +2586,10 @@ select {
 
   .md\:grid {
     display: grid;
+  }
+
+  .md\:w-\[500px\] {
+    width: 500px;
   }
 
   .md\:min-w-\[500px\] {
