@@ -10,6 +10,7 @@ use App\Models\Company;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Response;
 
@@ -33,7 +34,7 @@ class CompanyApiController extends BaseApiController
      * Store a newly created resource in storage.
      *
      * @param StoreCompanyRequest $request
-     * @return CompanyResource
+     * @return RedirectResponse
      */
     public function store(StoreCompanyRequest $request)
     {
@@ -42,7 +43,9 @@ class CompanyApiController extends BaseApiController
             'created_by_id' => $request->user()->id,
         ]));
 
-        return new CompanyResource($company);
+        return Redirect::to(route('companies.show', $company))
+            ->with('flash.banner', "{$company->name} Created")
+            ->with('flash.bannerStyle', 'success');
     }
 
     /**
@@ -76,12 +79,14 @@ class CompanyApiController extends BaseApiController
      * Remove the specified resource from storage.
      *
      * @param Company $company
-     * @return JsonResponse
+     * @return RedirectResponse
      */
     public function destroy(Company $company)
     {
         $company->delete();
 
-        return Response::json([], 204);
+        return Redirect::to(route('companies.list'))
+            ->with('flash.banner', "{$company->name} Deleted")
+            ->with('flash.bannerStyle', 'success');
     }
 }

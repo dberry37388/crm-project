@@ -1,18 +1,26 @@
 <script>
 import DefaultLayout from "../../Layouts/DefaultLayout";
 import Button from "../../Jetstream/Button";
+import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
+import CreateCompanyModal from "./Modals/CreateCompanyModal";
 export default {
     props: {
         companies: {},
     },
 
-    components: {Button, DefaultLayout}
+    components: {CreateCompanyModal, FullWidthAppLayout, Button},
+
+    data() {
+        return {
+            creatingCompany: false
+        }
+    }
 }
 </script>
 
 <template>
-    <DefaultLayout>
-        <template #headerFull>
+    <FullWidthAppLayout>
+        <template #header>
             <div class="flex items-center justify-between">
                <div>
                    <h2 class="font-bold text-xl text-gray-800 leading-tight">
@@ -21,7 +29,7 @@ export default {
                </div>
 
                 <div>
-                    <Button type="button">Create Company</Button>
+                    <Button type="button" @click="creatingCompany = true">Create Company</Button>
                 </div>
             </div>
         </template>
@@ -88,5 +96,7 @@ export default {
                 </div>
             </div>
         </div>
-    </DefaultLayout>
+
+        <CreateCompanyModal v-if="creatingCompany" :show="creatingCompany" @close="creatingCompany = false" />
+    </FullWidthAppLayout>
 </template>

@@ -1,10 +1,12 @@
 <script>
 import ThreeColumnLayout from "../../Layouts/ThreeColumnLayout";
-import {ChevronLeftIcon, PencilAltIcon} from "@heroicons/vue/solid"
+import {ChevronLeftIcon, PencilAltIcon, TrashIcon} from "@heroicons/vue/solid"
 import { Link } from '@inertiajs/inertia-vue3';
 import SidebarAttribute from "../../Components/SidebarAttribute";
 import UpdateCompanyModal from "./Modals/UpdateCompanyModal";
 import TeamUserComboBox from "../../Components/TeamUserComboBox";
+import ConfirmDeleteCompanyModal from "./Modals/ConfirmDeleteCompanyModal";
+import {Inertia} from "@inertiajs/inertia";
 
 export default {
     props: {
@@ -15,13 +17,15 @@ export default {
     },
 
     components: {
+        ConfirmDeleteCompanyModal,
         TeamUserComboBox,
-        UpdateCompanyModal, SidebarAttribute, ChevronLeftIcon, Link, PencilAltIcon, ThreeColumnLayout},
+        UpdateCompanyModal, SidebarAttribute, ChevronLeftIcon, Link, PencilAltIcon, ThreeColumnLayout, TrashIcon},
 
     data() {
         return {
             currentCompany: this.company.data,
-            updatingCompany: false
+            updatingCompany: false,
+            deletingCompany: false
         }
     },
 
@@ -31,6 +35,10 @@ export default {
                 .then((r) => {
                     this.currentCompany = r.data.data;
                 })
+        },
+
+        companyDeleted() {
+            window.location.href = route('companies.list');
         }
     }
 }
@@ -58,7 +66,10 @@ export default {
                             {{ currentCompany.name }}
                         </div>
 
-                        <PencilAltIcon class="h-6 w-6 cursor-pointer" @click="updatingCompany = true" />
+                        <div class="flex gap-1">
+                            <PencilAltIcon class="h-6 w-6 cursor-pointer" @click="updatingCompany = true" />
+                            <TrashIcon class="h-6 w-6 cursor-pointer text-red-500" @click="deletingCompany = true" />
+                        </div>
                     </div>
                 </div>
 
@@ -75,6 +86,7 @@ export default {
             </div>
 
             <UpdateCompanyModal v-if="updatingCompany" :show="updatingCompany" @close="updatingCompany = false" :company="currentCompany" @updated="refreshCompany" />
+            <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @updated="companyDeleted" />
         </template>
     </ThreeColumnLayout>
 </template>
