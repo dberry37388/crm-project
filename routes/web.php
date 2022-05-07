@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Frontend\Companies\ListCompaniesController;
 use App\Http\Controllers\Frontend\Companies\ShowCompanyController;
+use App\Http\Controllers\Frontend\Contacts\ListContactsController;
+use App\Http\Controllers\Frontend\Contacts\ShowContactController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,5 +36,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('companies')->name('companies.')->group(function () {
         Route::get('/', ListCompaniesController::class)->name('list');
         Route::get('{company}', ShowCompanyController::class)->name('show');
+    });
+
+    Route::prefix('contacts')->name('contacts.')->group(function () {
+        Route::get('/', ListContactsController::class)->name('list');
+        Route::get('{contact}', ShowContactController::class)->name('show');
     });
 });

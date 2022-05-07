@@ -27,15 +27,16 @@ class ResetApplicationCommand extends Command
      */
     public function handle()
     {
-        $this->call('scout:flush', ['model' => 'App\Models\Company']);
         $this->call('scout:flush', ['model' => 'App\Models\Industry']);
+        $this->call('scout:flush', ['model' => 'App\Models\Company']);
+        $this->call('scout:flush', ['model' => 'App\Models\Contact']);
 
         $this->call('migrate:fresh', ['--seed' => true]);
 
         $this->call('scout:import', ['model' => 'App\Models\Company']);
-        $this->call('scout:import', ['model' => 'App\Models\Industry']);
+        $this->call('scout:import', ['model' => 'App\Models\Contact']);
 
-        $this->call('mellisearch:industries');
+        $this->call('mellisearch:update-filterable-attributes');
 
         return 0;
     }

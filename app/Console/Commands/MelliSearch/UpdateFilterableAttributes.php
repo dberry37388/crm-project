@@ -12,7 +12,7 @@ class UpdateFilterableAttributes extends Command
      *
      * @var string
      */
-    protected $signature = 'mellisearch:industries';
+    protected $signature = 'mellisearch:update-filterable-attributes';
 
     /**
      * The console command description.
@@ -31,14 +31,27 @@ class UpdateFilterableAttributes extends Command
         $client = new Client(config('scout.meilisearch.host'));
 
         $client->index('industries_index')->updateFilterableAttributes([
-            'team_id'
+            'team_id',
+            'user_id',
+            '__soft_deleted',
         ]);
         $this->info('Updated filterable attributes for the industries_index');
 
         $client->index('companies_index')->updateFilterableAttributes([
             'team_id',
-            'industry_id'
+            'industry_id',
+            'created_by_id',
+            'assigned_to_id',
+            '__soft_deleted',
         ]);
+
+        $client->index('contacts_index')->updateFilterableAttributes([
+            'team_id',
+            'created_by_id',
+            'assigned_to_id',
+            '__soft_deleted',
+        ]);
+
         $this->info('Updated filterable attributes for the companies_index');
 
         return 0;

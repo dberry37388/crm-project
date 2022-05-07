@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
-class CompanyResource extends JsonResource
+class ContactResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,18 +20,16 @@ class CompanyResource extends JsonResource
             'id' => $this->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'name' => $this->name,
             'team' => new TeamResource($this->whenLoaded('team')),
             'created_by' => new UserResource($this->createdBy),
             'assigned_to' => new UserResource($this->assignedTo),
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'job_title' => $this->job_title,
+            'phone_number' => $this->phone_number,
+            'mobile_number' => $this->mobile_number,
             'description' => $this->description,
-            'city' => $this->city,
-            'state' => $this->state,
-            'postal_code' => $this->postal_code,
-            'number_of_employees' => $this->number_of_employees,
-            'timezone' => $this->timezone,
-            'industry' => new IndustryResource($this->industry),
-            'contacts' => ContactResource::collection($this->whenLoaded('contacts'))
         ];
     }
 }

@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Contact\StoreContactRequest;
+use App\Http\Requests\Contact\UpdateContactRequest;
+use App\Http\Resources\Api\V1\ContactResource;
+use App\Http\Resources\Api\V1\ContactResourceCollection;
+use App\Models\Company;
+use App\Models\Contact;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
+
+class ContactApiController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return ContactResourceCollection
+     */
+    public function index(Request $request)
+    {
+        return new ContactResourceCollection(
+            Contact::search($request->get('search'))
+                ->where('team_id', $request->user()->current_team_id)
+                ->paginate($request->get('per_page', 25))
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreContactRequest $request
+     * @return RedirectResponse
+     */
+    public function store(StoreContactRequest $request)
+    {
+        $contact = Contact::create(array_merge($request->validated(), [
+            'team_id' => $request->user()->current_team_id,
+            'created_by_id' => $request->user()->id,
+        ]));
+
+        return Redirect::to(route('contacts.show', $contact))
+            ->with('flash.banner', "{$contact->first_name} {$contact->last_name} Created")
+            ->with('flash.bannerStyle', 'success');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Contact $contact
+     * @return ContactResource
+     */
+    public function show(Contact $contact)
+    {
+        return new ContactResource($contact);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param UpdateContactRequest $request
+     * @param Contact $contact
+     * @return ContactResource|RedirectResponse
+     */
+    public function update(UpdateContactRequest $request, Contact $contact)
+    {
+        $contact->update($request->validated());
+
+        return $request->wantsJson()
+            ? new ContactResource($contact)
+            : back()
+                ->with('flash.banner', "{$contact->first_name} {$contact->last_name} Updated")
+                ->with('flash.bannerStyle', 'success');;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Contact $contact
+     * @return RedirectResponse
+     */
+    public function destroy(Contact $contact)
+    {
+        $contact->delete();
+
+        return Redirect::to(route('contacts.list'))
+            ->with('flash.banner', "{$contact->first_name} {$contact->last_name} Deleted")
+            ->with('flash.bannerStyle', 'success');
+    }
+}

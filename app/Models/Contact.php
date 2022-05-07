@@ -3,29 +3,25 @@
 namespace App\Models;
 
 use App\Traits\AssignedToAUser;
-use App\Traits\BelongsToTeam;
+use App\Traits\BelongsToCompany;
 use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
-class Company extends Model
+class Contact extends Model
 {
     use AssignedToAUser;
+    use BelongsToCompany;
     use CreatedByAUser;
-    use BelongsToTeam;
     use HasFactory;
     use Searchable;
-    use SoftDeletes;
 
     protected $guarded = [
         'id',
         'created_at',
-        'updated_at',
-        'deleted_at'
+        'updated_at'
     ];
 
     /**
@@ -35,16 +31,11 @@ class Company extends Model
      */
     public function searchableAs(): string
     {
-        return 'companies_index';
+        return 'contacts_index';
     }
 
-    public function industry(): BelongsTo
+    public function companies(): BelongsToMany
     {
-        return $this->belongsTo(Industry::class);
-    }
-
-    public function contacts(): BelongsToMany
-    {
-        return $this->belongsToMany(Contact::class)->withPivot(['assigned_to_id'])->withTimestamps();
+        return $this->belongsToMany(Company::class)->withPivot(['assigned_to_id'])->withTimestamps();
     }
 }

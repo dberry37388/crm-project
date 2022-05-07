@@ -25,8 +25,8 @@ class CompanyApiController extends BaseApiController
     {
         return new CompanyResourceCollection(
             Company::search($request->get('search'))
-                ->where('team_id', $request->user()->id)
-                ->get()
+                ->where('team_id', $request->user()->current_team_id)
+                ->paginate($request->get('per_page', 25))
         );
     }
 

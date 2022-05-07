@@ -980,6 +980,9 @@ select {
   white-space: nowrap;
   border-width: 0;
 }
+.pointer-events-none {
+  pointer-events: none;
+}
 .fixed {
   position: fixed;
 }
@@ -1011,6 +1014,9 @@ select {
 }
 .top-0 {
   top: 0px;
+}
+.bottom-0 {
+  bottom: 0px;
 }
 .right-3 {
   right: 0.75rem;
@@ -1124,8 +1130,17 @@ select {
 .ml-auto {
   margin-left: auto;
 }
+.-mb-1 {
+  margin-bottom: -0.25rem;
+}
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+.mr-1 {
+  margin-right: 0.25rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 .block {
   display: block;
@@ -1181,6 +1196,9 @@ select {
 .h-full {
   height: 100%;
 }
+.h-24 {
+  height: 6rem;
+}
 .max-h-56 {
   max-height: 14rem;
 }
@@ -1235,26 +1253,23 @@ select {
 .w-1\/4 {
   width: 25%;
 }
-.w-\[300px\] {
-  width: 300px;
-}
 .w-\[400px\] {
   width: 400px;
+}
+.w-24 {
+  width: 6rem;
 }
 .min-w-0 {
   min-width: 0px;
 }
-.min-w-\[300px\] {
-  min-width: 300px;
+.min-w-\[400px\] {
+  min-width: 400px;
 }
 .min-w-\[600px\] {
   min-width: 600px;
 }
 .min-w-full {
   min-width: 100%;
-}
-.min-w-\[400px\] {
-  min-width: 400px;
 }
 .max-w-screen-xl {
   max-width: 1280px;
@@ -1309,6 +1324,22 @@ select {
 }
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+@-webkit-keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
 }
 .cursor-default {
   cursor: default;
@@ -1369,6 +1400,9 @@ select {
 }
 .gap-1 {
   gap: 0.25rem;
+}
+.gap-5 {
+  gap: 1.25rem;
 }
 .gap-2 {
   gap: 0.5rem;
@@ -1593,11 +1627,11 @@ select {
 .p-6 {
   padding: 1.5rem;
 }
-.p-1 {
-  padding: 0.25rem;
-}
 .p-5 {
   padding: 1.25rem;
+}
+.p-1 {
+  padding: 0.25rem;
 }
 .p-4 {
   padding: 1rem;
@@ -1713,6 +1747,9 @@ select {
 }
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+.pl-10 {
+  padding-left: 2.5rem;
 }
 .pl-4 {
   padding-left: 1rem;
@@ -2146,6 +2183,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
+.hover\:bg-white:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
 .hover\:bg-green-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
@@ -2244,6 +2285,10 @@ select {
 .focus\:text-gray-500:focus {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.focus\:text-indigo-500:focus {
+  --tw-text-opacity: 1;
+  color: rgb(99 102 241 / var(--tw-text-opacity));
 }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
@@ -2647,6 +2692,11 @@ select {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 }
 
