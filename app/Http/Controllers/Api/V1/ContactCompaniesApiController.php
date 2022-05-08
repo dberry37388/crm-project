@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Response;
 
-class CompanyContactsApiController extends BaseApiController
+class ContactCompaniesApiController extends BaseApiController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return ContactResourceCollection()
+     * @return CompanyResourceCollection()
      */
-    public function index(Request $request, Company $company)
+    public function index(Request $request, Contact $contact)
     {
-        return new ContactResourceCollection($company->contacts()->orderBy('first_name')->get());
+        return new CompanyResourceCollection($contact->companies()->orderBy('name')->get());
     }
 
     /**
@@ -33,28 +33,29 @@ class CompanyContactsApiController extends BaseApiController
      *
      * @param Company $company
      * @param Contact $contact
+     *
      * @return RedirectResponse
      */
-    public function detach(Company $company, Contact $contact)
+    public function detach(Contact $contact, Company $company)
     {
-        $company->contacts()->detach($contact);
+        $contact->companies()->detach($company);
 
         return Redirect::back()
-            ->with('flash.banner', "{$contact->first_name} {$contact->last_name} has been detached.")
+            ->with('flash.banner', "{$company->name} has been detached.")
             ->with('flash.bannerStyle', 'success');
     }
 
     /**
      * Associate the specified contact with this resource.
      *
-     * @param Company $company
      * @param Contact $contact
+     * @param Company $company
      *
      * @return RedirectResponse
      */
-    public function attach(Company $company, Contact $contact)
+    public function attach(Contact $contact, Company $company)
     {
-        $company->contacts()->attach($contact);
+        $contact->companies()->attach($company);
 
         return Redirect::back()
             ->with('flash.banner', "{$contact->first_name} {$contact->last_name} is now associated with {$company->name}.")

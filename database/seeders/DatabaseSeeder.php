@@ -38,13 +38,13 @@ class DatabaseSeeder extends Seeder
                 $user->teams()->attach($team->id);
             }
 
-            $companies = Company::factory(rand(2,20))->create([
+            $companies = Company::factory(rand(50,100))->create([
                 'team_id' => $team->id,
                 'created_by_id' => $users->random()->id
             ]);
 
             // create some contacts
-            $contacts = Contact::factory(rand(10, 30))->create([
+            $contacts = Contact::factory(rand(200, 400))->create([
                 'team_id' => $team->id,
                 'created_by_id' => $adminUser->id,
                 'assigned_to_id' => $users->random()->id

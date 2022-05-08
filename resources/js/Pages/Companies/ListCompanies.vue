@@ -1,16 +1,16 @@
 <script>
 import Button from "../../Jetstream/Button";
 import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
-import CreateCompanyModal from "./Modals/CreateCompanyModal";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import Input from "../../Jetstream/Input";
 import {SearchIcon} from '@heroicons/vue/solid'
+import CreateNewCompanySlideover from "./Slideovers/CreateNewCompanySlideover";
 export default {
     props: {
         companies: {},
     },
 
-    components: {Input, FixedFooterPagination, CreateCompanyModal, FullWidthAppLayout, Button, SearchIcon},
+    components: {CreateNewCompanySlideover, Input, FixedFooterPagination, FullWidthAppLayout, Button, SearchIcon},
 
     data() {
         return {
@@ -149,6 +149,6 @@ export default {
         </div>
 
         <FixedFooterPagination :meta="filteredCompanies.meta" v-if="filteredCompanies.meta" />
-        <CreateCompanyModal v-if="creatingCompany" :show="creatingCompany" @close="creatingCompany = false" />
+        <CreateNewCompanySlideover :show="creatingCompany" @close="creatingCompany = false" @update="searchCompanies"/>
     </FullWidthAppLayout>
 </template>

@@ -43,6 +43,14 @@ class CompanyApiController extends BaseApiController
             'created_by_id' => $request->user()->id,
         ]));
 
+        if ($request->has('contact_id') && !empty($request->get('contact_id'))) {
+            $company->contacts()->attach($request->get('contact_id'));
+
+            return Redirect::back()
+                ->with('flash.banner', "Contact is now associated with {$company->name}")
+                ->with('flash.bannerStyle', 'success');
+        }
+
         return Redirect::to(route('companies.show', $company))
             ->with('flash.banner', "{$company->name} Created")
             ->with('flash.bannerStyle', 'success');
@@ -72,7 +80,8 @@ class CompanyApiController extends BaseApiController
 
         return $request->wantsJson()
             ? new CompanyResource($company)
-            : back()->with('status', 'company-updated');
+            : back()->with('flash.banner', "{$company->name} has been updated.")
+                ->with('flash.bannerStyle', 'success');
     }
 
     /**

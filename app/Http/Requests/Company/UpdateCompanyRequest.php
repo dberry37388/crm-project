@@ -13,7 +13,7 @@ class UpdateCompanyRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return Auth::check();
     }
@@ -36,5 +36,20 @@ class UpdateCompanyRequest extends FormRequest
             'industry_id' => ['sometimes', Rule::exists('industries', 'id')],
             'assigned_to_id' => ['sometimes', Rule::exists('users', 'id')],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $data = [];
+
+        if (!empty($this->industry)) {
+            $data['industry_id'] = $this->industry['id'];
+        }
+
+        if (!empty($this->assigned_to)) {
+            $data['assigned_to_id'] = $this->assigned_to['id'];
+        }
+
+        $this->merge($data);
     }
 }

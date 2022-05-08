@@ -8,6 +8,7 @@ import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import ConfirmDeleteCompanyModal from "./Modals/ConfirmDeleteCompanyModal";
 import {Inertia} from "@inertiajs/inertia";
 import ContactDisclosure from "../Contacts/Partials/ContactDisclosure";
+import UpdateCompanySlideover from "./Slideovers/UpdateCompanySlideover";
 
 export default {
     props: {
@@ -18,6 +19,7 @@ export default {
     },
 
     components: {
+        UpdateCompanySlideover,
         ContactDisclosure,
         ConfirmDeleteCompanyModal,
         TeamUserComboBox,
@@ -76,9 +78,9 @@ export default {
                 </div>
 
                 <div class="flex flex-col gap-4 p-5">
-                    <SidebarAttribute label="Assigned To" :content="currentCompany.assigned_to.name" />
+                    <SidebarAttribute label="Assigned To" :content="currentCompany.assigned_to ? currentCompany.assigned_to.name : ''" />
                     <SidebarAttribute label="Created By" :content="currentCompany.created_by.name" />
-                    <SidebarAttribute label="Industry" :content="currentCompany.industry.name" />
+                    <SidebarAttribute label="Industry" :content="currentCompany.industry ? currentCompany.industry.name : ''" />
                     <SidebarAttribute label="City" :content="currentCompany.city" />
                     <SidebarAttribute label="State" :content="currentCompany.state" />
                     <SidebarAttribute label="Postal Code" :content="currentCompany.postal_code" />
@@ -88,13 +90,14 @@ export default {
                 </div>
             </div>
 
-            <UpdateCompanyModal v-if="updatingCompany" :show="updatingCompany" @close="updatingCompany = false" :company="currentCompany" @updated="refreshCompany" />
+            <UpdateCompanySlideover v-if="updatingCompany" :show="updatingCompany" @close="updatingCompany = false" :company="currentCompany" @update="refreshCompany" />
             <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @updated="companyDeleted" />
+
         </template>
 
         <template #rightColumn>
             <div class="p-5 border-b border-gray-200" v-if="currentCompany">
-                <ContactDisclosure :company-id="currentCompany.id" />
+                <ContactDisclosure :company-id="currentCompany.id" :default-open="true"/>
             </div>
         </template>
     </ThreeColumnLayout>

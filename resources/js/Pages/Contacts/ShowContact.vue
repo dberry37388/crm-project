@@ -4,7 +4,11 @@
     import {ChevronLeftIcon, PencilAltIcon, TrashIcon} from "@heroicons/vue/solid"
     import SidebarAttribute from "../../Components/SidebarAttribute";
     import ConfirmDeleteContactModal from "./Modals/ConfirmDeleteContactModal";
-    import UpdateContactModal from "./Modals/UpdateContactModal";
+    import CompanyDisclosure from "../Companies/Partials/CompanyDisclosure";
+    import Button from "../../Jetstream/Button";
+    import Slideover from "../../Components/Slideovers/Slideover";
+    import AttachCompanyToContact from "./Slideovers/AttachCompanyToContact";
+    import UpdateContactSlideover from "./Slideovers/UpdateContactSlideover";
 
     export default {
         props: {
@@ -15,7 +19,11 @@
         },
 
         components: {
-            UpdateContactModal,
+            UpdateContactSlideover,
+            AttachCompanyToContact,
+            Slideover,
+            Button,
+            CompanyDisclosure,
             ConfirmDeleteContactModal,
             SidebarAttribute, ChevronLeftIcon, Link, PencilAltIcon, ThreeColumnLayout, TrashIcon},
 
@@ -23,12 +31,13 @@
             return {
                 currentContact: this.contact.data,
                 updatingContact: false,
-                deletingContact: false
+                deletingContact: false,
+                showingSlideover: false
             }
         },
 
         methods: {
-            refreshCompany() {
+            refreshContact() {
                 axios.get(route('api.v1.contacts.show', this.contact.data.id))
                     .then((r) => {
                         this.currentContact = r.data.data;
@@ -78,8 +87,15 @@
                 </div>
             </div>
 
-            <UpdateContactModal v-if="updatingContact" :show="updatingContact" @close="updatingContact = false" :contact="currentContact" @updated="refreshCompany" />
+
+            <UpdateContactSlideover v-if="updatingContact" :show="updatingContact" @close="updatingContact = false" :contact="currentContact" @update="refreshContact" />
             <ConfirmDeleteContactModal v-if="deletingContact" :show="deletingContact" @close="deletingContact = false" :contact="currentContact" />
+        </template>
+
+        <template #rightColumn>
+            <div class="p-5 border-b border-gray-200" v-if="currentContact">
+                <CompanyDisclosure :contact-id="currentContact.id" :default-open="true" />
+            </div>
         </template>
     </ThreeColumnLayout>
 </template>

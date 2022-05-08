@@ -3,16 +3,16 @@ import Button from "../../Jetstream/Button";
 import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
 import Pagination from "../../Components/Pagination";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
-import CreateContactModal from "./Modals/CreateContactModal";
 import {SearchIcon} from '@heroicons/vue/solid'
 import Input from "../../Jetstream/Input";
+import CreateNewContactSlideover from "./Slideovers/CreateNewContactSlideover";
 
 export default {
     props: {
         contacts: {},
     },
 
-    components: {Input, CreateContactModal, FixedFooterPagination, Pagination, FullWidthAppLayout, Button, SearchIcon},
+    components: {CreateNewContactSlideover, Input, FixedFooterPagination, Pagination, FullWidthAppLayout, Button, SearchIcon},
 
     data() {
         return {
@@ -97,7 +97,7 @@ export default {
 
                                             <!-- Assigned To -->
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                                <div class="flex">
+                                                <div class="flex" v-if="contact.assigned_to.name">
                                                     <div class="h-10 w-10 flex-shrink-0">
                                                         <img class="h-10 w-10 rounded-full" :src="contact.assigned_to.profile_photo_url" alt="{{ contact.assigned_to.name }}" />
                                                     </div>
@@ -105,6 +105,10 @@ export default {
                                                         <div class="font-medium text-gray-900">{{ contact.assigned_to.name }}</div>
                                                         <div class="text-gray-500">{{ contact.assigned_to.email }}</div>
                                                     </div>
+                                                </div>
+
+                                                <div v-else>
+                                                    Unassigned
                                                 </div>
                                             </td>
 
@@ -159,6 +163,6 @@ export default {
 
         <FixedFooterPagination :meta="contacts.meta" />
 
-        <CreateContactModal v-if="creatingContact" :show="creatingContact" @close="creatingContact = false" />
+        <CreateNewContactSlideover v-if="creatingContact" :show="creatingContact" @close="creatingContact = false" @update="searchContacts" />
     </FullWidthAppLayout>
 </template>
