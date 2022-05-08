@@ -10,6 +10,13 @@ import TeamUserComboBox from "../../../Components/TeamUserComboBox";
 import TextArea from "../../../Components/TextArea";
 
 export  default {
+    props: {
+        companyId: {
+            required: false,
+            default: null
+        }
+    },
+
     components: {
         TextArea,
         TeamUserComboBox,
@@ -44,6 +51,7 @@ export  default {
             this.form.transform((data) => ({
                 ...data,
                 assigned_to_id: data.assigned_to.id,
+                company_id: this.companyId
             }))
                 .post(`/api/v1/contacts`, {
                     errorBag: 'createContact',

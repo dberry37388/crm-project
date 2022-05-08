@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\CompanyApiController;
+use App\Http\Controllers\Api\V1\CompanyContactsApiController;
 use App\Http\Controllers\Api\V1\ContactApiController;
 use App\Http\Controllers\Api\V1\IndustryApiController;
 use App\Http\Controllers\Api\V1\LookupIndustriesApiController;
@@ -27,6 +28,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('industries', IndustryApiController::class);
     Route::resource('companies', CompanyApiController::class);
     Route::resource('contacts', ContactApiController::class);
+
+    Route::prefix('companies/{company}')->name('company.')->group(function () {
+        Route::get('contacts', CompanyContactsApiController::class . '@index')->name('list-contacts');
+        Route::get('contacts/{contact}', CompanyContactsApiController::class . '@detach')->name('detach-contact');
+    });
 
     Route::prefix('lookups')->name('lookup.')->group(function () {
         Route::get('team-users', LookupTeamUsersApiController::class)->name('team-users');

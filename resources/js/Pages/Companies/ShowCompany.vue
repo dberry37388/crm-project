@@ -7,6 +7,7 @@ import UpdateCompanyModal from "./Modals/UpdateCompanyModal";
 import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import ConfirmDeleteCompanyModal from "./Modals/ConfirmDeleteCompanyModal";
 import {Inertia} from "@inertiajs/inertia";
+import ContactDisclosure from "../Contacts/Partials/ContactDisclosure";
 
 export default {
     props: {
@@ -17,6 +18,7 @@ export default {
     },
 
     components: {
+        ContactDisclosure,
         ConfirmDeleteCompanyModal,
         TeamUserComboBox,
         UpdateCompanyModal, SidebarAttribute, ChevronLeftIcon, Link, PencilAltIcon, ThreeColumnLayout, TrashIcon},
@@ -88,6 +90,12 @@ export default {
 
             <UpdateCompanyModal v-if="updatingCompany" :show="updatingCompany" @close="updatingCompany = false" :company="currentCompany" @updated="refreshCompany" />
             <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @updated="companyDeleted" />
+        </template>
+
+        <template #rightColumn>
+            <div class="p-5 border-b border-gray-200" v-if="currentCompany">
+                <ContactDisclosure :company-id="currentCompany.id" />
+            </div>
         </template>
     </ThreeColumnLayout>
 </template>

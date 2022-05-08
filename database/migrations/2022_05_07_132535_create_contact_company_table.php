@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('company_contact', function (Blueprint $table) {
             $table->foreignId('company_id')->nullable()->constrained('companies');
-            $table->foreignId('contact_id')->constrained('users');
+            $table->foreignId('contact_id')->constrained('contacts');
             $table->foreignId('assigned_to_id')->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();

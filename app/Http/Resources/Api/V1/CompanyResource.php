@@ -31,7 +31,7 @@ class CompanyResource extends JsonResource
             'number_of_employees' => $this->number_of_employees,
             'timezone' => $this->timezone,
             'industry' => new IndustryResource($this->industry),
-            'contacts' => ContactResource::collection($this->whenLoaded('contacts'))
+            'contacts' => ContactResource::collection($this->contacts ?? [])
         ];
     }
 }

@@ -43,6 +43,10 @@ class ContactApiController extends Controller
             'created_by_id' => $request->user()->id,
         ]));
 
+        if ($request->has('company_id')) {
+            $contact->companies()->attach($request->get('company_id'));
+        }
+
         return Redirect::to(route('contacts.show', $contact))
             ->with('flash.banner', "{$contact->first_name} {$contact->last_name} Created")
             ->with('flash.bannerStyle', 'success');

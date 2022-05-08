@@ -22,7 +22,7 @@ class ContactResource extends JsonResource
             'updated_at' => $this->updated_at,
             'team' => new TeamResource($this->whenLoaded('team')),
             'created_by' => new UserResource($this->createdBy),
-            'assigned_to' => new UserResource($this->assignedTo),
+            'assigned_to' => new UserResource($this->assignedTo ?? []),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,

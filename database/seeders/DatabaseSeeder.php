@@ -44,11 +44,17 @@ class DatabaseSeeder extends Seeder
             ]);
 
             // create some contacts
-            Contact::factory(rand(10, 30))->create([
+            $contacts = Contact::factory(rand(10, 30))->create([
                 'team_id' => $team->id,
                 'created_by_id' => $adminUser->id,
                 'assigned_to_id' => $users->random()->id
             ]);
+
+            foreach ($contacts as $contact) {
+                $company = $companies->random();
+
+                $company->contacts()->attach($contact);
+            }
         }
     }
 }
