@@ -12,6 +12,7 @@ import NoteBlock from "../../Components/Notes/NoteBlock";
 import ManageNoteSlideover from "../../Components/Notes/ManageNoteSlideover";
 import Button from "../../Jetstream/Button";
 import ListNotes from "../../Components/Notes/ListNotes";
+import ActivityTabs from "../../Components/ActivityTabs";
 
 export default {
     props: {
@@ -22,6 +23,7 @@ export default {
     },
 
     components: {
+        ActivityTabs,
         ListNotes,
         Button,
         ManageNoteSlideover,
@@ -115,12 +117,21 @@ export default {
 
         <!-- section Middle -->
         <template #middleColumn>
-            <div class="py-5 px-12">
-                <ListNotes
-                    :noteListRoute="route('api.v1.company.list-notes', currentCompany.id)"
-                    :modelRoute="route('api.v1.company.store-note', currentCompany.id)"
-                    v-show="currentCompany.id" />
+
+            <div class="p-5">
+                <ActivityTabs
+                    :model-id="currentCompany.id"
+                    :note-list-route="route('api.v1.company.list-notes', currentCompany.id)"
+                    :note-store-route="route('api.v1.company.store-note', currentCompany.id)"
+                />
             </div>
+
+<!--            <div class="py-5 px-12">-->
+<!--                <ListNotes-->
+<!--                    :noteListRoute="route('api.v1.company.list-notes', currentCompany.id)"-->
+<!--                    :modelRoute="route('api.v1.company.store-note', currentCompany.id)"-->
+<!--                    v-show="currentCompany.id" />-->
+<!--            </div>-->
         </template>
 
         <!-- section Right -->

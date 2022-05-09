@@ -10,6 +10,7 @@
     import AttachCompanyToContact from "./Slideovers/AttachCompanyToContact";
     import UpdateContactSlideover from "./Slideovers/UpdateContactSlideover";
     import ListNotes from "../../Components/Notes/ListNotes";
+    import ActivityTabs from "../../Components/ActivityTabs";
 
     export default {
         props: {
@@ -20,6 +21,7 @@
         },
 
         components: {
+            ActivityTabs,
             ListNotes,
             UpdateContactSlideover,
             AttachCompanyToContact,
@@ -96,11 +98,12 @@
 
         <!-- section Middle -->
         <template #middleColumn>
-            <div class="py-5 px-12">
-                <ListNotes
-                    :noteListRoute="route('api.v1.contact.list-notes', currentContact.id)"
-                    :modelRoute="route('api.v1.contact.store-note', currentContact.id)"
-                    v-show="currentContact.id" />
+            <div class="p-5">
+                <ActivityTabs
+                    :model-id="currentContact.id"
+                    :note-list-route="route('api.v1.contact.list-notes', currentContact.id)"
+                    :note-store-route="route('api.v1.contact.store-note', currentContact.id)"
+                />
             </div>
         </template>
 
