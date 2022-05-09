@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ContactCompaniesApiController;
 use App\Http\Controllers\Api\V1\IndustryApiController;
 use App\Http\Controllers\Api\V1\LookupIndustriesApiController;
 use App\Http\Controllers\Api\V1\LookupTeamUsersApiController;
+use App\Http\Controllers\Api\V1\NoteApiController;
 use App\Http\Controllers\Api\V1\TeamCompaniesApiController;
 use App\Http\Controllers\Api\V1\TeamContactsApiController;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('industries', IndustryApiController::class);
     Route::resource('companies', CompanyApiController::class);
     Route::resource('contacts', ContactApiController::class);
+    Route::resource('notes', NoteApiController::class);
 
     Route::prefix('companies/{company}')->name('company.')->group(function () {
         Route::get('contacts', CompanyContactsApiController::class . '@index')->name('list-contacts');

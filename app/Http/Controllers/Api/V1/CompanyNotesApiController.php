@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\Note\StoreNoteRequest;
 use App\Http\Resources\Api\V1\NoteResourceCollection;
 use App\Models\Company;
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -29,6 +30,15 @@ class CompanyNotesApiController extends BaseApiController
 
         return Redirect::back()
             ->with('flash.banner', "A New note has been added to {$company->name}.")
+            ->with('flash.bannerStyle', 'success');
+    }
+
+    public function destroy(Note $note)
+    {
+        dd($note);
+
+        return Redirect::back()
+            ->with('flash.banner', "The note was successfully deleted.")
             ->with('flash.bannerStyle', 'success');
     }
 }

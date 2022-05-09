@@ -1,7 +1,7 @@
 <script>
 import Input from "../../../Jetstream/Input";
 import Button from "../../../Jetstream/Button";
-import { CogIcon, ChevronDownIcon, SearchIcon, UserAddIcon, PencilAltIcon, PlusIcon } from '@heroicons/vue/solid'
+import { CogIcon, ChevronDownIcon, SearchIcon, UserAddIcon, PencilAltIcon } from '@heroicons/vue/solid'
 import SecondaryButton from "../../../Jetstream/SecondaryButton";
 import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {Link} from "@inertiajs/inertia-vue3";
@@ -95,7 +95,13 @@ export default {
             <div class="mr-6">
                 <Dropdown>
                     <template #trigger>
-                        <CogIcon class="h-5 w-7 text-gray-800" />
+                        <div class="flex items-center text-sm font-semibold link cursor-pointer">
+                            <span class="mr-1">
+                                Actions
+                            </span>
+
+                            <ChevronDownIcon class="h-3 w-3" />
+                        </div>
                     </template>
 
                     <template #content class="flex flex-col gap-3">

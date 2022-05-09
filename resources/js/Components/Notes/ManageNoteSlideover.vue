@@ -22,6 +22,10 @@ const props = defineProps({
     methodRoute: {
         type: String,
         required: true
+    },
+    currentNote: {
+        type: String,
+        default: null
     }
 
 });
@@ -29,19 +33,15 @@ const props = defineProps({
 const emit = defineEmits(['close', 'update']);
 
 const form = useForm({
+    _method: props.currentNote ? 'PUT' : 'POST',
     processing: false,
-    note: '',
+    note: props.currentNote,
 })
 
 const saveForm = () => {
     form.processing = true;
 
-    form.transform((data) => ({
-        ...data,
-        contact_id: props.contactId,
-
-    }))
-        .post(props.methodRoute, {
+    form.post(props.methodRoute, {
             errorBag: 'manageNote',
             preserveScroll: true,
             onSuccess: () => closeSlideover(true),
@@ -77,14 +77,9 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
         <template #content>
             <div class="space-y-6 pt-6 pb-5">
-                <div>
-                    Add a Note
-                </div>
-
                 <div class="flex flex-col gap-4">
                     <div>
-                        <Label for="form.number_of_employees">Note</Label>
-                        <TextArea v-model="form.note" type="text" class="mt-1 block w-full" placeholder="Description"/>
+                        <TextArea v-model="form.note" type="text" class="mt-1 block w-full" placeholder="Write something memorable..."/>
                         <InputError :message="form.errors.note" class="mt-2" />
                     </div>
                 </div>
