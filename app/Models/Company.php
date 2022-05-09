@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\AssignedToAUser;
 use App\Traits\BelongsToTeam;
 use App\Traits\CreatedByAUser;
+use App\Traits\HasNotes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +19,7 @@ class Company extends Model
     use CreatedByAUser;
     use BelongsToTeam;
     use HasFactory;
+    use HasNotes;
     use Searchable;
     use SoftDeletes;
 

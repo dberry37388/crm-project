@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\Note;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -38,23 +39,30 @@ class DatabaseSeeder extends Seeder
                 $user->teams()->attach($team->id);
             }
 
-            $companies = Company::factory(rand(50,100))->create([
+            $companies = Company::factory(10)->create([
                 'team_id' => $team->id,
                 'created_by_id' => $users->random()->id
             ]);
 
             // create some contacts
-            $contacts = Contact::factory(rand(200, 400))->create([
+            $contacts = Contact::factory(200)->create([
                 'team_id' => $team->id,
                 'created_by_id' => $adminUser->id,
                 'assigned_to_id' => $users->random()->id
             ]);
 
-            foreach ($contacts as $contact) {
+            foreach ($contacts->random(20, $contacts->count()) as $contact) {
                 $company = $companies->random();
-
                 $company->contacts()->attach($contact);
             }
+
+             Note::factory()->count(rand(50, 100))->contact()->state(
+                 ['noteable_id' => $contacts->random()->id]
+             )->create();
+
+            Note::factory()->count(rand(50, 100))->company()->state(
+                ['noteable_id' => $companies->random()->id]
+            )->create();
         }
     }
 }

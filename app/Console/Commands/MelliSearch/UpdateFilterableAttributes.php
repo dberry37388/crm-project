@@ -54,6 +54,15 @@ class UpdateFilterableAttributes extends Command
 
         $this->info('Updated filterable attributes for the companies_index');
 
+        $client->index('notes_index')->updateFilterableAttributes([
+            'team_id',
+            'created_by_id',
+            'assigned_to_id',
+            '__soft_deleted',
+        ]);
+
+        $this->info('Updated filterable attributes for the companies_index');
+
         return 0;
     }
 }

@@ -6,9 +6,12 @@ import SidebarAttribute from "../../Components/SidebarAttribute";
 import UpdateCompanyModal from "./Modals/UpdateCompanyModal";
 import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import ConfirmDeleteCompanyModal from "./Modals/ConfirmDeleteCompanyModal";
-import {Inertia} from "@inertiajs/inertia";
 import ContactDisclosure from "../Contacts/Partials/ContactDisclosure";
 import UpdateCompanySlideover from "./Slideovers/UpdateCompanySlideover";
+import NoteBlock from "../../Components/Notes/NoteBlock";
+import ManageNoteSlideover from "../../Components/Notes/ManageNoteSlideover";
+import Button from "../../Jetstream/Button";
+import ListNotes from "../../Components/Notes/ListNotes";
 
 export default {
     props: {
@@ -19,6 +22,10 @@ export default {
     },
 
     components: {
+        ListNotes,
+        Button,
+        ManageNoteSlideover,
+        NoteBlock,
         UpdateCompanySlideover,
         ContactDisclosure,
         ConfirmDeleteCompanyModal,
@@ -29,7 +36,9 @@ export default {
         return {
             currentCompany: this.company.data,
             updatingCompany: false,
-            deletingCompany: false
+            deletingCompany: false,
+            managingNote: false,
+            notes: null,
         }
     },
 
@@ -38,6 +47,14 @@ export default {
             axios.get(route('api.v1.companies.show', this.company.data.id))
                 .then((r) => {
                     this.currentCompany = r.data.data;
+                    this.notes = this.currentCompany.notes;
+                })
+        },
+
+        searchNotes() {
+            axios.get(route('api.v1.company.list-notes', this.company.data.id))
+                .then((r) => {
+                    this.notes = r.data.data;
                 })
         },
 
@@ -50,6 +67,7 @@ export default {
 
 <template>
     <ThreeColumnLayout>
+        <!-- section Left -->
         <template #leftColumn>
             <div v-if="company">
                 <div class="border-b border-gray-200 p-5">
@@ -95,6 +113,17 @@ export default {
 
         </template>
 
+        <!-- section Middle -->
+        <template #middleColumn>
+            <div class="py-5 px-12">
+                <ListNotes
+                    :noteListRoute="route('api.v1.company.list-notes', currentCompany.id)"
+                    :modelRoute="route('api.v1.company.store-note', currentCompany.id)"
+                    v-show="currentCompany.id" />
+            </div>
+        </template>
+
+        <!-- section Right -->
         <template #rightColumn>
             <div class="p-5 border-b border-gray-200" v-if="currentCompany">
                 <ContactDisclosure :company-id="currentCompany.id" :default-open="true"/>
