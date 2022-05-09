@@ -9,6 +9,7 @@
     import Slideover from "../../Components/Slideovers/Slideover";
     import AttachCompanyToContact from "./Slideovers/AttachCompanyToContact";
     import UpdateContactSlideover from "./Slideovers/UpdateContactSlideover";
+    import ListNotes from "../../Components/Notes/ListNotes";
 
     export default {
         props: {
@@ -19,6 +20,7 @@
         },
 
         components: {
+            ListNotes,
             UpdateContactSlideover,
             AttachCompanyToContact,
             Slideover,
@@ -90,6 +92,16 @@
 
             <UpdateContactSlideover v-if="updatingContact" :show="updatingContact" @close="updatingContact = false" :contact="currentContact" @update="refreshContact" />
             <ConfirmDeleteContactModal v-if="deletingContact" :show="deletingContact" @close="deletingContact = false" :contact="currentContact" />
+        </template>
+
+        <!-- section Middle -->
+        <template #middleColumn>
+            <div class="py-5 px-12">
+                <ListNotes
+                    :noteListRoute="route('api.v1.contact.list-notes', currentContact.id)"
+                    :modelRoute="route('api.v1.contact.store-note', currentContact.id)"
+                    v-show="currentContact.id" />
+            </div>
         </template>
 
         <template #rightColumn>

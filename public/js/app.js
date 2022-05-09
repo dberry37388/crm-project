@@ -25806,9 +25806,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_ThreeColumnLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Layouts/ThreeColumnLayout */ "./resources/js/Layouts/ThreeColumnLayout.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
-/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/ChevronLeftIcon.js");
-/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/PencilAltIcon.js");
-/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/TrashIcon.js");
+/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/ChevronLeftIcon.js");
+/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/PencilAltIcon.js");
+/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/TrashIcon.js");
 /* harmony import */ var _Components_SidebarAttribute__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Components/SidebarAttribute */ "./resources/js/Components/SidebarAttribute.vue");
 /* harmony import */ var _Modals_ConfirmDeleteContactModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Modals/ConfirmDeleteContactModal */ "./resources/js/Pages/Contacts/Modals/ConfirmDeleteContactModal.vue");
 /* harmony import */ var _Companies_Partials_CompanyDisclosure__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Companies/Partials/CompanyDisclosure */ "./resources/js/Pages/Companies/Partials/CompanyDisclosure.vue");
@@ -25816,6 +25816,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Slideovers_Slideover__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Components/Slideovers/Slideover */ "./resources/js/Components/Slideovers/Slideover.vue");
 /* harmony import */ var _Slideovers_AttachCompanyToContact__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Slideovers/AttachCompanyToContact */ "./resources/js/Pages/Contacts/Slideovers/AttachCompanyToContact.vue");
 /* harmony import */ var _Slideovers_UpdateContactSlideover__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Slideovers/UpdateContactSlideover */ "./resources/js/Pages/Contacts/Slideovers/UpdateContactSlideover.vue");
+/* harmony import */ var _Components_Notes_ListNotes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../Components/Notes/ListNotes */ "./resources/js/Components/Notes/ListNotes.vue");
+
 
 
 
@@ -25834,6 +25836,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
+    ListNotes: _Components_Notes_ListNotes__WEBPACK_IMPORTED_MODULE_9__["default"],
     UpdateContactSlideover: _Slideovers_UpdateContactSlideover__WEBPACK_IMPORTED_MODULE_8__["default"],
     AttachCompanyToContact: _Slideovers_AttachCompanyToContact__WEBPACK_IMPORTED_MODULE_7__["default"],
     Slideover: _Components_Slideovers_Slideover__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -25841,11 +25844,11 @@ __webpack_require__.r(__webpack_exports__);
     CompanyDisclosure: _Companies_Partials_CompanyDisclosure__WEBPACK_IMPORTED_MODULE_4__["default"],
     ConfirmDeleteContactModal: _Modals_ConfirmDeleteContactModal__WEBPACK_IMPORTED_MODULE_3__["default"],
     SidebarAttribute: _Components_SidebarAttribute__WEBPACK_IMPORTED_MODULE_2__["default"],
-    ChevronLeftIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_9__["default"],
+    ChevronLeftIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_10__["default"],
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link,
-    PencilAltIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_10__["default"],
+    PencilAltIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_11__["default"],
     ThreeColumnLayout: _Layouts_ThreeColumnLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
-    TrashIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_11__["default"]
+    TrashIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   data: function data() {
     return {
@@ -35084,6 +35087,9 @@ var _hoisted_9 = {
   "class": "flex flex-col gap-4 p-5"
 };
 var _hoisted_10 = {
+  "class": "py-5 px-12"
+};
+var _hoisted_11 = {
   key: 0,
   "class": "p-5 border-b border-gray-200"
 };
@@ -35101,6 +35107,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_UpdateContactSlideover = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("UpdateContactSlideover");
 
   var _component_ConfirmDeleteContactModal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDeleteContactModal");
+
+  var _component_ListNotes = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ListNotes");
 
   var _component_CompanyDisclosure = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CompanyDisclosure");
 
@@ -35191,8 +35199,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["show", "contact"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
+    middleColumn: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ListNotes, {
+        noteListRoute: _ctx.route('api.v1.contact.list-notes', $data.currentContact.id),
+        modelRoute: _ctx.route('api.v1.contact.store-note', $data.currentContact.id)
+      }, null, 8
+      /* PROPS */
+      , ["noteListRoute", "modelRoute"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.currentContact.id]])])];
+    }),
     rightColumn: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [$data.currentContact ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CompanyDisclosure, {
+      return [$data.currentContact ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CompanyDisclosure, {
         "contact-id": $data.currentContact.id,
         "default-open": true
       }, null, 8

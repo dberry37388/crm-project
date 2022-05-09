@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CompanyContactsApiController;
 use App\Http\Controllers\Api\V1\CompanyNotesApiController;
 use App\Http\Controllers\Api\V1\ContactApiController;
 use App\Http\Controllers\Api\V1\ContactCompaniesApiController;
+use App\Http\Controllers\Api\V1\ContactNotesApiController;
 use App\Http\Controllers\Api\V1\IndustryApiController;
 use App\Http\Controllers\Api\V1\LookupIndustriesApiController;
 use App\Http\Controllers\Api\V1\LookupTeamUsersApiController;
@@ -50,6 +51,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('companies', ContactCompaniesApiController::class . '@index')->name('list-companies');
         Route::post('companies/{company}', ContactCompaniesApiController::class . '@attach')->name('attach-company');
         Route::delete('companies/{company}', ContactCompaniesApiController::class . '@detach')->name('detach-company');
+
+        Route::prefix('notes')->group(function () {
+            Route::get('/', ContactNotesApiController::class . '@index')->name('list-notes');
+            Route::post('/', ContactNotesApiController::class . '@store')->name('store-note');
+        });
     });
 
     Route::prefix('lookups')->name('lookup.')->group(function () {
