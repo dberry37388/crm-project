@@ -39,7 +39,7 @@ class NoteFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'noteable_id' => Contact::factory(),
-                'noteable_type' => '\App\Models\Contact',
+                'noteable_type' => 'App\Models\Contact',
             ];
         });
     }
@@ -52,7 +52,7 @@ class NoteFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'noteable_id' => Company::factory(),
-                'noteable_type' => '\App\Models\Company',
+                'noteable_type' => 'App\Models\Company',
             ];
         });
     }
