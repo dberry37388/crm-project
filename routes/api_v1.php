@@ -3,9 +3,11 @@
 use App\Http\Controllers\Api\V1\CompanyApiController;
 use App\Http\Controllers\Api\V1\CompanyContactsApiController;
 use App\Http\Controllers\Api\V1\CompanyNotesApiController;
+use App\Http\Controllers\Api\V1\CompanyTasksApiController;
 use App\Http\Controllers\Api\V1\ContactApiController;
 use App\Http\Controllers\Api\V1\ContactCompaniesApiController;
 use App\Http\Controllers\Api\V1\ContactNotesApiController;
+use App\Http\Controllers\Api\V1\ContactTasksApiController;
 use App\Http\Controllers\Api\V1\IndustryApiController;
 use App\Http\Controllers\Api\V1\LookupIndustriesApiController;
 use App\Http\Controllers\Api\V1\LookupTeamUsersApiController;
@@ -45,6 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/', CompanyNotesApiController::class . '@index')->name('list-notes');
             Route::post('/', CompanyNotesApiController::class . '@store')->name('store-note');
         });
+
+        Route::prefix('tasks')->name('tasks.')->group(function () {
+            Route::get('/', CompanyTasksApiController::class . '@index')->name('list');
+            Route::post('/', CompanyTasksApiController::class . '@store')->name('store');
+        });
     });
 
     Route::prefix('contacts/{contact}')->name('contact.')->group(function () {
@@ -55,6 +62,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('notes')->group(function () {
             Route::get('/', ContactNotesApiController::class . '@index')->name('list-notes');
             Route::post('/', ContactNotesApiController::class . '@store')->name('store-note');
+        });
+
+        Route::prefix('tasks')->name('tasks.')->group(function () {
+            Route::get('/', ContactTasksApiController::class . '@index')->name('list');
+            Route::post('/', ContactTasksApiController::class . '@store')->name('store');
         });
     });
 

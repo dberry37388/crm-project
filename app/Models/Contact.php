@@ -6,6 +6,7 @@ use App\Traits\AssignedToAUser;
 use App\Traits\BelongsToCompany;
 use App\Traits\CreatedByAUser;
 use App\Traits\HasNotes;
+use App\Traits\HasTasks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,6 +19,7 @@ class Contact extends Model
     use CreatedByAUser;
     use HasFactory;
     use HasNotes;
+    use HasTasks;
     use Searchable;
 
     protected $guarded = [

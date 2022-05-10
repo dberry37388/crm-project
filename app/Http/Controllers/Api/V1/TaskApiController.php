@@ -3,28 +3,29 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Note\StoreNoteRequest;
-use App\Http\Requests\Note\UpdateNoteRequest;
-use App\Http\Resources\Api\V1\NoteResource;
-use App\Http\Resources\Api\V1\NoteResourceCollection;
-use App\Models\Note;
+use App\Http\Requests\Task\StoreTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
+use App\Http\Resources\Api\V1\TaskResource;
+use App\Http\Resources\Api\V1\TaskResourceCollection;
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 
-class NoteApiController extends BaseApiController
+class TaskApiController extends BaseApiController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return NoteResourceCollection
+     * @param Request $request
+     * @param Model $model
+     * @return TaskResourceCollection
      */
     public function index(Request $request, Model $model)
     {
-        return new NoteResourceCollection(
-            Note::search($request->get('search'))
+        return new TaskResourceCollection(
+            Task::search($request->get('search'))
                 ->where('noteable_type', $this->getNoteableType($model))
         );
     }
@@ -32,13 +33,13 @@ class NoteApiController extends BaseApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreNoteRequest $request
+     * @param StoreTaskRequest $request
      * @param Model $model
      * @return RedirectResponse
      */
-    public function store(StoreNoteRequest $request, Model $model)
+    public function store(StoreTaskRequest $request, Model $model): RedirectResponse
     {
-        $contact = Note::create(array_merge($request->validated(), [
+        $contact = Task::create(array_merge($request->validated(), [
             'noteable_type' => $this->getNoteableType($model),
             'noteable_id' => $model->id,
             'created_by_id' => $request->user()->id,
@@ -52,22 +53,22 @@ class NoteApiController extends BaseApiController
     /**
      * Display the specified resource.
      *
-     * @param Note $note
-     * @return NoteResource
+     * @param  Task  $task
+     * @return TaskResource
      */
-    public function show(Note $note)
+    public function show(Task $task)
     {
-        return new NoteResource($note);
+        return new TaskResource($task);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateNoteRequest $request
-     * @param Note $note
+     * @param UpdateTaskRequest $request
+     * @param Task $task
      * @return RedirectResponse
      */
-    public function update(UpdateNoteRequest $request, Note $note)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
         $note->update($request->validated());
 
@@ -79,12 +80,12 @@ class NoteApiController extends BaseApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Note $note
+     * @param Task $task
      * @return RedirectResponse
      */
-    public function destroy(Note $note)
+    public function destroy(Task $task)
     {
-        $note->delete();
+        $task->delete();
 
         return Redirect::back()
             ->with('flash.banner', "Note has been deleted.")

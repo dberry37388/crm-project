@@ -6,6 +6,7 @@ use App\Traits\AssignedToAUser;
 use App\Traits\BelongsToTeam;
 use App\Traits\CreatedByAUser;
 use App\Traits\HasNotes;
+use App\Traits\HasTasks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +21,7 @@ class Company extends Model
     use BelongsToTeam;
     use HasFactory;
     use HasNotes;
+    use HasTasks;
     use Searchable;
     use SoftDeletes;
 
