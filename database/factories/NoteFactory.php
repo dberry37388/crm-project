@@ -19,8 +19,6 @@ class NoteFactory extends Factory
      */
     public function definition()
     {
-        $noteableType = array_rand(['\App\Models\Contact', '\App\Models\Company']);
-
         return [
             'noteable_id' => Company::factory(),
             'noteable_type' => function (array $attributes) {
