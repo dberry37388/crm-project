@@ -1,6 +1,7 @@
 <script setup>
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ListNotes from "./Notes/ListNotes";
+import ListTasks from "./Tasks/ListTasks";
 
 const props = defineProps({
     modelId: {
@@ -14,6 +15,16 @@ const props = defineProps({
     },
 
     noteStoreRoute: {
+        type: String,
+        required: true
+    },
+
+    taskListRoute: {
+        type: String,
+        required: true
+    },
+
+    taskStoreRoute: {
         type: String,
         required: true
     }
@@ -44,7 +55,7 @@ const props = defineProps({
 
             <TabPanel>
                 <div class="mt-6">
-                    Tasks will go here.
+                    <ListTasks :taskListRoute="taskListRoute" :modelRoute="taskStoreRoute" v-show="modelId" />
                 </div>
             </TabPanel>
         </TabPanels>

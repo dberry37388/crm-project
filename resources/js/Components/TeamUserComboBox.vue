@@ -10,7 +10,7 @@ let people = ref();
 const props = defineProps({
     label: {
         type: String,
-        default: 'Select a Person'
+        required: false,
     }
 });
 
@@ -30,7 +30,7 @@ const filteredPeople = computed(() =>
 
 <template>
     <Combobox as="div" v-model="selectedPerson">
-        <ComboboxLabel class="block text-sm font-medium text-gray-700">
+        <ComboboxLabel class="block text-sm font-medium text-gray-700" v-if="label">
             {{ label }}
         </ComboboxLabel>
         <div class="relative mt-1">

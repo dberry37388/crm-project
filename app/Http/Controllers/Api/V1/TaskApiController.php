@@ -70,10 +70,10 @@ class TaskApiController extends BaseApiController
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $note->update($request->validated());
+        $task->update($request->validated());
 
         return Redirect::back()
-            ->with('flash.banner', "Note has been updated.")
+            ->with('flash.banner', "Task has been updated.")
             ->with('flash.bannerStyle', 'success');
     }
 

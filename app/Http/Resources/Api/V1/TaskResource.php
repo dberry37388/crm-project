@@ -20,6 +20,7 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'due_date' => $this->due_date,
             'completed_at' => $this->completed_at,
             'task' => $this->task,
             'created_by' => new UserResource($this->createdBy),

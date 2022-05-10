@@ -28,4 +28,15 @@ class StoreNoteRequest extends FormRequest
             'note' => ['required']
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $data = [];
+
+        if (empty($this->assigned_to)) {
+            $data['assigned_to_id'] = Auth::user()->id;
+        }
+
+        $this->merge(array_filter($data));
+    }
 }

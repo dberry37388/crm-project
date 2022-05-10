@@ -1217,6 +1217,9 @@ select {
 .max-h-56 {
   max-height: 14rem;
 }
+.max-h-60 {
+  max-height: 15rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1770,10 +1773,6 @@ select {
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
 }
-.px-12 {
-  padding-left: 3rem;
-  padding-right: 3rem;
-}
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -1824,6 +1823,9 @@ select {
 }
 .pb-5 {
   padding-bottom: 1.25rem;
+}
+.pr-2 {
+  padding-right: 0.5rem;
 }
 .pl-10 {
   padding-left: 2.5rem;
@@ -1881,6 +1883,9 @@ select {
 }
 .font-bold {
   font-weight: 700;
+}
+.font-normal {
+  font-weight: 400;
 }
 .uppercase {
   text-transform: uppercase;
@@ -1973,6 +1978,10 @@ select {
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity));
 }
 .text-orange-600 {
   --tw-text-opacity: 1;

@@ -123,15 +123,10 @@ export default {
                     :model-id="currentCompany.id"
                     :note-list-route="route('api.v1.company.list-notes', currentCompany.id)"
                     :note-store-route="route('api.v1.company.store-note', currentCompany.id)"
+                    :task-list-route="route('api.v1.company.tasks.list', currentCompany.id)"
+                    :task-store-route="route('api.v1.company.tasks.store', currentCompany.id)"
                 />
             </div>
-
-<!--            <div class="py-5 px-12">-->
-<!--                <ListNotes-->
-<!--                    :noteListRoute="route('api.v1.company.list-notes', currentCompany.id)"-->
-<!--                    :modelRoute="route('api.v1.company.store-note', currentCompany.id)"-->
-<!--                    v-show="currentCompany.id" />-->
-<!--            </div>-->
         </template>
 
         <!-- section Right -->
