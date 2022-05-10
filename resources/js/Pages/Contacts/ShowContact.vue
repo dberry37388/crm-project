@@ -103,6 +103,8 @@
                     :model-id="currentContact.id"
                     :note-list-route="route('api.v1.contact.list-notes', currentContact.id)"
                     :note-store-route="route('api.v1.contact.store-note', currentContact.id)"
+                    :task-list-route="route('api.v1.contact.tasks.list', currentContact.id)"
+                    :task-store-route="route('api.v1.contact.tasks.store', currentContact.id)"
                 />
             </div>
         </template>

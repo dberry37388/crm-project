@@ -53,7 +53,12 @@ searchNotes();
                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                    </svg>
                    <h3 class="mt-2 text-sm font-medium text-gray-900">It's lonely in here</h3>
-                   <p class="mt-1 text-sm text-gray-500">There are no notes associated with this company.</p>
+
+                   <div class="mt-5">
+                       <Button type="button" @click="managingNote = true">
+                           Create Your First Note
+                       </Button>
+                   </div>
                </div>
            </div>
        </div>
