@@ -6,7 +6,6 @@
     import CompanyDisclosure from "../../Components/Companies/CompanyDisclosure";
     import Button from "../../Jetstream/Button";
     import Slideover from "../../Components/Slideovers/Slideover";
-    import AttachCompanyToContact from "./Slideovers/AttachCompanyToContact";
     import UpdateContactSlideover from "../../Components/Contacts/UpdateContactSlideover";
     import ListNotes from "../../Components/Notes/ListNotes";
     import ActivityTabs from "../../Components/ActivityTabs";
@@ -24,7 +23,6 @@
             ActivityTabs,
             ListNotes,
             UpdateContactSlideover,
-            AttachCompanyToContact,
             Slideover,
             Button,
             CompanyDisclosure,

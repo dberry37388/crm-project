@@ -40,8 +40,8 @@ const modelRoute = route('api.v1.notes.update', props.note.id)
             <div>
                 <Dropdown>
                     <template #trigger>
-                        <div class="flex items-center font-medium hover:text-orange-500 cursor-pointer">
-                            <span class="mr-1">
+                        <div class="flex items-center cursor-pointer">
+                            <span class="mr-1 link">
                                 Actions
                             </span>
 
@@ -50,11 +50,11 @@ const modelRoute = route('api.v1.notes.update', props.note.id)
                     </template>
 
                     <template #content>
-                        <div class="cursor-pointer px-3 py-2 text-sm hover:text-orange-500" @click="managingNote = true">
+                        <div class="cursor-pointer px-3 py-2 text-sm action-link" @click="managingNote = true">
                             Edit
                         </div>
 
-                        <div class="cursor-pointer px-3 py-2 text-sm hover:text-orange-500" @click="deletingNote = true">
+                        <div class="cursor-pointer px-3 py-2 text-sm action-link" @click="deletingNote = true">
                             Delete
                         </div>
                     </template>

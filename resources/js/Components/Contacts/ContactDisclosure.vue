@@ -74,8 +74,8 @@ searchResources();
             <div class="mr-6">
                 <Dropdown>
                     <template #trigger>
-                        <div class="flex items-center text-sm font-semibold link cursor-pointer">
-                            <span class="mr-1">
+                        <div class="flex items-center text-sm cursor-pointer">
+                            <span class="mr-1 link">
                                 Actions
                             </span>
 
@@ -84,11 +84,11 @@ searchResources();
                     </template>
 
                     <template #content class="flex flex-col gap-3">
-                        <div class="cursor-pointer px-3 py-2 text-sm hover:text-orange-500" @click="attachingNewContact = true">
+                        <div class="cursor-pointer px-3 py-2 text-sm action-link" @click="attachingNewContact = true">
                             Associate New Contact
                         </div>
 
-                        <div class="cursor-pointer px-3 py-2 text-sm hover:text-orange-500" @click="attachingExistingContact = true">
+                        <div class="cursor-pointer px-3 py-2 text-sm action-link" @click="attachingExistingContact = true">
                             Associate Existing Contact
                         </div>
                     </template>
@@ -118,14 +118,14 @@ searchResources();
 
                                         <dropdown>
                                             <template #trigger>
-                                                <div class="flex items-center text-sm font-semibold link cursor-pointer">
+                                                <div class="flex items-center text-sm link cursor-pointer">
                                                     <span class="mr-1">Actions</span>
                                                     <ChevronDownIcon class="h-3 w-3" />
                                                 </div>
                                             </template>
 
                                             <template #content>
-                                                <div class="cursor-pointer px-3 py-2 text-sm hover:text-orange-500" @click="selectedContact = contact; detachingContact = true">
+                                                <div class="cursor-pointer px-3 py-2 text-sm action-link" @click="selectedContact = contact; detachingContact = true">
                                                     Remove from Resource
                                                 </div>
                                             </template>
