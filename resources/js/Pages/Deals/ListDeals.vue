@@ -5,7 +5,7 @@ import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
 import Button from "../../Jetstream/Button";
 import Input from "../../Jetstream/Input";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
-import ManageDealSlideover from "./Slideovers/ManageDealSlideover";
+import ManageDealSlideover from "../../Components/Deals/ManageDealSlideover";
 
 const props = defineProps({
     deals: {

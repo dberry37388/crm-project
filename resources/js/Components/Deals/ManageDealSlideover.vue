@@ -3,14 +3,14 @@
 import {DialogTitle, Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import { XIcon } from '@heroicons/vue/outline'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-import SlideoverWithTitle from "../../../Components/Slideovers/SlideoverWithTitle";
-import Button from "../../../Jetstream/Button";
-import SecondaryButton from "../../../Jetstream/SecondaryButton";
-import Label from "../../../Jetstream/Label";
-import InputError from "../../../Jetstream/InputError";
+import SlideoverWithTitle from "../Slideovers/SlideoverWithTitle";
+import Button from "../../Jetstream/Button";
+import SecondaryButton from "../../Jetstream/SecondaryButton";
+import Label from "../../Jetstream/Label";
+import InputError from "../../Jetstream/InputError";
 import {useForm} from "@inertiajs/inertia-vue3";
-import Input from "../../../Jetstream/Input";
-import TeamUserComboBox from "../../../Components/TeamUserComboBox"
+import Input from "../../Jetstream/Input";
+import TeamUserComboBox from "../TeamUserComboBox"
 
 const props = defineProps({
     show: {
@@ -42,7 +42,7 @@ const form = useForm({
     stage: props.currentDeal ? props.currentDeal.stage : 'Appointment scheduled',
     amount: props.currentDeal ? props.currentDeal.amount : 0.00,
     owner: props.currentDeal ? props.currentDeal.owner : null,
-    priority: props.currentDeal ? props.currentDeal.priority : null,
+    priority: props.currentDeal ? props.currentDeal.priority : 'Low',
     close_date: props.currentDeal ? props.currentDeal.close_date : null,
 })
 
@@ -137,7 +137,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                             <div class="mt-1 relative">
                                 <ListboxButton class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <span class="flex items-center">
-                                        <span class="ml-3 block truncate">{{ form.priority }}</span>
+                                        <span class="block truncate">{{ form.priority }}</span>
                                     </span>
 
                                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -150,7 +150,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                                         <ListboxOption as="template" v-for="priority in prioritiesList" :key="priority.id" :value="priority.name" v-slot="{ active, selected }">
                                             <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
                                                 <div class="flex items-center">
-                                                    <span :class="[selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate']">
+                                                    <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                                                         {{ priority.name }}
                                                     </span>
                                                 </div>
@@ -175,7 +175,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                             <div class="mt-1 relative">
                                 <ListboxButton class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <span class="flex items-center">
-                                        <span class="ml-3 block truncate">{{ form.stage }}</span>
+                                        <span class="block truncate">{{ form.stage }}</span>
                                     </span>
 
                                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -188,7 +188,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                                         <ListboxOption as="template" v-for="stage in stagesList" :key="stage.id" :value="stage.name" v-slot="{ active, selected }">
                                             <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
                                                 <div class="flex items-center">
-                                                    <span :class="[selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate']">
+                                                    <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                                                         {{ stage.name }}
                                                     </span>
                                                 </div>
@@ -213,7 +213,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                             <div class="mt-1 relative">
                                 <ListboxButton class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <span class="flex items-center">
-                                        <span class="ml-3 block truncate">{{ form.type }}</span>
+                                        <span class="block truncate">{{ form.type }}</span>
                                     </span>
 
                                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
