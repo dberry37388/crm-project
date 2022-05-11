@@ -8,6 +8,11 @@ use App\Http\Controllers\Api\V1\ContactApiController;
 use App\Http\Controllers\Api\V1\ContactCompaniesApiController;
 use App\Http\Controllers\Api\V1\ContactNotesApiController;
 use App\Http\Controllers\Api\V1\ContactTasksApiController;
+use App\Http\Controllers\Api\V1\DealApiController;
+use App\Http\Controllers\Api\V1\DealCompaniesApiController;
+use App\Http\Controllers\Api\V1\DealContactsApiController;
+use App\Http\Controllers\Api\V1\DealNotesApiController;
+use App\Http\Controllers\Api\V1\DealTasksApiController;
 use App\Http\Controllers\Api\V1\IndustryApiController;
 use App\Http\Controllers\Api\V1\LookupIndustriesApiController;
 use App\Http\Controllers\Api\V1\LookupTeamUsersApiController;
@@ -39,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('contacts', ContactApiController::class);
     Route::resource('notes', NoteApiController::class);
     Route::resource('tasks', TaskApiController::class);
+    Route::resource('deals', DealApiController::class);
 
     Route::prefix('companies/{company}')->name('company.')->group(function () {
         Route::get('contacts', CompanyContactsApiController::class . '@index')->name('list-contacts');
@@ -69,6 +75,28 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('tasks')->name('tasks.')->group(function () {
             Route::get('/', ContactTasksApiController::class . '@index')->name('list');
             Route::post('/', ContactTasksApiController::class . '@store')->name('store');
+        });
+    });
+
+    Route::prefix('deals/{deal}')->name('deal.')->group(function () {
+        Route::prefix('companies')->name('companies.')->group(function () {
+            Route::get('/', DealCompaniesApiController::class . '@index')->name('list');
+            Route::post('/', DealCompaniesApiController::class . '@store')->name('store');
+        });
+
+        Route::prefix('contacts')->name('contacts.')->group(function () {
+            Route::get('/', DealContactsApiController::class . '@index')->name('list');
+            Route::post('/', DealContactsApiController::class . '@store')->name('store');
+        });
+
+        Route::prefix('notes')->group(function () {
+            Route::get('/', DealNotesApiController::class . '@index')->name('list-notes');
+            Route::post('/', DealNotesApiController::class . '@store')->name('store-note');
+        });
+
+        Route::prefix('tasks')->name('tasks.')->group(function () {
+            Route::get('/', DealTasksApiController::class . '@index')->name('list');
+            Route::post('/', DealTasksApiController::class . '@store')->name('store');
         });
     });
 

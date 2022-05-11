@@ -1,6 +1,29 @@
 <?php
 
 return [
+    'priorities' => [
+      'Low',
+      'Medium',
+      'High'
+    ],
+
+    'deals' => [
+        'types' => [
+            'New Business',
+            'Existing Business',
+        ],
+
+        'stages' => [
+            'Appointment scheduled',
+            'Qualified to buy,',
+            'Presentation scheduled',
+            'Decision maker brought-in',
+            'Contract sent',
+            'Closed won',
+            'Closed lost'
+        ]
+    ],
+
     'industries' => [
         'Accommodation',
         'Accommodation and Food Services',

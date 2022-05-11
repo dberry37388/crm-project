@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\AssignedToAUser;
 use App\Traits\BelongsToCompany;
 use App\Traits\CreatedByAUser;
+use App\Traits\HasDeals;
 use App\Traits\HasNotes;
 use App\Traits\HasTasks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ class Contact extends Model
     use AssignedToAUser;
     use BelongsToCompany;
     use CreatedByAUser;
+    use HasDeals;
     use HasFactory;
     use HasNotes;
     use HasTasks;
