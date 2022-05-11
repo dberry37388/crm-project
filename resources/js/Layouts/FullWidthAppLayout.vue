@@ -62,6 +62,10 @@ const logout = () => {
                                 <JetNavLink :href="route('contacts.list')" :active="route().current('contacts.*')">
                                     Contacts
                                 </JetNavLink>
+
+                                <JetNavLink :href="route('deals.list')" :active="route().current('deals.*')">
+                                    Deals
+                                </JetNavLink>
                             </div>
                         </div>
 

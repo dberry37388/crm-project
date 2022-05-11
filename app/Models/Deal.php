@@ -33,7 +33,7 @@ class Deal extends Model
         return 'deals_index';
     }
 
-    public function owner(): BelongsTo
+    public function ownedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
