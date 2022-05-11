@@ -13,6 +13,7 @@ use App\Models\Deal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Response;
@@ -56,6 +57,25 @@ class DealCompaniesApiController extends BaseApiController
     public function attach(Deal $deal, Company $company)
     {
         $deal->companies()->attach($company);
+
+        return Redirect::back()
+            ->with('flash.banner', "{$company->name} is now associated with {$deal->name}.")
+            ->with('flash.bannerStyle', 'success');
+    }
+
+    /**
+     * Create a new contact and associate it with this deal
+     *
+     * @param StoreCompanyRequest $request
+     * @param Deal $deal
+     * @return RedirectResponse
+     */
+    public function store(StoreCompanyRequest $request, Deal $deal)
+    {
+        $company = $deal->companies()->create(array_merge($request->validated(), [
+            'team_id' => Auth::id(),
+            'created_by_id' => Auth::id(),
+        ]));
 
         return Redirect::back()
             ->with('flash.banner', "{$company->name} is now associated with {$deal->name}.")

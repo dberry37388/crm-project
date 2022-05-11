@@ -67,9 +67,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('contacts/{contact}')->name('contact.')->group(function () {
-        Route::get('companies', ContactCompaniesApiController::class . '@index')->name('list-companies');
-        Route::post('companies/{company}', ContactCompaniesApiController::class . '@attach')->name('attach-company');
-        Route::delete('companies/{company}', ContactCompaniesApiController::class . '@detach')->name('detach-company');
+        Route::prefix('companies')->name('companies.')->group(function () {
+            Route::get('/', ContactCompaniesApiController::class . '@index')->name('list');
+            Route::post('/', ContactCompaniesApiController::class . '@store')->name('store');
+            Route::delete('{company}', ContactCompaniesApiController::class . '@detach')->name('detach');
+            Route::post('{company?}', ContactCompaniesApiController::class . '@attach')->name('attach');
+        });
 
         Route::prefix('notes')->group(function () {
             Route::get('/', ContactNotesApiController::class . '@index')->name('list-notes');
@@ -82,6 +85,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
+    /* section Deal API */
     Route::prefix('deals/{deal}')->name('deal.')->group(function () {
         Route::prefix('companies')->name('companies.')->group(function () {
             Route::get('/', DealCompaniesApiController::class . '@index')->name('list');
@@ -95,6 +99,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{contact?}', DealContactsApiController::class . '@attach')->name('attach');
         });
 
+        Route::prefix('companies')->name('companies.')->group(function () {
+            Route::get('/', DealCompaniesApiController::class . '@index')->name('list');
+            Route::post('/', DealCompaniesApiController::class . '@store')->name('store');
+            Route::delete('{company}', DealCompaniesApiController::class . '@detach')->name('detach');
+            Route::post('{company?}', DealCompaniesApiController::class . '@attach')->name('attach');
+        });
+
         Route::prefix('notes')->group(function () {
             Route::get('/', DealNotesApiController::class . '@index')->name('list-notes');
             Route::post('/', DealNotesApiController::class . '@store')->name('store-note');
@@ -106,11 +117,13 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
+    /* section Lookups */
     Route::prefix('lookups')->name('lookup.')->group(function () {
         Route::get('team-users', LookupTeamUsersApiController::class)->name('team-users');
         Route::get('team-industries', LookupIndustriesApiController::class)->name('team-industries');
     });
 
+    /* section Current Team */
     Route::prefix('currentTeam')->name('currentTeam.')->group(function () {
         Route::get('companies', TeamCompaniesApiController::class . '@index')->name('list-companies');
         Route::get('contacts', TeamContactsApiController::class . '@index')->name('list-contacts');

@@ -3,16 +3,15 @@ import ThreeColumnLayout from "../../Layouts/ThreeColumnLayout";
 import {ChevronLeftIcon, PencilAltIcon, TrashIcon} from "@heroicons/vue/solid"
 import { Link } from '@inertiajs/inertia-vue3';
 import SidebarAttribute from "../../Components/SidebarAttribute";
-import UpdateCompanyModal from "./Modals/UpdateCompanyModal";
 import TeamUserComboBox from "../../Components/TeamUserComboBox";
-import ConfirmDeleteCompanyModal from "./Modals/ConfirmDeleteCompanyModal";
+import ConfirmDeleteCompanyModal from "../../Components/Companies/ConfirmDeleteCompanyModal";
 import ContactDisclosure from "../../Components/Contacts/ContactDisclosure";
-import UpdateCompanySlideover from "./Slideovers/UpdateCompanySlideover";
 import NoteBlock from "../../Components/Notes/NoteBlock";
 import ManageNoteSlideover from "../../Components/Notes/ManageNoteSlideover";
 import Button from "../../Jetstream/Button";
 import ListNotes from "../../Components/Notes/ListNotes";
 import ActivityTabs from "../../Components/ActivityTabs";
+import ManageCompanySlideover from "../../Components/Companies/ManageCompanySlideover";
 
 export default {
     props: {
@@ -23,16 +22,16 @@ export default {
     },
 
     components: {
+        ManageCompanySlideover,
         ActivityTabs,
         ListNotes,
         Button,
         ManageNoteSlideover,
         NoteBlock,
-        UpdateCompanySlideover,
         ContactDisclosure,
         ConfirmDeleteCompanyModal,
         TeamUserComboBox,
-        UpdateCompanyModal, SidebarAttribute, ChevronLeftIcon, Link, PencilAltIcon, ThreeColumnLayout, TrashIcon},
+        SidebarAttribute, ChevronLeftIcon, Link, PencilAltIcon, ThreeColumnLayout, TrashIcon},
 
     data() {
         return {
@@ -110,7 +109,14 @@ export default {
                 </div>
             </div>
 
-            <UpdateCompanySlideover v-if="updatingCompany" :show="updatingCompany" @close="updatingCompany = false" :company="currentCompany" @update="refreshCompany" />
+            <ManageCompanySlideover
+                :show="updatingCompany"
+                :model-route="route('api.v1.companies.store')"
+                @close="updatingCompany = false"
+                @update="refreshCompany"
+                :company="currentCompany"
+                v-if="currentCompany" />
+
             <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @updated="companyDeleted" />
 
         </template>

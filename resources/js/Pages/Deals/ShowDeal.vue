@@ -6,6 +6,7 @@ import {Link} from "@inertiajs/inertia-vue3"
 import SidebarAttribute from "../../Components/SidebarAttribute";
 import ActivityTabs from "../../Components/ActivityTabs";
 import ContactDisclosure from "../../Components/Contacts/ContactDisclosure";
+import CompanyDisclosure from "../../Components/Companies/CompanyDisclosure";
 
 const props = defineProps({
     deal: {
@@ -92,6 +93,15 @@ const refreshDeal = axios.get(route('api.v1.deals.show', props.deal.data.id))
                 <ContactDisclosure
                     resource-type="deal"
                     :model-route="route('api.v1.deal.contacts.list', deal.data.id)"
+                    :default-open="true"
+                    :model-id="deal.data.id"
+                />
+            </div>
+
+            <div class="p-5 border-b border-gray-200">
+                <CompanyDisclosure
+                    resource-type="deal"
+                    :model-route="route('api.v1.deal.companies.list', deal.data.id)"
                     :default-open="true"
                     :model-id="deal.data.id"
                 />

@@ -17,7 +17,7 @@ export default {
                 <slot name="middleColumn" />
             </div>
 
-            <div class="bg-white h-full min-w-[400px] w-[400px] md:min-w-[500px] border-l border-gray-200">
+            <div class="bg-white h-full min-w-[400px] w-[400px] md:min-w-[500px] border-l border-gray-200 overflow-auto">
                 <slot name="rightColumn" />
             </div>
         </main>

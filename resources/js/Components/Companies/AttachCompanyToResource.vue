@@ -2,38 +2,34 @@
 
 import {DialogTitle} from "@headlessui/vue";
 import { XIcon } from '@heroicons/vue/outline'
-import SlideoverWithTitle from "../../../Components/Slideovers/SlideoverWithTitle";
-import Button from "../../../Jetstream/Button";
-import SecondaryButton from "../../../Jetstream/SecondaryButton";
-import TeamCompaniesComboBox from "../../../Components/TeamCompaniesComboBox";
+import SlideoverWithTitle from "../../Components/Slideovers/SlideoverWithTitle";
+import Button from "../../Jetstream/Button";
+import SecondaryButton from "../../Jetstream/SecondaryButton";
 import {useForm} from "@inertiajs/inertia-vue3";
-import TeamContactsComboBox from "../../../Components/TeamContactsComboBox";
+import TeamContactsComboBox from "../../Components/TeamContactsComboBox";
+import TeamCompaniesComboBox from "../TeamCompaniesComboBox";
 
 const props = defineProps({
     show: {
         type: Boolean,
-        default: true,
-    },
-    maxWidth: {
-        type: String,
-        default: '2xl',
+        default: false,
     },
     closeable: {
         type: Boolean,
         default: true,
     },
-    companyId: {
-        type: Number,
-        required: true
-    }
+    modelRoute: {
+        type: String,
+        default: null,
+    },
 });
 
 const form = useForm({
     processing: false,
-    contact: null
+    company: null
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'update']);
 
 const closeSlideover = (shouldRefreshParent = false) => {
     form.reset();
@@ -48,7 +44,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
 const saveForm = () => {
     form.processing = true;
 
-    form.post(route('api.v1.company.attach-contact', {company: props.companyId, contact: form.contact}), {
+    form.post(props.modelRoute + '/' + form.company.id, {
             errorBag: 'attachContact',
             preserveScroll: true,
             onSuccess: () => closeSlideover(true),
@@ -75,12 +71,12 @@ const saveForm = () => {
         <template #content>
             <div class="pt-6 pb-5">
                 <div>
-                    Use the tool below to associate this company with an existing contact.
+                    Use the tool below to associate this company with an existing company.
                 </div>
             </div>
 
             <div class="mt-5">
-                <TeamContactsComboBox label="Search for a contact to associate this company with." v-model="form.contact" />
+                <TeamCompaniesComboBox v-model="form.company" />
             </div>
         </template>
 

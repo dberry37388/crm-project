@@ -2,16 +2,16 @@
 
 import {DialogTitle} from "@headlessui/vue";
 import { XIcon } from '@heroicons/vue/outline'
-import SlideoverWithTitle from "../../../Components/Slideovers/SlideoverWithTitle";
-import Button from "../../../Jetstream/Button";
-import SecondaryButton from "../../../Jetstream/SecondaryButton";
-import Label from "../../../Jetstream/Label";
-import Input from "../../../Jetstream/Input";
-import InputError from "../../../Jetstream/InputError";
-import TeamUserComboBox from "../../../Components/TeamUserComboBox";
+import SlideoverWithTitle from "../../Components/Slideovers/SlideoverWithTitle";
+import Button from "../../Jetstream/Button";
+import SecondaryButton from "../../Jetstream/SecondaryButton";
+import Label from "../../Jetstream/Label";
+import Input from "../../Jetstream/Input";
+import InputError from "../../Jetstream/InputError";
+import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import {useForm} from "@inertiajs/inertia-vue3";
-import TextArea from "../../../Components/TextArea";
-import IndustriesComboBox from "../../../Components/IndustriesComboBox";
+import TextArea from "../../Components/TextArea";
+import IndustriesComboBox from "../IndustriesComboBox";
 
 const props = defineProps({
     show: {
@@ -22,40 +22,43 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    contactId: {
-        type: Number,
+    modelRoute: {
+        type: String,
         default: null,
     },
+    associatingContact: {
+        type: Boolean,
+        default: false
+    },
+    company: {
+        type: Object,
+        default: null
+    }
 });
 
 const emit = defineEmits(['close', 'update']);
 
 const form = useForm({
     processing: false,
-    name: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    timezone: '',
-    number_of_employees: '',
-    assigned_to: '',
-    industry: '',
-    description: '',
+    name: props.company ? props.company.name : '',
+    city: props.company ? props.company.city : '',
+    state: props.company ? props.company.state : '',
+    postal_code: props.company ? props.company.postal_code : '',
+    timezone: props.company ? props.company.timezone : '',
+    number_of_employees: props.company ? props.company.number_of_employees : '',
+    assigned_to: props.company ? props.company.assigned_to : '',
+    industry: props.company ? props.company.industry : '',
+    description: props.company ? props.company.description : '',
 })
 
 const saveForm = () => {
     form.processing = true;
 
-    form.transform((data) => ({
-        ...data,
-        contact_id: props.contactId,
-
-    }))
-        .post(route('api.v1.companies.store'), {
-            errorBag: 'createCompany',
-            preserveScroll: true,
-            onSuccess: () => closeSlideover(true),
-        })
+    form.post(props.modelRoute, {
+        errorBag: 'createContact',
+        preserveScroll: true,
+        onSuccess: () => closeSlideover(true),
+    })
 }
 
 const closeSlideover = (shouldRefreshParent = false) => {
@@ -74,7 +77,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
     <SlideoverWithTitle :show="show">
         <template #header>
             <DialogTitle class="text-lg font-bold text-white">
-                <div v-if="!contactId">
+                <div v-if="!company">
                     Create Company
                 </div>
 
@@ -94,12 +97,12 @@ const closeSlideover = (shouldRefreshParent = false) => {
         <template #content>
             <div class="space-y-6 pt-6 pb-5">
                 <div>
-                    <div v-if="!contactId">
+                    <div v-if="!company">
                         Use the form below to create a new contact.
                     </div>
 
                     <div v-else>
-                        Use the form below to create a new contact that will be associated with this company.
+                        Use the form below to create a new contact that will be associated with this resource.
                     </div>
                 </div>
 

@@ -4,13 +4,13 @@ import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import Input from "../../Jetstream/Input";
 import {SearchIcon} from '@heroicons/vue/solid'
-import CreateNewCompanySlideover from "./Slideovers/CreateNewCompanySlideover";
+import ManageCompanySlideover from "../../Components/Companies/ManageCompanySlideover";
 export default {
     props: {
         companies: {},
     },
 
-    components: {CreateNewCompanySlideover, Input, FixedFooterPagination, FullWidthAppLayout, Button, SearchIcon},
+    components: {ManageCompanySlideover, Input, FixedFooterPagination, FullWidthAppLayout, Button, SearchIcon},
 
     data() {
         return {
@@ -114,7 +114,7 @@ export default {
                                             </td>
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ company.city }}</td>
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ company.state }}</td>
-                                            <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ company.industry.name }}</td>
+                                            <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ company.industry ? company.industry.name : '' }}</td>
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ new Date(company.created_at).toDateString() }}</td>
                                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">{{ new Date(company.updated_at).toDateString() }}</td>
                                         </tr>
@@ -149,6 +149,12 @@ export default {
         </div>
 
         <FixedFooterPagination :meta="filteredCompanies.meta" v-if="filteredCompanies.meta" />
-        <CreateNewCompanySlideover :show="creatingCompany" @close="creatingCompany = false" @update="searchCompanies"/>
+
+        <ManageCompanySlideover
+            :show="creatingCompany"
+            :model-route="route('api.v1.companies.store')"
+            @close="creatingCompany = false"
+            @update="searchCompanies"
+        />
     </FullWidthAppLayout>
 </template>

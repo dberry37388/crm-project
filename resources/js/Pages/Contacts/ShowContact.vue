@@ -3,7 +3,7 @@
     import { Link } from '@inertiajs/inertia-vue3';
     import {ChevronLeftIcon, PencilAltIcon, TrashIcon} from "@heroicons/vue/solid"
     import SidebarAttribute from "../../Components/SidebarAttribute";
-    import CompanyDisclosure from "../Companies/Partials/CompanyDisclosure";
+    import CompanyDisclosure from "../../Components/Companies/CompanyDisclosure";
     import Button from "../../Jetstream/Button";
     import Slideover from "../../Components/Slideovers/Slideover";
     import AttachCompanyToContact from "./Slideovers/AttachCompanyToContact";
@@ -111,7 +111,12 @@
 
         <template #rightColumn>
             <div class="p-5 border-b border-gray-200" v-if="currentContact">
-                <CompanyDisclosure :contact-id="currentContact.id" :default-open="true" />
+                <CompanyDisclosure
+                    resource-type="contact"
+                    :model-route="route('api.v1.contact.companies.list', currentContact.id)"
+                    :default-open="true"
+                    :model-id="currentContact.id"
+                />
             </div>
         </template>
     </ThreeColumnLayout>
