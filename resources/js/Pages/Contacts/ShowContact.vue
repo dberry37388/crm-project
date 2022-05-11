@@ -3,14 +3,14 @@
     import { Link } from '@inertiajs/inertia-vue3';
     import {ChevronLeftIcon, PencilAltIcon, TrashIcon} from "@heroicons/vue/solid"
     import SidebarAttribute from "../../Components/SidebarAttribute";
-    import ConfirmDeleteContactModal from "./Modals/ConfirmDeleteContactModal";
     import CompanyDisclosure from "../Companies/Partials/CompanyDisclosure";
     import Button from "../../Jetstream/Button";
     import Slideover from "../../Components/Slideovers/Slideover";
     import AttachCompanyToContact from "./Slideovers/AttachCompanyToContact";
-    import UpdateContactSlideover from "./Slideovers/UpdateContactSlideover";
+    import UpdateContactSlideover from "../../Components/Contacts/UpdateContactSlideover";
     import ListNotes from "../../Components/Notes/ListNotes";
     import ActivityTabs from "../../Components/ActivityTabs";
+    import ConfirmDeleteContactModal from "../../Components/Contacts/ConfirmDeleteContactModal"
 
     export default {
         props: {

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Deal;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +29,7 @@ class StoreDealRequest extends FormRequest
         return [
             'name' => ['required', 'max:1000'],
             'amount' => ['sometimes', 'numeric'],
-            'owner_id' => ['sometimes', Rule::exists('users', 'id')],
+            'owned_by_id' => ['sometimes', Rule::exists('users', 'id')],
             'type' => ['required', Rule::in(config('defaults.deals.types'))],
             'stage' => ['required', Rule::in(config('defaults.deals.stages'))],
             'priority' => ['sometimes', Rule::in(config('defaults.priorities'))]
@@ -39,9 +40,7 @@ class StoreDealRequest extends FormRequest
     {
         $data = [];
 
-        if (empty($this->owner_id)) {
-            $data['owner_id'] = Auth::user()->id;
-        }
+        $data['owned_by_id'] = Arr::get($this->owner, 'id', Auth::id());
 
         if (empty($this->type)) {
             $data['type'] = config('defaults.deals.types')[0];

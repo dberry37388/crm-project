@@ -5,7 +5,7 @@ import Pagination from "../../Components/Pagination";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import {SearchIcon} from '@heroicons/vue/solid'
 import Input from "../../Jetstream/Input";
-import CreateNewContactSlideover from "./Slideovers/CreateNewContactSlideover";
+import CreateNewContactSlideover from "../../Components/Contacts/CreateNewContactSlideover";
 
 export default {
     props: {
@@ -163,6 +163,11 @@ export default {
 
         <FixedFooterPagination :meta="contacts.meta" />
 
-        <CreateNewContactSlideover v-if="creatingContact" :show="creatingContact" @close="creatingContact = false" @update="searchContacts" />
+        <CreateNewContactSlideover
+            v-if="creatingContact"
+            :show="creatingContact"
+            :model-route="route('api.v1.contacts.store')"
+            @close="creatingContact = false"
+            @update="searchContacts" />
     </FullWidthAppLayout>
 </template>

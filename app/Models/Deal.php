@@ -22,6 +22,12 @@ class Deal extends Model
     use HasTeams;
     use Searchable;
 
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
+
     protected $dates = [
         'updated_at',
         'created_at',
@@ -35,7 +41,7 @@ class Deal extends Model
 
     public function ownedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(User::class, 'owned_by_id');
     }
 
     /**

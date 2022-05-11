@@ -55,8 +55,8 @@ class Company extends Model
         return $this->belongsToMany(Contact::class)->withPivot(['assigned_to_id'])->withTimestamps();
     }
 
-    public function deals(): HasMany
-    {
-        return $this->hasMany(Deal::class, 'deal_id');
-    }
+//    public function deals(): HasMany
+//    {
+//        return $this->morphMany(Deal::class, 'deal_id');
+//    }
 }

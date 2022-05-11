@@ -22,7 +22,6 @@ const handleUpdateEvent = () => {
 }
 
 let managingNote = ref(false);
-let selectedNote = ref(null)
 let loading = ref(false)
 const modelRoute = route('api.v1.notes.update', props.note.id)
 

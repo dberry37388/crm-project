@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Deal\StoreDealRequest;
 use App\Http\Requests\Deal\UpdateDealRequest;
+use App\Http\Resources\Api\V1\DealResource;
 use App\Http\Resources\Api\V1\DealResourceCollection;
 use App\Models\Deal;
 use Illuminate\Http\Request;
@@ -49,11 +50,11 @@ class DealApiController extends Controller
      * Display the specified resource.
      *
      * @param Deal $deal
-     * @return Response
+     * @return DealResource
      */
     public function show(Deal $deal)
     {
-        //
+        return new DealResource($deal);
     }
 
     /**

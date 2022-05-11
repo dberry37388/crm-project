@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\Companies\ShowCompanyController;
 use App\Http\Controllers\Frontend\Contacts\ListContactsController;
 use App\Http\Controllers\Frontend\Contacts\ShowContactController;
 use App\Http\Controllers\Frontend\Deals\ListDealsController;
+use App\Http\Controllers\Frontend\Deals\ShowDealController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +47,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::prefix('deals')->name('deals.')->group(function () {
         Route::get('/', ListDealsController::class)->name('list');
-        Route::get('{deal}', ShowCompanyController::class)->name('show');
+        Route::get('{deal}', ShowDealController::class)->name('show');
     });
 });

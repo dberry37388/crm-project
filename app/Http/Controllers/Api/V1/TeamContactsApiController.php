@@ -21,7 +21,11 @@ class TeamContactsApiController extends BaseApiController
     public function index(Request $request)
     {
         return new ContactResourceCollection(
-            Contact::search($request->get('search'))
+            Contact::where(function($query) use($request) {
+                return $query->where('first_name', 'like', "%{$request->get('query')}")
+                    ->orWhere('last_name', 'like', "%{$request->get('query')}")
+                    ->orWhere('email', 'like', "%{$request->get('query')}");
+            })
                 ->where('team_id', Auth::user()->current_team_id)
                 ->get()
         );

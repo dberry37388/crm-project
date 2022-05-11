@@ -2,15 +2,15 @@
 
 import {DialogTitle} from "@headlessui/vue";
 import { XIcon } from '@heroicons/vue/outline'
-import SlideoverWithTitle from "../../../Components/Slideovers/SlideoverWithTitle";
-import Button from "../../../Jetstream/Button";
-import SecondaryButton from "../../../Jetstream/SecondaryButton";
-import Label from "../../../Jetstream/Label";
-import Input from "../../../Jetstream/Input";
-import InputError from "../../../Jetstream/InputError";
-import TeamUserComboBox from "../../../Components/TeamUserComboBox";
+import SlideoverWithTitle from "../../Components/Slideovers/SlideoverWithTitle";
+import Button from "../../Jetstream/Button";
+import SecondaryButton from "../../Jetstream/SecondaryButton";
+import Label from "../../Jetstream/Label";
+import Input from "../../Jetstream/Input";
+import InputError from "../../Jetstream/InputError";
+import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import {useForm} from "@inertiajs/inertia-vue3";
-import TextArea from "../../../Components/TextArea";
+import TextArea from "../../Components/TextArea";
 
 const props = defineProps({
     show: {
@@ -21,34 +21,31 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    companyId: {
-        type: Number,
-        default: null,
+    contact: {
+        type: Object,
+        required: true,
     },
 });
 
 const emit = defineEmits(['close', 'update']);
 
 const form = useForm({
+    _method: 'PUT',
     processing: false,
-    first_name: '',
-    last_name: '',
-    email: '',
-    job_title: '',
-    phone_number: '',
-    mobile_number: '',
-    description: '',
-    assigned_to: '',
+    first_name: props.contact.first_name,
+    last_name: props.contact.last_name,
+    email: props.contact.email,
+    job_title: props.contact.job_title,
+    phone_number: props.contact.phone_number,
+    mobile_number: props.contact.mobile_number,
+    description: props.contact.description,
+    assigned_to: props.contact.assigned_to,
 })
 
 const saveForm = () => {
     form.processing = true;
 
-    form.transform((data) => ({
-        ...data,
-        company_id: props.companyId
-    }))
-        .post(route('api.v1.contacts.store'), {
+    form.post(route('api.v1.contacts.update', props.contact.id), {
             errorBag: 'createContact',
             preserveScroll: true,
             onSuccess: () => closeSlideover(true),
@@ -71,13 +68,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
     <SlideoverWithTitle :show="show">
         <template #header>
             <DialogTitle class="text-lg font-bold text-white">
-                <div v-if="!companyId">
-                    Create Contact
-                </div>
-
-                <div v-else>
-                    Associate a New Contact
-                </div>
+                Update {{ contact.first_name }} {{ contact.last_name }}
             </DialogTitle>
 
             <div class="ml-3 flex h-7 items-center">
@@ -91,12 +82,8 @@ const closeSlideover = (shouldRefreshParent = false) => {
         <template #content>
             <div class="space-y-6 pt-6 pb-5">
                 <div>
-                    <div v-if="!companyId">
-                        Use the form below to create a new contact.
-                    </div>
-
-                    <div v-else>
-                        Use the form below to create a new contact that will be associated with this company.
+                    <div>
+                        Use the form below to update the contact information for {{ contact.first_name }} {{ contact.last_name }}.
                     </div>
                 </div>
 

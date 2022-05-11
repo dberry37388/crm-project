@@ -6,7 +6,7 @@ import SidebarAttribute from "../../Components/SidebarAttribute";
 import UpdateCompanyModal from "./Modals/UpdateCompanyModal";
 import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import ConfirmDeleteCompanyModal from "./Modals/ConfirmDeleteCompanyModal";
-import ContactDisclosure from "../Contacts/Partials/ContactDisclosure";
+import ContactDisclosure from "../../Components/Contacts/ContactDisclosure";
 import UpdateCompanySlideover from "./Slideovers/UpdateCompanySlideover";
 import NoteBlock from "../../Components/Notes/NoteBlock";
 import ManageNoteSlideover from "../../Components/Notes/ManageNoteSlideover";
@@ -132,7 +132,12 @@ export default {
         <!-- section Right -->
         <template #rightColumn>
             <div class="p-5 border-b border-gray-200" v-if="currentCompany">
-                <ContactDisclosure :company-id="currentCompany.id" :default-open="true"/>
+                <ContactDisclosure
+                    resource-type="company"
+                    :model-route="route('api.v1.company.contacts.list', company.data.id)"
+                    :default-open="true"
+                    :model-id="company.data.id"
+                />
             </div>
         </template>
     </ThreeColumnLayout>

@@ -4,6 +4,8 @@ import {SearchIcon} from "@heroicons/vue/solid";
 import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
 import Button from "../../Jetstream/Button";
 import Input from "../../Jetstream/Input";
+import FixedFooterPagination from "../../Components/FixedFooterPagination";
+import ManageDealSlideover from "./Slideovers/ManageDealSlideover";
 
 const props = defineProps({
     deals: {
@@ -72,9 +74,9 @@ const searchDeals = _.debounce((function (e) {
                                             <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
                                             <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned To</th>
                                             <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Created By</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">City</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">State</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Industry</th>
+                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
+                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Stage</th>
+                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Priority</th>
                                             <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Create Date</th>
                                             <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6">Last Update</th>
                                         </tr>
@@ -89,11 +91,11 @@ const searchDeals = _.debounce((function (e) {
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                                                 <div class="flex">
                                                     <div class="h-10 w-10 flex-shrink-0">
-                                                        <img class="h-10 w-10 rounded-full" :src="deal.owner.profile_photo_url" alt="{{ deal.owner.name }}" />
+                                                        <img class="h-10 w-10 rounded-full" :src="deal.owned_by.profile_photo_url" alt="{{ deal.owned_by.name }}" />
                                                     </div>
                                                     <div class="ml-4">
-                                                        <div class="font-medium text-gray-900">{{ deal.owner.name }}</div>
-                                                        <div class="text-gray-500">{{ deal.owner.email }}</div>
+                                                        <div class="font-medium text-gray-900">{{ deal.owned_by.name }}</div>
+                                                        <div class="text-gray-500">{{ deal.owned_by.email }}</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -144,8 +146,8 @@ const searchDeals = _.debounce((function (e) {
             </div>
         </div>
 
-<!--        <FixedFooterPagination :meta="filteredDeals.meta" v-if="filteredDeals.meta" />-->
-<!--        <CreateNewCompanySlideover :show="creatingDeal" @close="creatingDeal = false" @update="searchCompanies"/>-->
+        <FixedFooterPagination :meta="filteredDeals.meta" v-if="filteredDeals.meta" />
+        <ManageDealSlideover :show="creatingDeal" @close="creatingDeal = false" @update="searchDeals" :method-route="route('api.v1.deals.store')"/>
     </FullWidthAppLayout>
 
 </template>
