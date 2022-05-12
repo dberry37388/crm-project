@@ -36,6 +36,7 @@ class NoteResource extends JsonResource
         return match ($noteableType) {
             "App\Models\Company" => new CompanyResource(Company::find($noteableId)),
             "App\Models\Contact" => new ContactResource(Contact::find($noteableId)),
+            "App\Models\Deal" => new DealResource(Contact::find($noteableId)),
             default => throw new Exception("Could not find a valid resource."),
         };
     }

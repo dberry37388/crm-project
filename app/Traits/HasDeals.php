@@ -3,12 +3,11 @@
 namespace App\Traits;
 
 use App\Models\Deal;
-use App\Models\Note;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait HasDeals
 {
-    public function deals(): MorphMany
+    public function deals(): MorphToMany
     {
         return $this->morphToMany(Deal::class, 'dealable');
     }

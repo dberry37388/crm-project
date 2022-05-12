@@ -40,7 +40,7 @@ const form = useForm({
     name: props.currentDeal ? props.currentDeal.name : null,
     type: props.currentDeal ? props.currentDeal.type : 'New Business',
     stage: props.currentDeal ? props.currentDeal.stage : 'Appointment scheduled',
-    amount: props.currentDeal ? props.currentDeal.amount : 0.00,
+    amount: props.currentDeal ? props.currentDeal.amount : '0.00',
     owner: props.currentDeal ? props.currentDeal.owner : null,
     priority: props.currentDeal ? props.currentDeal.priority : 'Low',
     close_date: props.currentDeal ? props.currentDeal.close_date : null,

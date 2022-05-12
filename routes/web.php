@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\Deals\ShowDealController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,14 +22,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', AuthenticatedSessionController::class . '@create');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'teams'])->group(function () {
     Route::get('/dashboard', function () {

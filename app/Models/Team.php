@@ -32,6 +32,16 @@ class Team extends JetstreamTeam
         'personal_team',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();;
+
+        self::deleting(function (Team $team) {
+            $team->industries()->delete();
+            $team->companies()->delete();
+        });
+    }
+
     /**
      * The event map for the model.
      *
@@ -51,5 +61,10 @@ class Team extends JetstreamTeam
     public function companies(): HasMany
     {
         return $this->hasMany(Company::class);
+    }
+
+    public function deals(): HasMany
+    {
+        return $this->hasMany(Deal::class);
     }
 }

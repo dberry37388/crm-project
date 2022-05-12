@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\CompanyNotesApiController;
 use App\Http\Controllers\Api\V1\CompanyTasksApiController;
 use App\Http\Controllers\Api\V1\ContactApiController;
 use App\Http\Controllers\Api\V1\ContactCompaniesApiController;
+use App\Http\Controllers\Api\V1\ContactDealsApiController;
 use App\Http\Controllers\Api\V1\ContactNotesApiController;
 use App\Http\Controllers\Api\V1\ContactTasksApiController;
 use App\Http\Controllers\Api\V1\DealApiController;
@@ -15,11 +16,13 @@ use App\Http\Controllers\Api\V1\DealNotesApiController;
 use App\Http\Controllers\Api\V1\DealTasksApiController;
 use App\Http\Controllers\Api\V1\IndustryApiController;
 use App\Http\Controllers\Api\V1\LookupIndustriesApiController;
+use App\Http\Controllers\Api\V1\LookupTeamDealsApiController;
 use App\Http\Controllers\Api\V1\LookupTeamUsersApiController;
 use App\Http\Controllers\Api\V1\NoteApiController;
 use App\Http\Controllers\Api\V1\TaskApiController;
 use App\Http\Controllers\Api\V1\TeamCompaniesApiController;
 use App\Http\Controllers\Api\V1\TeamContactsApiController;
+use App\Http\Controllers\Api\V1\TeamDealsApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +77,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{company?}', ContactCompaniesApiController::class . '@attach')->name('attach');
         });
 
+        Route::prefix('deals')->name('deals.')->group(function () {
+            Route::get('/', ContactDealsApiController::class . '@index')->name('list');
+            Route::post('/', ContactDealsApiController::class . '@store')->name('store');
+            Route::delete('{deal}', ContactDealsApiController::class . '@detach')->name('detach');
+            Route::post('{deal?}', ContactDealsApiController::class . '@attach')->name('attach');
+        });
+
         Route::prefix('notes')->group(function () {
             Route::get('/', ContactNotesApiController::class . '@index')->name('list-notes');
             Route::post('/', ContactNotesApiController::class . '@store')->name('store-note');
@@ -121,11 +131,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('lookups')->name('lookup.')->group(function () {
         Route::get('team-users', LookupTeamUsersApiController::class)->name('team-users');
         Route::get('team-industries', LookupIndustriesApiController::class)->name('team-industries');
+        Route::get('team-deals', LookupTeamDealsApiController::class)->name('team-industries');
     });
 
     /* section Current Team */
     Route::prefix('currentTeam')->name('currentTeam.')->group(function () {
         Route::get('companies', TeamCompaniesApiController::class . '@index')->name('list-companies');
         Route::get('contacts', TeamContactsApiController::class . '@index')->name('list-contacts');
+        Route::get('contacts', TeamDealsApiController::class . '@index')->name('list-deals');
     });
 });

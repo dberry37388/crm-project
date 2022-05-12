@@ -10,6 +10,7 @@
     import ListNotes from "../../Components/Notes/ListNotes";
     import ActivityTabs from "../../Components/ActivityTabs";
     import ConfirmDeleteContactModal from "../../Components/Contacts/ConfirmDeleteContactModal"
+    import DealDisclosure from "../../Components/Deals/DealDisclosure";
 
     export default {
         props: {
@@ -20,6 +21,7 @@
         },
 
         components: {
+            DealDisclosure,
             ActivityTabs,
             ListNotes,
             UpdateContactSlideover,
@@ -112,6 +114,15 @@
                 <CompanyDisclosure
                     resource-type="contact"
                     :model-route="route('api.v1.contact.companies.list', currentContact.id)"
+                    :default-open="true"
+                    :model-id="currentContact.id"
+                />
+            </div>
+
+            <div class="p-5 border-b border-gray-200" v-if="currentContact">
+                <DealDisclosure
+                    resource-type="contact"
+                    :model-route="route('api.v1.contact.deals.list', currentContact.id)"
                     :default-open="true"
                     :model-id="currentContact.id"
                 />
