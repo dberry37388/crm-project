@@ -11,6 +11,7 @@ use App\Models\Deal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class DealApiController extends Controller
 {
@@ -21,11 +22,14 @@ class DealApiController extends Controller
      */
     public function index(Request $request)
     {
-        return new DealResourceCollection(
-            Deal::search($request->get('search'))
-                ->where('team_id', $request->user()->current_team_id)
-                ->paginate($request->get('per_page', 25))
-        );
+        $contacts = QueryBuilder::for(Deal::class)
+            ->allowedIncludes('contacts', 'companies', 'notes', 'tasks')
+            ->allowedFilters(['name', 'amount', 'stage', 'priority'])
+            ->defaultSort('updated_at')
+            ->paginate($request->get('per_page', 25))
+            ->appends(request()->query());
+
+        return new DealResourceCollection($contacts);
     }
 
     /**

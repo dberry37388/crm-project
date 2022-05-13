@@ -27367,13 +27367,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/SearchIcon.js");
-/* harmony import */ var _Layouts_FullWidthAppLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Layouts/FullWidthAppLayout */ "./resources/js/Layouts/FullWidthAppLayout.vue");
-/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
-/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
-/* harmony import */ var _Components_FixedFooterPagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Components/FixedFooterPagination */ "./resources/js/Components/FixedFooterPagination.vue");
-/* harmony import */ var _Components_Deals_ManageDealSlideover__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Components/Deals/ManageDealSlideover */ "./resources/js/Components/Deals/ManageDealSlideover.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @heroicons/vue/solid */ "./node_modules/@heroicons/vue/solid/esm/SearchIcon.js");
+/* harmony import */ var _Layouts_FullWidthAppLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Layouts/FullWidthAppLayout */ "./resources/js/Layouts/FullWidthAppLayout.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _Components_FixedFooterPagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Components/FixedFooterPagination */ "./resources/js/Components/FixedFooterPagination.vue");
+/* harmony import */ var _Components_Deals_ManageDealSlideover__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Components/Deals/ManageDealSlideover */ "./resources/js/Components/Deals/ManageDealSlideover.vue");
+/* harmony import */ var _Models_Deal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../Models/Deal */ "./resources/js/Models/Deal.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -27392,23 +27402,36 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var filteredDeals = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(props.deals);
-    var creatingDeal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var search = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var filteredDeals = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(props.deals);
+    var creatingDeal = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
+    var search = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('');
+    var loading = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
 
-    var searchDeals = _.debounce(function (e) {
-      loading.value = true;
-      var params = {
-        search: this.search
+    var searchDeals = _.debounce( /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(e) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                loading.value = true;
+                _context.next = 3;
+                return _Models_Deal__WEBPACK_IMPORTED_MODULE_7__["default"].where('name', search.value).get().then(function (r) {
+                  filteredDeals.value = r;
+                  loading.value = false;
+                });
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
       };
-      axios.get(route('api.v1.deals.index'), {
-        params: params
-      }).then(function (r) {
-        filteredDeals.value = r.data;
-        loading.value = false;
-      });
-    }, 500);
+    }(), 500);
 
     var __returned__ = {
       props: props,
@@ -27417,13 +27440,14 @@ __webpack_require__.r(__webpack_exports__);
       search: search,
       loading: loading,
       searchDeals: searchDeals,
-      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      SearchIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_6__["default"],
-      FullWidthAppLayout: _Layouts_FullWidthAppLayout__WEBPACK_IMPORTED_MODULE_1__["default"],
-      Button: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_2__["default"],
-      Input: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__["default"],
-      FixedFooterPagination: _Components_FixedFooterPagination__WEBPACK_IMPORTED_MODULE_4__["default"],
-      ManageDealSlideover: _Components_Deals_ManageDealSlideover__WEBPACK_IMPORTED_MODULE_5__["default"]
+      ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
+      SearchIcon: _heroicons_vue_solid__WEBPACK_IMPORTED_MODULE_8__["default"],
+      FullWidthAppLayout: _Layouts_FullWidthAppLayout__WEBPACK_IMPORTED_MODULE_2__["default"],
+      Button: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_3__["default"],
+      Input: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_4__["default"],
+      FixedFooterPagination: _Components_FixedFooterPagination__WEBPACK_IMPORTED_MODULE_5__["default"],
+      ManageDealSlideover: _Components_Deals_ManageDealSlideover__WEBPACK_IMPORTED_MODULE_6__["default"],
+      Deal: _Models_Deal__WEBPACK_IMPORTED_MODULE_7__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -38894,7 +38918,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Input"], {
         type: "text",
         "class": "w-full pl-10",
-        placeholder: "Search by companies",
+        placeholder: "Search by deal name",
         modelValue: $setup.search,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return $setup.search = $event;
@@ -41451,6 +41475,68 @@ var Contact = /*#__PURE__*/function (_Model) {
   }]);
 
   return Contact;
+}(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Models/Deal.js":
+/*!*************************************!*\
+  !*** ./resources/js/Models/Deal.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Deal)
+/* harmony export */ });
+/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/Models/Model.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Deal = /*#__PURE__*/function (_Model) {
+  _inherits(Deal, _Model);
+
+  var _super = _createSuper(Deal);
+
+  function Deal() {
+    _classCallCheck(this, Deal);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(Deal, [{
+    key: "resource",
+    value: // Set the resource route of the model
+    function resource() {
+      return 'deals';
+    }
+  }]);
+
+  return Deal;
 }(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 

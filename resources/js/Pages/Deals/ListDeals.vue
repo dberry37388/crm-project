@@ -6,6 +6,7 @@ import Button from "../../Jetstream/Button";
 import Input from "../../Jetstream/Input";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import ManageDealSlideover from "../../Components/Deals/ManageDealSlideover";
+import Deal from "../../Models/Deal";
 
 const props = defineProps({
     deals: {
@@ -19,16 +20,12 @@ const creatingDeal = ref(false)
 const search = ref('')
 const loading = ref(false)
 
-const searchDeals = _.debounce((function (e) {
+const searchDeals =  _.debounce((async function (e) {
     loading.value = true;
 
-    const params = {
-        search: this.search
-    };
-
-    axios.get(route('api.v1.deals.index'), {params})
+    await Deal.where('name', search.value).get()
         .then((r) => {
-            filteredDeals.value = r.data;
+            filteredDeals.value = r;
             loading.value = false;
         })
 }), 500)
@@ -60,7 +57,7 @@ const searchDeals = _.debounce((function (e) {
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                             </div>
-                            <Input type="text" class="w-full pl-10" placeholder="Search by companies" v-model.lazy="search" @input="searchDeals" />
+                            <Input type="text" class="w-full pl-10" placeholder="Search by deal name" v-model.lazy="search" @input="searchDeals" />
                         </div>
                     </div>
 
