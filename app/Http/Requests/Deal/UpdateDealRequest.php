@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Deal;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateDealRequest extends FormRequest
@@ -14,7 +15,7 @@ class UpdateDealRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::check();
     }
 
     /**

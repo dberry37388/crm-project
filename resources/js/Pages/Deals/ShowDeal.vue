@@ -7,6 +7,9 @@ import SidebarAttribute from "../../Components/SidebarAttribute";
 import ActivityTabs from "../../Components/ActivityTabs";
 import ContactDisclosure from "../../Components/Contacts/ContactDisclosure";
 import CompanyDisclosure from "../../Components/Companies/CompanyDisclosure";
+import ManageDealSlideover from "../../Components/Deals/ManageDealSlideover";
+import ConfirmDeleteDealModal from "../../Components/Deals/ConfirmDeleteDealModal";
+import UpdateDealSlideover from "../../Components/Deals/UpdateDealSlideover";
 
 const props = defineProps({
     deal: {
@@ -15,14 +18,19 @@ const props = defineProps({
     }
 })
 
-const currentDeal = ref(props.deal)
+let currentDeal = ref(props.deal)
 const updatingDeal = ref(false)
 const deletingDeal = ref(false)
 
-const refreshDeal = axios.get(route('api.v1.deals.show', props.deal.data.id))
-    .then((r) => {
-        currentDeal.value = r.data.data;
-    })
+async function refreshDeal() {
+    await axios.get(route('api.v1.deals.show', props.deal.data.id))
+        .then((r) => {
+            console.log('we are here');
+            currentDeal.value = r.data.data;
+        })
+}
+
+refreshDeal();
 
 </script>
 
@@ -44,8 +52,15 @@ const refreshDeal = axios.get(route('api.v1.deals.show', props.deal.data.id))
                     </div>
 
                     <div>
-                        <div class="font-bold font-semibold">
-                            {{ currentDeal.name }}
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="font-bold font-semibold">
+                                {{ currentDeal.name }}
+                            </div>
+
+                            <div class="flex gap-1">
+                                <PencilAltIcon class="h-6 w-6 cursor-pointer" @click="updatingDeal = true" />
+                                <TrashIcon class="h-6 w-6 cursor-pointer text-red-500" @click="deletingDeal = true" />
+                            </div>
                         </div>
 
                         <div class="mt-4 flex flex-col gap-1 text-sm">
@@ -71,6 +86,20 @@ const refreshDeal = axios.get(route('api.v1.deals.show', props.deal.data.id))
                     <SidebarAttribute label="Priority" :content="currentDeal.priority" />
                 </div>
             </div>
+
+            <UpdateDealSlideover
+                v-if="currentDeal.id"
+                :show="updatingDeal"
+                @close="updatingDeal = false"
+                @update="refreshDeal"
+                :deal="currentDeal"
+            />
+
+            <ConfirmDeleteDealModal
+                v-if="currentDeal.id"
+                :show="deletingDeal"
+                @close="deletingDeal = false"
+                :deal="currentDeal"/>
         </template>
 
         <template #middleColumn>

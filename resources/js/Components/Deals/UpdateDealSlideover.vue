@@ -3,14 +3,14 @@
 import {DialogTitle, Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import { XIcon } from '@heroicons/vue/outline'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-import SlideoverWithTitle from "../Slideovers/SlideoverWithTitle";
+import SlideoverWithTitle from "../../Components/Slideovers/SlideoverWithTitle";
 import Button from "../../Jetstream/Button";
 import SecondaryButton from "../../Jetstream/SecondaryButton";
 import Label from "../../Jetstream/Label";
-import InputError from "../../Jetstream/InputError";
-import {useForm} from "@inertiajs/inertia-vue3";
 import Input from "../../Jetstream/Input";
-import TeamUserComboBox from "../TeamUserComboBox"
+import InputError from "../../Jetstream/InputError";
+import TeamUserComboBox from "../../Components/TeamUserComboBox";
+import {useForm} from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     show: {
@@ -21,29 +21,24 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    methodRoute: {
-        type: String,
-        required: true
-    },
-    currentDeal: {
+    deal: {
         type: Object,
-        default: null
-    }
-
+        required: true,
+    },
 });
 
 const emit = defineEmits(['close', 'update']);
 
-const form = useForm({
-    _method: props.currentDeal ? 'PUT' : 'POST',
+let form = useForm({
+    _method: props.deal ? 'PUT' : 'POST',
     processing: false,
-    name: props.currentDeal ? props.currentDeal.name : null,
-    type: props.currentDeal ? props.currentDeal.type : 'New Business',
-    stage: props.currentDeal ? props.currentDeal.stage : 'Appointment scheduled',
-    amount: props.currentDeal ? props.currentDeal.amount : '0.00',
-    owner: props.currentDeal ? props.currentDeal.owner : null,
-    priority: props.currentDeal ? props.currentDeal.priority : 'Low',
-    close_date: props.currentDeal ? props.currentDeal.close_date : null,
+    name: props.deal ? props.deal.name : null,
+    type: props.deal ? props.deal.type : null,
+    stage: props.deal ? props.deal.stage : null,
+    amount: props.deal ? props.deal.amount : '0.00',
+    owned_by: props.deal ? props.deal.owned_by : null,
+    priority: props.deal ? props.deal.priority : null,
+    close_date: props.deal ? props.deal.close_date : null,
 })
 
 const prioritiesList = [
@@ -70,21 +65,21 @@ const stagesList = [
 const saveForm = () => {
     form.processing = true;
 
-    form.post(props.methodRoute, {
-            errorBag: 'manageDeal',
-            preserveScroll: true,
-            onSuccess: () => closeSlideover(true),
-        })
+    form.post(route('api.v1.deals.update', props.deal.id), {
+        errorBag: 'updateDeal',
+        preserveScroll: true,
+        onSuccess: () => closeSlideover(true),
+    })
 }
 
 const closeSlideover = (shouldRefreshParent = false) => {
     if (shouldRefreshParent) {
         emit('update');
+    } else {
+        form.reset()
     }
 
     emit('close');
-
-    form.reset();
 };
 
 </script>
@@ -93,8 +88,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
     <SlideoverWithTitle :show="show">
         <template #header>
             <DialogTitle class="text-lg font-bold text-white">
-                <span v-if="currentDeal">Edit Deal</span>
-                <span v-else>Create Deal</span>
+                Update {{ deal.name }}
             </DialogTitle>
 
             <div class="ml-3 flex h-7 items-center">
@@ -107,6 +101,12 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
         <template #content>
             <div class="space-y-6 pt-6 pb-5">
+                <div>
+                    <div>
+                        Use the form below to update the deal information for {{ deal.first_name }} {{ deal.last_name }}.
+                    </div>
+                </div>
+
                 <div class="flex flex-col gap-6">
                     <div>
                         <Label for="form.name" class="font-semibold">Deal name</Label>
@@ -116,7 +116,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                     <div>
                         <Label for="form.owner" class="font-semibold">Who owns this deal?</Label>
-                        <TeamUserComboBox v-model="form.owner" />
+                        <TeamUserComboBox v-model="form.owned_by" />
                     </div>
 
                     <div>

@@ -8,6 +8,7 @@ use App\Http\Requests\Deal\UpdateDealRequest;
 use App\Http\Resources\Api\V1\DealResource;
 use App\Http\Resources\Api\V1\DealResourceCollection;
 use App\Models\Deal;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
@@ -36,7 +37,7 @@ class DealApiController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreDealRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(StoreDealRequest $request)
     {
@@ -66,21 +67,31 @@ class DealApiController extends Controller
      *
      * @param UpdateDealRequest $request
      * @param Deal $deal
-     * @return Response
+     * @return DealResource|RedirectResponse
      */
     public function update(UpdateDealRequest $request, Deal $deal)
     {
-        //
+        $deal->update($request->validated());
+
+        return $request->wantsJson()
+            ? new DealResource($deal)
+            : back()
+                ->with('flash.banner', "{$deal->name} Updated")
+                ->with('flash.bannerStyle', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Deal $deal
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(Deal $deal)
     {
-        //
+        $deal->delete();
+
+        return Redirect::to(route('deals.list'))
+            ->with('flash.banner', "{$deal->name} Deleted")
+            ->with('flash.bannerStyle', 'success');
     }
 }
