@@ -10,6 +10,7 @@ import JetNavLink from '@/Jetstream/NavLink.vue';
 import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
 import {PopoverButton, PopoverOverlay, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import PopoverResponsiveMenu from "../Components/PopoverResponsiveMenu";
+import ApplicationLogo from "../Jetstream/ApplicationLogo";
 
 defineProps({
     title: String,
@@ -45,7 +46,7 @@ const logout = () => {
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <JetApplicationMark class="block h-9 w-auto" />
+                                    <ApplicationLogo class="block h-7 w-auto text-white" alt="Ashlar CMS" />
                                 </Link>
                             </div>
 
