@@ -10,9 +10,11 @@ use App\Models\Company;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Response;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CompanyApiController extends BaseApiController
 {
@@ -23,11 +25,15 @@ class CompanyApiController extends BaseApiController
      */
     public function index(Request $request)
     {
-        return new CompanyResourceCollection(
-            Company::search($request->get('search'))
-                ->where('team_id', $request->user()->current_team_id)
-                ->paginate($request->get('per_page', 25))
-        );
+        $companies = QueryBuilder::for(Company::class)
+            ->where('team_id', Auth::user()->current_team_id)
+            ->allowedIncludes('team_id', 'deals', 'contacts', 'notes', 'tasks')
+            ->allowedFilters(['name', 'city', 'state'])
+            ->defaultSort('name')
+            ->paginate($request->get('per_page', 25))
+            ->appends(request()->query());
+
+        return new CompanyResourceCollection($companies);
     }
 
     /**

@@ -5,6 +5,7 @@ import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import Input from "../../Jetstream/Input";
 import {SearchIcon} from '@heroicons/vue/solid'
 import ManageCompanySlideover from "../../Components/Companies/ManageCompanySlideover";
+import Company from "../../Models/Company";
 export default {
     props: {
         companies: {},
@@ -22,18 +23,27 @@ export default {
     },
 
     methods: {
-        searchCompanies: _.debounce((function (e) {
+        searchCompanies: _.debounce((async function (e) {
             this.loading = true;
-            const params = {
-                search: this.search
-            };
 
-            this.filteredCompanies = axios.get(route('api.v1.companies.index'), {params})
+            await Company.where(['name', 'city'], this.search).get()
                 .then((r) => {
-                    this.filteredCompanies = r.data;
+                    this.filteredCompanies = r;
                     this.loading = false;
                 })
         }), 500),
+        // searchCompanies: _.debounce((function (e) {
+        //     this.loading = true;
+        //     const params = {
+        //         search: this.search
+        //     };
+        //
+        //     this.filteredCompanies = axios.get(route('api.v1.companies.index'), {params})
+        //         .then((r) => {
+        //             this.filteredCompanies = r.data;
+        //             this.loading = false;
+        //         })
+        // }), 500),
     }
 }
 </script>
