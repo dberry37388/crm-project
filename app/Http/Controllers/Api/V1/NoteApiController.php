@@ -7,12 +7,15 @@ use App\Http\Requests\Note\StoreNoteRequest;
 use App\Http\Requests\Note\UpdateNoteRequest;
 use App\Http\Resources\Api\V1\NoteResource;
 use App\Http\Resources\Api\V1\NoteResourceCollection;
+use App\Http\Resources\Api\V1\TaskResourceCollection;
 use App\Models\Note;
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class NoteApiController extends BaseApiController
 {
@@ -23,10 +26,14 @@ class NoteApiController extends BaseApiController
      */
     public function index(Request $request, Model $model)
     {
-        return new NoteResourceCollection(
-            Note::search($request->get('search'))
-                ->where('noteable_type', $this->getNoteableType($model))
-        );
+        $notes = QueryBuilder::for(Note::class)
+            ->allowedIncludes('deals', 'contacts', 'notes', 'tasks')
+            ->allowedFilters(['note', 'due_date', 'priority'])
+            ->defaultSort('note')
+            ->paginate($request->get('per_page', 25))
+            ->appends(request()->query());
+
+        return new NoteResourceCollection($notes);
     }
 
     /**

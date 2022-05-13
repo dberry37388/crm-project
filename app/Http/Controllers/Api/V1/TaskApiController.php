@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
+use App\Http\Resources\Api\V1\CompanyResourceCollection;
 use App\Http\Resources\Api\V1\TaskResource;
 use App\Http\Resources\Api\V1\TaskResourceCollection;
+use App\Models\Company;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskApiController extends BaseApiController
 {
@@ -24,10 +28,14 @@ class TaskApiController extends BaseApiController
      */
     public function index(Request $request, Model $model)
     {
-        return new TaskResourceCollection(
-            Task::search($request->get('search'))
-                ->where('noteable_type', $this->getNoteableType($model))
-        );
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedIncludes('deals', 'contacts', 'notes', 'tasks')
+            ->allowedFilters(['task', 'notes', 'due_date', 'priority'])
+            ->defaultSort('task')
+            ->paginate($request->get('per_page', 25))
+            ->appends(request()->query());
+
+        return new TaskResourceCollection($tasks);
     }
 
     /**

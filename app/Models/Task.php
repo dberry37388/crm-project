@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\TeamScope;
 use App\Traits\AssignedToAUser;
 use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

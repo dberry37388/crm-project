@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TeamCompaniesApiController extends BaseApiController
 {
@@ -19,10 +20,13 @@ class TeamCompaniesApiController extends BaseApiController
      */
     public function index(Request $request)
     {
-        return new CompanyResourceCollection(
-            Company::search($request->get('search'))
-                ->where('team_id', Auth::user()->current_team_id)
-                ->get()
-        );
+        $companies = QueryBuilder::for(Company::class)
+            ->allowedIncludes('team_id', 'deals', 'contacts', 'notes', 'tasks')
+            ->allowedFilters(['name', 'city', 'state'])
+            ->defaultSort('name')
+            ->paginate($request->get('per_page', 25))
+            ->appends(request()->query());
+
+        return new CompanyResourceCollection($companies);
     }
 }

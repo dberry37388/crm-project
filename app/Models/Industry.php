@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\TeamScope;
 use App\Traits\BelongsToTeam;
 use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,13 @@ class Industry extends Model
     use CreatedByAUser;
     use HasFactory;
     use Searchable;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::addGlobalScope(new TeamScope);
+    }
 
     protected $fillable = [
         'team_id',

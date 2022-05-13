@@ -11,6 +11,7 @@ use App\Models\Industry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Response;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class IndustryApiController extends BaseApiController
 {
@@ -21,11 +22,11 @@ class IndustryApiController extends BaseApiController
      */
     public function index(Request $request)
     {
-        return new IndustryResourceCollection(
-            Industry::search($request->get('search'))
-                ->where('team_id', $request->user()->id)
-                ->get()
-        );
+        $industries = QueryBuilder::for(Industry::class)
+            ->allowedFilters(['name'])
+            ->get();
+
+        return new IndustryResourceCollection($industries);
     }
 
     /**
