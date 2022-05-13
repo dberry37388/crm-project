@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Schema;
 use Tests\TestCase;
 
-class DealTest extends TestCase
+class IndustryModelTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -15,19 +15,17 @@ class DealTest extends TestCase
      *
      * @return void
      */
-    public function test_deals_database_table_has_expected_columns()
+    public function test_industries_database_table_has_expected_columns(): void
     {
         $this->assertTrue(
-            Schema::hasColumns('deals', [
+            Schema::hasColumns('industries', [
+                'id',
                 'team_id',
                 'created_by_id',
-                'owned_by_id',
-                'type',
-                'stage',
-                'priority',
                 'name',
-                'amount',
-                'close_date',
+                'created_at',
+                'updated_at',
+                'deleted_at',
             ])
         );
     }
