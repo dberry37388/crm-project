@@ -12,7 +12,10 @@ use App\Models\Contact;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ContactApiController extends Controller
 {
@@ -23,11 +26,14 @@ class ContactApiController extends Controller
      */
     public function index(Request $request)
     {
-        return new ContactResourceCollection(
-            Contact::search($request->get('search'))
-                ->where('team_id', $request->user()->current_team_id)
-                ->paginate($request->get('per_page', 25))
-        );
+        $contacts = QueryBuilder::for(Contact::class)
+            ->allowedIncludes('deals', 'companies', 'notes', 'tasks')
+            ->allowedFilters(['first_name', 'last_name', 'city', 'state', AllowedFilter::scope('search_by_name')])
+            ->defaultSort('first_name')
+            ->paginate($request->get('per_page', 25))
+            ->appends(request()->query());
+
+        return new ContactResourceCollection($contacts);
     }
 
     /**

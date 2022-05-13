@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\TeamScope;
 use App\Traits\AssignedToAUser;
 use App\Traits\BelongsToTeam;
 use App\Traits\CreatedByAUser;
@@ -26,6 +27,20 @@ class Company extends Model
     use HasTasks;
     use Searchable;
     use SoftDeletes;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::addGlobalScope(new TeamScope);
+
+        self::deleting(function (Company $company) {
+            $company->contacts()->sync([]);
+            $company->notes()->delete();
+            $company->tasks()->delete();
+            $company->deals()->sync([]);
+        });
+    }
 
     protected $guarded = [
         'id',

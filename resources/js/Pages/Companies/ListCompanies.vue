@@ -32,18 +32,6 @@ export default {
                     this.loading = false;
                 })
         }), 500),
-        // searchCompanies: _.debounce((function (e) {
-        //     this.loading = true;
-        //     const params = {
-        //         search: this.search
-        //     };
-        //
-        //     this.filteredCompanies = axios.get(route('api.v1.companies.index'), {params})
-        //         .then((r) => {
-        //             this.filteredCompanies = r.data;
-        //             this.loading = false;
-        //         })
-        // }), 500),
     }
 }
 </script>

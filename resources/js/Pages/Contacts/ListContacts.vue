@@ -6,6 +6,7 @@ import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import {SearchIcon} from '@heroicons/vue/solid'
 import Input from "../../Jetstream/Input";
 import CreateNewContactSlideover from "../../Components/Contacts/CreateNewContactSlideover";
+import Contact from "../../Models/Contact";
 
 export default {
     props: {
@@ -24,15 +25,14 @@ export default {
     },
 
     methods: {
-        searchContacts: _.debounce((function (e) {
+        searchContacts: _.debounce((async function (e) {
             this.loading = true;
-            const params = {
-                search: this.search
-            };
 
-            axios.get(route('api.v1.contacts.index'), {params})
+            await Contact
+                .where("search_by_name", this.search)
+                .get()
                 .then((r) => {
-                    this.filteredContacts = r.data;
+                    this.filteredContacts = r;
                     this.loading = false;
                 })
         }), 500),
