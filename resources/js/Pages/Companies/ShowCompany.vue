@@ -12,6 +12,7 @@ import Button from "../../Jetstream/Button";
 import ListNotes from "../../Components/Notes/ListNotes";
 import ActivityTabs from "../../Components/ActivityTabs";
 import ManageCompanySlideover from "../../Components/Companies/ManageCompanySlideover";
+import DealDisclosure from "../../Components/Deals/DealDisclosure";
 
 export default {
     props: {
@@ -22,6 +23,7 @@ export default {
     },
 
     components: {
+        DealDisclosure,
         ManageCompanySlideover,
         ActivityTabs,
         ListNotes,
@@ -49,13 +51,6 @@ export default {
                 .then((r) => {
                     this.currentCompany = r.data.data;
                     this.notes = this.currentCompany.notes;
-                })
-        },
-
-        searchNotes() {
-            axios.get(route('api.v1.company.list-notes', this.company.data.id))
-                .then((r) => {
-                    this.notes = r.data.data;
                 })
         },
 
@@ -141,6 +136,15 @@ export default {
                 <ContactDisclosure
                     resource-type="company"
                     :model-route="route('api.v1.company.contacts.list', company.data.id)"
+                    :default-open="true"
+                    :model-id="company.data.id"
+                />
+            </div>
+
+            <div class="p-5 border-b border-gray-200" v-if=" company">
+                <DealDisclosure
+                    resource-type="company"
+                    :model-route="route('api.v1.company.deals.list',  company.data.id)"
                     :default-open="true"
                     :model-id="company.data.id"
                 />

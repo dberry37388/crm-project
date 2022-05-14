@@ -161,7 +161,7 @@ export default {
             </div>
         </div>
 
-        <FixedFooterPagination :meta="contacts.meta" />
+        <FixedFooterPagination :meta="filteredContacts.meta" />
 
         <CreateNewContactSlideover
             v-if="creatingContact"

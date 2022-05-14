@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\CompanyApiController;
 use App\Http\Controllers\Api\V1\CompanyContactsApiController;
+use App\Http\Controllers\Api\V1\CompanyDealsApiController;
 use App\Http\Controllers\Api\V1\CompanyNotesApiController;
 use App\Http\Controllers\Api\V1\CompanyTasksApiController;
 use App\Http\Controllers\Api\V1\ContactApiController;
@@ -56,6 +57,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/', CompanyContactsApiController::class . '@store')->name('store');
             Route::delete('{contact}', CompanyContactsApiController::class . '@detach')->name('detach');
             Route::post('{contact?}', CompanyContactsApiController::class . '@attach')->name('attach');
+        });
+
+        Route::prefix('deals')->name('deals.')->group(function () {
+            Route::get('/', CompanyDealsApiController::class . '@index')->name('list');
+            Route::post('/', CompanyDealsApiController::class . '@store')->name('store');
+            Route::delete('{deal}', CompanyDealsApiController::class . '@detach')->name('detach');
+            Route::post('{deal?}', CompanyDealsApiController::class . '@attach')->name('attach');
         });
 
         Route::prefix('notes')->group(function () {

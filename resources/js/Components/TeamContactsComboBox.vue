@@ -14,7 +14,7 @@ const props = defineProps({
     }
 });
 
-const contactsLookup = axios.get(route('api.v1.currentTeam.list-contacts'))
+const contactsLookup = axios.get(route('api.v1.contacts.index'))
     .then((r) => {
         contacts = r.data.data;
     })

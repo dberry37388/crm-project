@@ -74,8 +74,8 @@ searchResources();
             <div class="mr-6">
                 <Dropdown>
                     <template #trigger>
-                        <div class="flex items-center text-sm cursor-pointer">
-                            <span class="mr-1 link">
+                        <div class="flex items-center text-sm cursor-pointer link">
+                            <span class="mr-1">
                                 Actions
                             </span>
 

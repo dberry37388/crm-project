@@ -1209,14 +1209,14 @@ select {
 .h-screen {
   height: 100vh;
 }
+.h-7 {
+  height: 1.75rem;
+}
 .h-\[calc\(100vh-65px\)\] {
   height: calc(100vh - 65px);
 }
 .h-full {
   height: 100%;
-}
-.h-7 {
-  height: 1.75rem;
 }
 .h-3 {
   height: 0.75rem;
@@ -1731,6 +1731,9 @@ select {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-10 {
+  padding: 2.5rem;
 }
 .px-4 {
   padding-left: 1rem;
@@ -2253,12 +2256,21 @@ select {
     font-display: swap;
 }
 .link {
+  font-weight: 600;
   --tw-text-opacity: 1;
   color: rgb(249 115 22 / var(--tw-text-opacity));
 }
 .link:hover {
   --tw-text-opacity: 1;
   color: rgb(251 146 60 / var(--tw-text-opacity));
+}
+.link-blue {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+.link-blue:hover {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 .action-link {
   font-weight: 500;

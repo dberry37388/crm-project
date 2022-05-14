@@ -27,14 +27,14 @@ const props = defineProps({
     }
 })
 
-const loading = ref(false)
-const open = ref(true)
-const search = ref('')
-const companies = ref({})
-const attachingExistingCompany = ref(false)
-const attachingNewCompany = ref(false)
-const detachingCompany = ref(false)
-const selectedCompany = ref({})
+let loading = ref(false)
+let open = ref(true)
+let search = ref('')
+let companies = ref({})
+let attachingExistingCompany = ref(false)
+let attachingNewCompany = ref(false)
+let detachingCompany = ref(false)
+let selectedCompany = ref({})
 
 function searchResources() {
     loading.value = true;
@@ -74,8 +74,8 @@ searchResources();
             <div class="mr-6">
                 <Dropdown>
                     <template #trigger>
-                        <div class="flex items-center text-sm cursor-pointer">
-                            <span class="mr-1 link">
+                        <div class="flex items-center text-sm cursor-pointer link">
+                            <span class="mr-1">
                                 Actions
                             </span>
 

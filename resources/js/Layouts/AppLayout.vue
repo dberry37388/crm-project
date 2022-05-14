@@ -1,4 +1,4 @@
-<script setup>
+s<script setup>
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
@@ -11,6 +11,7 @@ import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
 import {Popover, PopoverButton, PopoverOverlay, PopoverPanel, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import { AcademicCapIcon, BadgeCheckIcon, BellIcon, CashIcon, ClockIcon, MenuIcon, ReceiptRefundIcon, UsersIcon, XIcon, } from '@heroicons/vue/outline'
 import PopoverResponsiveMenu from "../Components/PopoverResponsiveMenu";
+import ApplicationLogo from "../Jetstream/ApplicationLogo";
 
 defineProps({
     title: String,
@@ -46,7 +47,7 @@ const logout = () => {
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <JetApplicationMark class="block h-9 w-auto" />
+                                    <ApplicationLogo class="block h-7 w-auto text-white" alt="Ashlar CMS" />
                                 </Link>
                             </div>
 
@@ -56,8 +57,16 @@ const logout = () => {
                                     Dashboard
                                 </JetNavLink>
 
-                                <JetNavLink :href="route('companies.list')">
+                                <JetNavLink :href="route('companies.list')" :active="route().current('companies.*')">
                                     Companies
+                                </JetNavLink>
+
+                                <JetNavLink :href="route('contacts.list')" :active="route().current('contacts.*')">
+                                    Contacts
+                                </JetNavLink>
+
+                                <JetNavLink :href="route('deals.list')" :active="route().current('deals.*')">
+                                    Deals
                                 </JetNavLink>
                             </div>
                         </div>

@@ -14,12 +14,12 @@ const props = defineProps({
     }
 });
 
-const industriesLookup = axios.get(route('api.v1.lookup.team-industries'))
+const industriesLookup = axios.get(route('api.v1.industries.index'))
     .then((r) => {
         industries = r.data.data;
     })
 
-const filteredIndustries = computed(() =>
+let filteredIndustries = computed(() =>
     query.value === ''
         ? industries
         : industries.filter((industry) => {

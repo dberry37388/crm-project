@@ -77,8 +77,12 @@ const closeSlideover = (shouldRefreshParent = false) => {
     <SlideoverWithTitle :show="show">
         <template #header>
             <DialogTitle class="text-lg font-bold text-white">
-                <div v-if="!company">
+                <div v-if="company && !company.id">
                     Create Company
+                </div>
+
+                <div v-else-if="company && company.id">
+                    Update Company
                 </div>
 
                 <div v-else>
