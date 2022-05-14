@@ -8,10 +8,12 @@ use App\Http\Requests\Deal\UpdateDealRequest;
 use App\Http\Resources\Api\V1\DealResource;
 use App\Http\Resources\Api\V1\DealResourceCollection;
 use App\Models\Deal;
+use App\QueryBuilder\Sorts\RelatedSort;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class DealApiController extends Controller
@@ -25,8 +27,19 @@ class DealApiController extends Controller
     {
         $contacts = QueryBuilder::for(Deal::class)
             ->allowedIncludes('contacts', 'companies', 'notes', 'tasks')
-            ->allowedFilters(['name', 'amount', 'stage', 'priority'])
+            ->allowedFilters(['name', 'amount', 'stage', 'priority', 'type', 'owned_by_id', 'created_by_id'])
             ->defaultSort('updated_at')
+            ->allowedSorts(
+                'name',
+                'amount',
+                'stage',
+                'priority',
+                'type',
+                'created_at',
+                'updated_at',
+                AllowedSort::custom("ownedBy.name", new RelatedSort()),
+                AllowedSort::custom("createdBy.name", new RelatedSort()),
+            )
             ->paginate($request->get('per_page', 25))
             ->appends(request()->query());
 

@@ -6,10 +6,13 @@ use App\Http\Requests\Deal\StoreDealRequest;
 use App\Http\Resources\Api\V1\DealResourceCollection;
 use App\Models\Deal;
 use App\Models\Company;
+use App\QueryBuilder\Sorts\RelatedSort;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CompanyDealsApiController extends BaseApiController
 {

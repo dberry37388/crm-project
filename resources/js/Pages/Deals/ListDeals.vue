@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {SearchIcon} from "@heroicons/vue/solid";
 import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
 import Button from "../../Jetstream/Button";
@@ -7,28 +7,98 @@ import Input from "../../Jetstream/Input";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import ManageDealSlideover from "../../Components/Deals/ManageDealSlideover";
 import Deal from "../../Models/Deal";
+import TeamUserComboBoxMulti from "../../Components/TeamUserComboBoxMulti";
+import TableHeader from "../../Components/Table/TableHeader";
+import PrioritiesListbox from "../../Components/Deals/PrioritiesListbox";
+import StagesListbox from "../../Components/Deals/StagesListbox";
+import TypeListbox from "../../Components/Deals/TypeListbox";
 
-const props = defineProps({
-    deals: {
-        type: Object,
-        required: false
-    }
-})
-
-const filteredDeals = ref(props.deals)
+const filteredDeals = ref(null)
 const creatingDeal = ref(false)
 const search = ref('')
-const loading = ref(false)
+const loading = ref(true)
+let currentOrderBy =  ref('name')
+let currentOrderByDirection = ref('')
+let searchCreatedBy = ref(false)
+let searchOwnedBy = ref(false)
+let currentPage = ref(parseInt('1'))
+let searchPriority = ref('')
+let searchStage = ref('')
+let searchType = ref('')
 
 const searchDeals =  _.debounce((async function (e) {
     loading.value = true;
 
-    await Deal.where('name', search.value).get()
+    let ownedBy = _.get(searchCreatedBy, 'id', '');
+    let createdBy = _.get(searchOwnedBy, 'id', '');
+    let page = parseInt(currentPage.value)
+    let priority = searchPriority.value === 'Any' ? '' : searchPriority.value;
+    let stage = searchStage.value === 'Any' ? '' : searchStage.value;
+    let type = searchType.value === 'Any' ? '' : searchType.value;
+
+    await Deal
+        .orderBy(currentOrderByDirection.value + currentOrderBy.value)
+        .where('name', search.value)
+        .where('owned_by_id', ownedBy)
+        .where('created_by_id', createdBy)
+        .where('priority', priority)
+        .where('stage', stage)
+        .where('type', type)
+        .page(page)
+        .get()
         .then((r) => {
             filteredDeals.value = r;
             loading.value = false;
         })
 }), 500)
+
+const sort = (s) => {
+    if(s === currentOrderBy.value) {
+        currentOrderByDirection.value = currentOrderByDirection.value === '' ? '-' : '';
+    }
+
+    currentPage.value = 1;
+    currentOrderBy.value = s;
+    searchDeals();
+}
+
+const changePage = (page) => {
+    currentPage.value = parseInt(page);
+    searchDeals()
+}
+
+const setSearchPriority = (value) => {
+    searchPriority.value = value;
+    searchDeals()
+}
+
+const setSearchStage = (value) => {
+    searchStage.value = value;
+    searchDeals()
+}
+
+const setSearchType = (value) => {
+    searchType.value = value;
+    searchDeals()
+}
+
+watch(searchCreatedBy, (currentValue) => {
+    if (currentValue === null) {
+        searchCreatedBy = false;
+    }
+    currentPage = 1;
+    searchDeals()
+});
+
+watch(searchOwnedBy, (currentValue) => {
+    if (currentValue === null) {
+        searchOwnedBy = false;
+    }
+    currentPage = 1;
+    searchDeals()
+});
+
+searchDeals()
 
 </script>
 
@@ -36,11 +106,47 @@ const searchDeals =  _.debounce((async function (e) {
 
     <FullWidthAppLayout>
         <template #header>
-            <div class="flex items-center justify-between">
-                <div>
-                    <h2 class="font-bold text-xl text-gray-800 leading-tight">
-                        Deals
-                    </h2>
+            <div class="flex flex-col sm:flex-row justify-between gap-5">
+                <div class="flex flex-wrap sm:flex-row items-start justify-start sm:items-center sm:justify-start gap-5">
+                    <div>
+                        <div class="text-sm font-semibold">Wildcard Search</div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <SearchIcon class="h-6 w-6 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <Input type="text" class="w-full pl-10 text-sm" placeholder="Search contacts" v-model.lazy="search" @input="searchDeals" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <TeamUserComboBoxMulti label="Assigned To" v-model="searchOwnedBy" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <TeamUserComboBoxMulti label="Created By" v-model="searchCreatedBy" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-100 -mt-1">
+                            <PrioritiesListbox label="Priority" @update="setSearchPriority"  />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-100 -mt-1">
+                            <StagesListbox label="Stage" @update="setSearchStage"  />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-100 -mt-1">
+                            <TypeListbox label="Deal Type" @update="setSearchType"  />
+                        </div>
+                    </div>
                 </div>
 
                 <div>
@@ -52,30 +158,21 @@ const searchDeals =  _.debounce((async function (e) {
         <div class="py-5">
             <div class="sm:px-6 lg:px-5">
                 <div v-if="!loading">
-                    <div class="flex items-center justify-start gap-5">
-                        <div class="relative rounded-md shadow-sm w-full">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                            </div>
-                            <Input type="text" class="w-full pl-10" placeholder="Search by deal name" v-model.lazy="search" @input="searchDeals" />
-                        </div>
-                    </div>
-
-                    <div class="mt-5 flex flex-col">
+                    <div class="flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg" v-if="filteredDeals.data && filteredDeals.data.length >= 1">
+                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg" v-if="filteredDeals && filteredDeals.data.length >= 1">
                                     <table class="min-w-full divide-y divide-gray-300">
                                         <thead class="bg-gray-50">
                                         <tr class="divide-x divide-gray-200">
-                                            <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned To</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Created By</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Stage</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Priority</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Create Date</th>
-                                            <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6">Last Update</th>
+                                            <TableHeader name="Name" :selected="currentOrderBy === 'name'" :order="currentOrderByDirection" @update="sort('name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Owned By" :selected="currentOrderBy === 'ownedBy.name'" :order="currentOrderByDirection" @update="sort('ownedBy.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Created By" :selected="currentOrderBy === 'createdBy.name'" :order="currentOrderByDirection" @update="sort('createdBy.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Type" :selected="currentOrderBy === 'type'" :order="currentOrderByDirection" @update="sort('type')" class="px-4 py-3.5" />
+                                            <TableHeader name="Stage" :selected="currentOrderBy === 'stage'" :order="currentOrderByDirection" @update="sort('stage')" class="px-4 py-3.5" />
+                                            <TableHeader name="Priority" :selected="currentOrderBy === 'priority'" :order="currentOrderByDirection" @update="sort('priority')" class="px-4 py-3.5" />
+                                            <TableHeader name="Date Created" :selected="currentOrderBy === 'created_at'" :order="currentOrderByDirection" @update="sort('created_at')" class="px-4 py-3.5" />
+                                            <TableHeader name="Last Update" :selected="currentOrderBy === 'updated_at'" :order="currentOrderByDirection" @update="sort('updated_at')" class="px-4 py-3.5" />
                                         </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
@@ -143,7 +240,7 @@ const searchDeals =  _.debounce((async function (e) {
             </div>
         </div>
 
-        <FixedFooterPagination :meta="filteredDeals.meta" v-if="filteredDeals.meta" />
+        <FixedFooterPagination :meta="filteredDeals.meta" v-if="!loading && filteredDeals.meta" />
         <ManageDealSlideover :show="creatingDeal" @close="creatingDeal = false" @update="searchDeals" :method-route="route('api.v1.deals.store')"/>
     </FullWidthAppLayout>
 

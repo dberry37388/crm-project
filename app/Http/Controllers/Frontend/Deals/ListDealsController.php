@@ -15,12 +15,6 @@ class ListDealsController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $deal = Deal::where('team_id', Auth::user()->current_team_id)
-            ->with(['createdBy', 'ownedBy'])
-            ->paginate($request->get('per_page', 25));
-
-        return Inertia::render('Deals/ListDeals', [
-            'deals' => DealResource::collection($deal)
-        ]);
+        return Inertia::render('Deals/ListDeals');
     }
 }

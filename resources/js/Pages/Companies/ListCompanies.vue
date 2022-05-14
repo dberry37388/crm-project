@@ -57,7 +57,7 @@ export default {
 
             await Company
                 .orderBy(this.currentOrderByDirection + this.currentOrderBy)
-                .where(['name', 'city'], this.search)
+                .where(['name', 'city', 'state'], this.search)
                 .where('assigned_to_id', this.searchAssignedTo ? this.searchAssignedTo.id : '')
                 .where('created_by_id', this.searchCreatedBy ? this.searchCreatedBy.id : '')
                 .page(this.currentPage)
