@@ -7,21 +7,47 @@ import {SearchIcon} from '@heroicons/vue/solid'
 import Input from "../../Jetstream/Input";
 import CreateNewContactSlideover from "../../Components/Contacts/CreateNewContactSlideover";
 import Contact from "../../Models/Contact";
+import TableHeader from "../../Components/Table/TableHeader";
+import TeamUserComboBoxMulti from "../../Components/TeamUserComboBoxMulti";
 
 export default {
     props: {
         contacts: {},
     },
 
-    components: {CreateNewContactSlideover, Input, FixedFooterPagination, Pagination, FullWidthAppLayout, Button, SearchIcon},
+    components: {
+        TeamUserComboBoxMulti,
+        TableHeader,
+        CreateNewContactSlideover, Input, FixedFooterPagination, Pagination, FullWidthAppLayout, Button, SearchIcon},
 
     data() {
         return {
-            filteredContacts: this.contacts,
+            filteredContacts: null,
             creatingContact: false,
             search: '',
-            loading: false
+            loading: true,
+            currentOrderBy: 'first_name',
+            currentOrderByDirection: '',
+            searchCreatedBy: false,
+            searchAssignedTo: false,
+            currentPage: 1
         }
+    },
+
+    watch: {
+        searchCreatedBy(value) {
+            this.currentPage = 1;
+            this.searchContacts()
+        },
+
+        searchAssignedTo(value) {
+            this.currentPage = 1;
+            this.searchContacts()
+        }
+    },
+
+    created() {
+        this.searchContacts()
     },
 
     methods: {
@@ -29,13 +55,33 @@ export default {
             this.loading = true;
 
             await Contact
+                .orderBy(this.currentOrderByDirection + this.currentOrderBy)
                 .where("search_by_name", this.search)
+                .where('assigned_to_id', this.searchAssignedTo ? this.searchAssignedTo.id : '')
+                .where('created_by_id', this.searchCreatedBy ? this.searchCreatedBy.id : '')
+                .page(this.currentPage)
                 .get()
                 .then((r) => {
                     this.filteredContacts = r;
                     this.loading = false;
                 })
         }), 500),
+
+        changePage(page) {
+            this.currentPage = parseInt(page);
+            this.searchContacts();
+        },
+
+        sort(s) {
+            //if s == current sort, reverse
+            if(s === this.currentOrderBy) {
+                this.currentOrderByDirection = this.currentOrderByDirection === '' ? '-' : '';
+            }
+
+            this.currentPage = 1;
+            this.currentOrderBy = s;
+            this.searchContacts();
+        }
     }
 }
 </script>
@@ -43,11 +89,29 @@ export default {
 <template>
     <FullWidthAppLayout>
         <template #header>
-            <div class="flex items-center justify-between">
-                <div>
-                    <h2 class="font-bold text-xl text-gray-800 leading-tight">
-                        Contacts
-                    </h2>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div class="flex items-center justify-start gap-5">
+                    <div>
+                        <div class="text-sm font-semibold">Wildcard Search</div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <SearchIcon class="h-6 w-6 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <Input type="text" class="w-full pl-10 text-sm" placeholder="Search contacts" v-model.lazy="search" @input="searchContacts" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <TeamUserComboBoxMulti label="Assigned To" v-model="searchAssignedTo" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <TeamUserComboBoxMulti label="Created By" v-model="searchCreatedBy" />
+                        </div>
+                    </div>
                 </div>
 
                 <div>
@@ -56,18 +120,9 @@ export default {
             </div>
         </template>
 
-        <div class="py-5">
+        <div class="pt-5 pb-32">
             <div class="sm:px-6 lg:px-8">
                 <div v-if="!loading">
-                    <div class="flex items-center justify-start gap-5">
-                        <div class="relative rounded-md shadow-sm w-full">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                            </div>
-                            <Input type="text" class="w-full pl-10" placeholder="Search by name, email, phone, etc..." v-model.lazy="search" @input="searchContacts" />
-                        </div>
-                    </div>
-
                     <div class="mt-5 flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -75,23 +130,31 @@ export default {
                                     <table class="min-w-full divide-y divide-gray-300">
                                         <thead class="bg-gray-50">
                                         <tr class="divide-x divide-gray-200">
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned To</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Created By</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Job Title</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Phone Number</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile Number</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Create Date</th>
-                                            <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6">Last Update</th>
+                                            <TableHeader name="First Name" :selected="currentOrderBy === 'first_name'" :order="currentOrderByDirection" class="py-3.5 pl-4 pr-4 sm:pl-6" @update="sort('first_name')" />
+                                            <TableHeader name="Last Name" :selected="currentOrderBy === 'last_name'" :order="currentOrderByDirection" class="px-4 py-3.5" @update="sort('last_name')" />
+                                            <TableHeader name="Assigned To" :selected="currentOrderBy === 'assignedTo.name'" @update="sort('assignedTo.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Created By" :selected="currentOrderBy === 'createdBy.name'" @update="sort('createdBy.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Email" :selected="currentOrderBy === 'email'" :order="currentOrderByDirection" class="px-4 py-3.5" @update="sort('email')" />
+                                            <TableHeader name="Job Title" :selected="currentOrderBy === 'job_title'" :order="currentOrderByDirection" class="px-4 py-3.5" @update="sort('job_title')" />
+                                            <TableHeader name="Phone Number" :selected="currentOrderBy === 'phone_number'" :order="currentOrderByDirection" class="px-4 py-3.5" @update="sort('phone_number')" />
+                                            <TableHeader name="Mobile Number" :selected="currentOrderBy === 'mobile_number'" :order="currentOrderByDirection" class="px-4 py-3.5" @update="sort('mobile_number')" />
+                                            <TableHeader name="Date Created" :selected="currentOrderBy === 'created_at'" @update="sort('created_at')" class="px-4 py-3.5" />
+                                            <TableHeader name="Last Update" :selected="currentOrderBy === 'updated_at'" @update="sort('updated_at')" class="px-4 py-3.5" />
                                         </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                        <tr v-for="contact in filteredContacts.data" :key="contacts.id" class="divide-x divide-gray-200">
+                                        <tr v-for="contact in filteredContacts.data" :key="contact.id" class="divide-x divide-gray-200">
                                             <!-- Name -->
                                             <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-semibold link sm:pl-6">
                                                 <a :href="route('contacts.show', contact.id)">
-                                                    {{ contact.first_name }} {{ contact.last_name }}
+                                                    {{ contact.first_name }}
+                                                </a>
+                                            </td>
+
+                                            <!-- Last Name -->
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-semibold link sm:pl-6">
+                                                <a :href="route('contacts.show', contact.id)">
+                                                    {{ contact.last_name }}
                                                 </a>
                                             </td>
 
@@ -137,11 +200,11 @@ export default {
 
                                 <div class="max-w-3xl mx-auto" v-else>
                                     <div class="text-lg font-semibold mb-2">
-                                        No companies match the current filters.
+                                        No contacts match the current filters.
                                     </div>
 
                                     <div>
-                                        Expecting to see new companies? Let the system catchup and try again in a few seconds.
+                                        Expecting to see new contacts? Let the system catchup and try again in a few seconds.
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +224,11 @@ export default {
             </div>
         </div>
 
-        <FixedFooterPagination :meta="filteredContacts.meta" />
+        <FixedFooterPagination
+            v-if="!loading && filteredContacts.meta"
+            :meta="filteredContacts.meta"
+            @update="changePage"
+        />
 
         <CreateNewContactSlideover
             v-if="creatingContact"

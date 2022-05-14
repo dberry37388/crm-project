@@ -8,10 +8,12 @@ use App\Http\Requests\Contact\UpdateContactRequest;
 use App\Http\Resources\Api\V1\ContactResource;
 use App\Http\Resources\Api\V1\ContactResourceCollection;
 use App\Models\Contact;
+use App\QueryBuilder\Sorts\RelatedSort;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ContactApiController extends Controller
@@ -25,10 +27,32 @@ class ContactApiController extends Controller
     {
         $contacts = QueryBuilder::for(Contact::class)
             ->allowedIncludes('deals', 'companies', 'notes', 'tasks')
-            ->allowedFilters(['first_name', 'last_name', 'city', 'state', AllowedFilter::scope('search_by_name')])
+            ->allowedFilters([
+                'first_name',
+                'last_name',
+                'city',
+                'state',
+                'assigned_to_id',
+                'created_by_id',
+                AllowedFilter::scope('search_by_name')])
             ->defaultSort('first_name')
-            ->paginate($request->get('per_page', 25))
+            ->allowedSorts(
+                'first_name',
+                'last_name',
+                'phone_number',
+                'mobile_number',
+                'job_title',
+                'created_at',
+                'updated_at',
+                'email',
+                AllowedSort::custom("assignedTo.name", new RelatedSort()),
+                AllowedSort::custom("createdBy.name", new RelatedSort()),
+            )
+            ->paginate()
             ->appends(request()->query());
+
+
+        $contacts->withPath('/contacts?');
 
         return new ContactResourceCollection($contacts);
     }

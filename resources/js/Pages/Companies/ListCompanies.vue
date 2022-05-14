@@ -11,10 +11,6 @@ import {Switch, SwitchGroup, SwitchLabel} from "@headlessui/vue";
 import TeamUserComboBoxMulti from "../../Components/TeamUserComboBoxMulti";
 
 export default {
-    props: {
-        companies: {},
-    },
-
     components: {
         TeamUserComboBoxMulti,
         SwitchLabel,
@@ -26,26 +22,33 @@ export default {
     data() {
         return {
             activeHeader: 'name',
-            filteredCompanies: this.searchCompanies(),
+            filteredCompanies: null,
             creatingCompany: false,
             search: '',
-            loading: false,
+            loading: true,
             currentOrderBy: 'name',
             currentOrderByDirection: '',
             searchCreatedBy: false,
             searchAssignedTo: false,
+            currentPage: 1
 
         }
     },
 
     watch: {
         searchCreatedBy(value) {
+            this.currentPage = 1;
             this.searchCompanies()
         },
 
         searchAssignedTo(value) {
+            this.currentPage = 1;
             this.searchCompanies()
         }
+    },
+
+    created() {
+        this.searchCompanies()
     },
 
     methods: {
@@ -57,13 +60,18 @@ export default {
                 .where(['name', 'city'], this.search)
                 .where('assigned_to_id', this.searchAssignedTo ? this.searchAssignedTo.id : '')
                 .where('created_by_id', this.searchCreatedBy ? this.searchCreatedBy.id : '')
+                .page(this.currentPage)
                 .get()
                 .then((r) => {
-                    console.log(r.meta);
                     this.filteredCompanies = r;
                     this.loading = false;
                 })
         }), 500),
+
+        changePage(page) {
+            this.currentPage = parseInt(page);
+            this.searchContacts();
+        },
 
         sort(s) {
             //if s == current sort, reverse
@@ -82,12 +90,30 @@ export default {
 <template>
     <FullWidthAppLayout>
         <template #header>
-            <div class="flex items-center justify-between">
-               <div>
-                   <h2 class="font-bold text-xl text-gray-800 leading-tight">
-                       Companies
-                   </h2>
-               </div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div class="flex items-center justify-start gap-5">
+                    <div>
+                        <div class="text-sm font-semibold">Wildcard Search</div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <SearchIcon class="h-6 w-6 text-gray-400" aria-hidden="true" />
+                            </div>
+                            <Input type="text" class="w-full pl-10 text-sm" placeholder="Search by companies" v-model.lazy="search" @input="searchCompanies" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <TeamUserComboBoxMulti label="Assigned To" v-model="searchAssignedTo" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative rounded-md shadow-sm w-full">
+                            <TeamUserComboBoxMulti label="Created By" v-model="searchCreatedBy" />
+                        </div>
+                    </div>
+                </div>
 
                 <div>
                     <Button type="button" @click="creatingCompany = true">Create Company</Button>
@@ -98,30 +124,6 @@ export default {
         <div class="pt-5 pb-32">
             <div class="sm:px-6 lg:px-5">
                 <div v-if="!loading">
-                    <div class="flex items-center justify-start gap-5">
-                        <div>
-                            <div class="text-sm font-semibold">Wildcard Search</div>
-                            <div class="relative rounded-md shadow-sm w-full">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <SearchIcon class="h-6 w-6 text-gray-400" aria-hidden="true" />
-                                </div>
-                                <Input type="text" class="w-full pl-10 text-sm" placeholder="Search by companies" v-model.lazy="search" @input="searchCompanies" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="relative rounded-md shadow-sm w-full">
-                                <TeamUserComboBoxMulti label="Assigned To" v-model="searchAssignedTo" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="relative rounded-md shadow-sm w-full">
-                                <TeamUserComboBoxMulti label="Created By" v-model="searchCreatedBy" />
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="mt-5 flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -204,7 +206,7 @@ export default {
             </div>
         </div>
 
-        <FixedFooterPagination :meta="filteredCompanies.meta" v-if="filteredCompanies" />
+        <FixedFooterPagination v-if="!loading && filteredCompanies.meta" :meta="filteredCompanies.meta" />
 
         <ManageCompanySlideover
             :show="creatingCompany"

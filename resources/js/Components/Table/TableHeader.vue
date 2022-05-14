@@ -29,11 +29,11 @@ function sort() {
 <template>
     <th scope="col" @click="sort('name')" class="table-header">
         <div class="flex items-center justify-between">
-            <span>
+            <span :class="[selected === true ? 'font-bold' : 'text-gray-600', 'font-medium']">
                 {{name}}
             </span>
 
-            <ChevronDownIcon :class="[selected === true ? 'font-bold' : 'font-medium text-black', order === '-' ?  '-rotate-180' : 'rotate-0', 'h-5 w-5 transform']" aria-hidden="true" />
+            <ChevronDownIcon :class="[selected === true ? 'font-bold' : 'hidden', order !== '-' ?  '-rotate-180' : 'rotate-0', 'h-5 w-5 transform']" aria-hidden="true" />
         </div>
     </th>
 </template>

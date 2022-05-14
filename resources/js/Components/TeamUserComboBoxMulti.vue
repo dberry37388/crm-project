@@ -34,7 +34,7 @@ const filteredPeople = computed(() =>
             {{ label }}
         </ComboboxLabel>
         <div class="relative">
-            <ComboboxInput class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" @change="query = $event.target.value" :display-value="(person) => person?.name" />
+            <ComboboxInput class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" @change="query = $event.target.value" :display-value="(person) => person?.name" autocomplete="off"/>
             <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                 <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>
@@ -45,8 +45,8 @@ const filteredPeople = computed(() =>
                         <div class="flex items-center">
                             <img :src="person.profile_photo_url" alt="" class="h-6 w-6 flex-shrink-0 rounded-full" />
                             <span :class="['ml-3 truncate', selected && 'font-semibold']">
-                                    {{ person.name }} <span class="text-sm italic text-gray-400">({{ person.email}})</span>
-                                </span>
+                                {{ person.name }} <span class="text-sm italic text-gray-400">({{ person.email}})</span>
+                            </span>
                         </div>
 
                         <span v-if="selected" :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-indigo-600']">

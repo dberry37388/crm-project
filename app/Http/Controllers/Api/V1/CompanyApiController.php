@@ -45,6 +45,8 @@ class CompanyApiController extends BaseApiController
             ->paginate($request->get('per_page', 25))
             ->appends(request()->query());
 
+        $companies->withPath('/companies?' . $request->query('sort'));
+
         return new CompanyResourceCollection($companies);
     }
 

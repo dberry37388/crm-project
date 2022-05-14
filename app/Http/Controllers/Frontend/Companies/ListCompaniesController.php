@@ -13,12 +13,6 @@ class ListCompaniesController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $companies = Company::where('team_id', Auth::user()->current_team_id)
-            ->with(['createdBy', 'assignedTo', 'industry'])
-            ->paginate($request->get('per_page', 25));
-
-        return Inertia::render('Companies/ListCompanies', [
-            'companies' => CompanyResource::collection($companies)
-        ]);
+        return Inertia::render('Companies/ListCompanies');
     }
 }
