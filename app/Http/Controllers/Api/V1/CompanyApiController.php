@@ -7,6 +7,7 @@ use App\Http\Requests\Company\UpdateCompanyRequest;
 use App\Http\Resources\Api\V1\CompanyResource;
 use App\Http\Resources\Api\V1\CompanyResourceCollection;
 use App\Models\Company;
+use App\QueryBuilder\Sorts\RelatedSort;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Response;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CompanyApiController extends BaseApiController
@@ -28,7 +30,17 @@ class CompanyApiController extends BaseApiController
         $companies = QueryBuilder::for(Company::class)
             ->where('team_id', Auth::user()->current_team_id)
             ->allowedIncludes('team_id', 'deals', 'contacts', 'notes', 'tasks')
-            ->allowedFilters(['name', 'city', 'state'])
+            ->allowedFilters(['name', 'city', 'state', 'created_by_id', 'assigned_to_id'])
+            ->allowedSorts(
+                'name',
+                'city',
+                'state',
+                'created_at',
+                'updated_at',
+                AllowedSort::custom("industry.name", new RelatedSort()),
+                AllowedSort::custom("assignedTo.name", new RelatedSort()),
+                AllowedSort::custom("createdBy.name", new RelatedSort()),
+            )
             ->defaultSort('name')
             ->paginate($request->get('per_page', 25))
             ->appends(request()->query());

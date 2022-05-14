@@ -1732,9 +1732,6 @@ select {
 .p-4 {
   padding: 1rem;
 }
-.p-10 {
-  padding: 2.5rem;
-}
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1859,6 +1856,9 @@ select {
 }
 .pr-2 {
   padding-right: 0.5rem;
+}
+.pb-32 {
+  padding-bottom: 8rem;
 }
 .pl-10 {
   padding-left: 2.5rem;
@@ -2018,6 +2018,10 @@ select {
 .text-orange-500 {
   --tw-text-opacity: 1;
   color: rgb(249 115 22 / var(--tw-text-opacity));
+}
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 .text-orange-600 {
   --tw-text-opacity: 1;
@@ -2319,6 +2323,15 @@ select {
 .navbar-dropdown-button:active {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+.table-header {
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;

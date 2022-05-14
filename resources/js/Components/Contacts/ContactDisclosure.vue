@@ -27,14 +27,14 @@ const props = defineProps({
     }
 })
 
-const loading = ref(false)
-const open = ref(true)
-const search = ref('')
-const contacts = ref({})
-const attachingExistingContact = ref(false)
-const attachingNewContact = ref(false)
-const detachingContact = ref(false)
-const selectedContact = ref({})
+let loading = ref(false)
+let open = ref(true)
+let search = ref('')
+let contacts = ref({})
+let attachingExistingContact = ref(false)
+let attachingNewContact = ref(false)
+let detachingContact = ref(false)
+let selectedContact = ref({})
 
 function searchResources() {
     loading.value = true;

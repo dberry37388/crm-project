@@ -3,22 +3,48 @@ import Button from "../../Jetstream/Button";
 import FullWidthAppLayout from "../../Layouts/FullWidthAppLayout";
 import FixedFooterPagination from "../../Components/FixedFooterPagination";
 import Input from "../../Jetstream/Input";
-import {SearchIcon} from '@heroicons/vue/solid'
+import {SearchIcon, ChevronDownIcon} from '@heroicons/vue/solid'
 import ManageCompanySlideover from "../../Components/Companies/ManageCompanySlideover";
 import Company from "../../Models/Company";
+import TableHeader from "../../Components/Table/TableHeader";
+import {Switch, SwitchGroup, SwitchLabel} from "@headlessui/vue";
+import TeamUserComboBoxMulti from "../../Components/TeamUserComboBoxMulti";
+
 export default {
     props: {
         companies: {},
     },
 
-    components: {ManageCompanySlideover, Input, FixedFooterPagination, FullWidthAppLayout, Button, SearchIcon},
+    components: {
+        TeamUserComboBoxMulti,
+        SwitchLabel,
+        Switch,
+        SwitchGroup,
+        TableHeader,
+        ManageCompanySlideover, Input, FixedFooterPagination, FullWidthAppLayout, Button, SearchIcon, ChevronDownIcon},
 
     data() {
         return {
-            filteredCompanies: this.companies,
+            activeHeader: 'name',
+            filteredCompanies: this.searchCompanies(),
             creatingCompany: false,
             search: '',
-            loading: false
+            loading: false,
+            currentOrderBy: 'name',
+            currentOrderByDirection: '',
+            searchCreatedBy: false,
+            searchAssignedTo: false,
+
+        }
+    },
+
+    watch: {
+        searchCreatedBy(value) {
+            this.searchCompanies()
+        },
+
+        searchAssignedTo(value) {
+            this.searchCompanies()
         }
     },
 
@@ -26,13 +52,30 @@ export default {
         searchCompanies: _.debounce((async function (e) {
             this.loading = true;
 
-            await Company.where(['name', 'city'], this.search).get()
+            await Company
+                .orderBy(this.currentOrderByDirection + this.currentOrderBy)
+                .where(['name', 'city'], this.search)
+                .where('assigned_to_id', this.searchAssignedTo ? this.searchAssignedTo.id : '')
+                .where('created_by_id', this.searchCreatedBy ? this.searchCreatedBy.id : '')
+                .get()
                 .then((r) => {
+                    console.log(r.meta);
                     this.filteredCompanies = r;
                     this.loading = false;
                 })
         }), 500),
-    }
+
+        sort(s) {
+            //if s == current sort, reverse
+            if(s === this.currentOrderBy) {
+                this.currentOrderByDirection = this.currentOrderByDirection === '' ? '-' : '';
+            }
+
+            this.currentOrderBy = s;
+            this.searchCompanies();
+        }
+    },
+
 }
 </script>
 
@@ -52,33 +95,48 @@ export default {
             </div>
         </template>
 
-        <div class="py-5">
+        <div class="pt-5 pb-32">
             <div class="sm:px-6 lg:px-5">
                 <div v-if="!loading">
                     <div class="flex items-center justify-start gap-5">
-                        <div class="relative rounded-md shadow-sm w-full">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <div>
+                            <div class="text-sm font-semibold">Wildcard Search</div>
+                            <div class="relative rounded-md shadow-sm w-full">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <SearchIcon class="h-6 w-6 text-gray-400" aria-hidden="true" />
+                                </div>
+                                <Input type="text" class="w-full pl-10 text-sm" placeholder="Search by companies" v-model.lazy="search" @input="searchCompanies" />
                             </div>
-                            <Input type="text" class="w-full pl-10" placeholder="Search by companies" v-model.lazy="search" @input="searchCompanies" />
+                        </div>
+
+                        <div>
+                            <div class="relative rounded-md shadow-sm w-full">
+                                <TeamUserComboBoxMulti label="Assigned To" v-model="searchAssignedTo" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="relative rounded-md shadow-sm w-full">
+                                <TeamUserComboBoxMulti label="Created By" v-model="searchCreatedBy" />
+                            </div>
                         </div>
                     </div>
 
                     <div class="mt-5 flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg" v-if="filteredCompanies.data && filteredCompanies.data.length >= 1">
+                                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg" v-if="filteredCompanies && filteredCompanies.data.length >= 1">
                                     <table class="min-w-full divide-y divide-gray-300">
                                         <thead class="bg-gray-50">
                                         <tr class="divide-x divide-gray-200">
-                                            <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned To</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Created By</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">City</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">State</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Industry</th>
-                                            <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Create Date</th>
-                                            <th scope="col" class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6">Last Update</th>
+                                            <TableHeader name="Name" :selected="currentOrderBy === 'Name'" :order="currentOrderByDirection" class="py-3.5 pl-4 pr-4 sm:pl-6" @update="sort('name')" />
+                                            <TableHeader name="Assigned To" :selected="currentOrderBy === 'Assigned To'" @update="sort('assignedTo.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Created By" :selected="currentOrderBy === 'Created By'" @update="sort('createdBy.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="City" :selected="currentOrderBy === 'City'" @update="sort('city')" class="px-4 py-3.5" />
+                                            <TableHeader name="State" :selected="currentOrderBy === 'State'" @update="sort('state')" class="px-4 py-3.5" />
+                                            <TableHeader name="Industry" :selected="currentOrderBy === 'Industry'" @update="sort('industry.name')" class="px-4 py-3.5" />
+                                            <TableHeader name="Date Created" :selected="currentOrderBy === 'Date Created'" @update="sort('created_at')" class="px-4 py-3.5" />
+                                            <TableHeader name="Last Update" :selected="currentOrderBy === 'Last Update'" @update="sort('updated_at')" class="px-4 py-3.5" />
                                         </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
@@ -146,7 +204,7 @@ export default {
             </div>
         </div>
 
-        <FixedFooterPagination :meta="filteredCompanies.meta" v-if="filteredCompanies.meta" />
+        <FixedFooterPagination :meta="filteredCompanies.meta" v-if="filteredCompanies" />
 
         <ManageCompanySlideover
             :show="creatingCompany"
