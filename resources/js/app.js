@@ -10,6 +10,14 @@ import { Model } from 'vue-api-query'
 Model.$http = axios
 Model.$http.defaults.withCredentials = true;
 
+// Check for CSRF token
+let csrf = RegExp('XSRF-TOKEN[^;]+').exec(document.cookie)
+csrf = decodeURIComponent(csrf ? csrf.toString().replace(/^[^=]+./, '') : '')
+
+if (csrf) {
+    Model.$http.defaults.headers.append('X-XSRF-TOKEN', csrf)
+}
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
