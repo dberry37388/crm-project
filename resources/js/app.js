@@ -8,6 +8,7 @@ import { Model } from 'vue-api-query'
 
 // inject global axios instance as http client to Model
 Model.$http = axios
+Model.$http.defaults.withCredentials = true;
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
