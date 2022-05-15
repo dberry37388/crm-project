@@ -8,7 +8,16 @@ window._ = require('lodash');
 
 window.axios = require('axios');
 
+let csrf = RegExp('XSRF-TOKEN[^;]+').exec(document.cookie)
+csrf = decodeURIComponent(csrf ? csrf.toString().replace(/^[^=]+./, '') : '')
+
+console.log(csrf);
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': csrf
+};
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
