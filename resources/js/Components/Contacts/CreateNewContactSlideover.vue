@@ -102,13 +102,13 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                 <div class="flex flex-col gap-4">
                     <div>
-                        <Label class="font-medium" for="form.name">First Name</Label>
+                        <Label class="font-medium" for="form.name" :required="true">First Name</Label>
                         <Input v-model="form.first_name" type="text" class="mt-1 block w-full" placeholder="First Name"/>
                         <InputError :message="form.errors.first_name" class="mt-2" />
                     </div>
 
                     <div>
-                        <Label class="font-medium" for="form.name">Last Name</Label>
+                        <Label class="font-medium" for="form.name" :required="true">Last Name</Label>
                         <Input v-model="form.last_name" type="text" class="mt-1 block w-full" placeholder="Last Name"/>
                         <InputError :message="form.errors.last_name" class="mt-2" />
                     </div>

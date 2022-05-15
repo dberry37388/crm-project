@@ -11,6 +11,7 @@
     import ActivityTabs from "../../Components/ActivityTabs";
     import ConfirmDeleteContactModal from "../../Components/Contacts/ConfirmDeleteContactModal"
     import DealDisclosure from "../../Components/Deals/DealDisclosure";
+    import _ from "lodash";
 
     export default {
         props: {
@@ -47,7 +48,11 @@
                         this.currentContact = r.data.data;
                     })
             },
-        }
+
+            get(theObject, valuePath, defaultValue = '') {
+                return _.get(theObject, valuePath, defaultValue)
+            }
+        },
     }
 </script>
 
@@ -81,13 +86,13 @@
                 </div>
 
                 <div class="flex flex-col gap-4 p-5">
-                    <SidebarAttribute label="Assigned To" :content="currentContact.assigned_to.name" />
-                    <SidebarAttribute label="Created By" :content="currentContact.created_by.name" />
-                    <SidebarAttribute label="Email" :content="currentContact.email" />
-                    <SidebarAttribute label="Job Title" :content="currentContact.job_title" />
-                    <SidebarAttribute label="Phone Number" :content="currentContact.phone_number" />
-                    <SidebarAttribute label="Mobile Number" :content="currentContact.mobile_number" />
-                    <SidebarAttribute label="Description" :content="currentContact.description ?? ''" />
+                    <SidebarAttribute label="Assigned To" :content="get(currentContact, 'assigned_to.name')" />
+                    <SidebarAttribute label="Created By" :content="get(currentContact, 'created_by.name')" />
+                    <SidebarAttribute label="Email" :content="get(currentContact, 'email')" />
+                    <SidebarAttribute label="Job Title" :content="get(currentContact, 'job_title')"/>
+                    <SidebarAttribute label="Phone Number" :content="get(currentContact, 'phone_number')" />
+                    <SidebarAttribute label="Mobile Number" :content="get(currentContact, 'mobile_number')"/>
+                    <SidebarAttribute label="Description" :content="get(currentContact, 'description')" />
                 </div>
             </div>
 

@@ -1,17 +1,13 @@
-<script>
-import {defineComponent} from "vue";
+<script setup>
+const props = defineProps({
+    label: {
+        type: String,
+        required: true
+    },
 
-export default defineComponent({
-    props: {
-        label: {
-            type: String,
-            required: true
-        },
-
-        content: {
-            type: String,
-            required: false
-        }
+    content: {
+        type: String,
+        required: false
     }
 })
 </script>

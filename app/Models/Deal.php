@@ -28,8 +28,8 @@ class Deal extends Model
         self::addGlobalScope(new TeamScope);
 
         self::deleting(function (Deal $deal) {
-            $deal->contacts()->sync([]);
-            $deal->companies()->sync([]);
+            $deal->contacts()->detach();
+            $deal->companies()->detach();
             $deal->notes()->delete();
             $deal->tasks()->delete();
         });

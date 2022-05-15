@@ -12,6 +12,9 @@ import {useForm} from "@inertiajs/inertia-vue3";
 import TextArea from "../../Components/TextArea";
 import Input from "../../Jetstream/Input";
 import TeamUserComboBox from "../TeamUserComboBox";
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import {ref} from "vue";
 
 const props = defineProps({
     show: {
@@ -35,7 +38,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'update']);
 
-const form = useForm({
+let form = useForm({
     _method: props.currentTask ? 'PUT' : 'POST',
     processing: false,
     task: props.currentTask ? props.currentTask.task : null,
@@ -45,6 +48,8 @@ const form = useForm({
     due_date: props.currentTask ? props.currentTask.due_date : null,
     completed_at: props.currentTask ? props.currentTask.completed_at : null,
 })
+
+let date = ref(form.due_date);
 
 const prioritiesList = [
     { name: 'Low', color: '#444444' },
@@ -63,8 +68,6 @@ const saveForm = () => {
 }
 
 const closeSlideover = (shouldRefreshParent = false) => {
-    form.reset();
-
     if (shouldRefreshParent) {
         emit('update');
     }
@@ -94,7 +97,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
             <div class="space-y-6 pt-6 pb-5">
                 <div class="flex flex-col gap-6">
                     <div>
-                        <Label for="form.notes" class="font-semibold">What needs to be done?</Label>
+                        <Label for="form.notes" class="font-semibold" :required="true">What needs to be done?</Label>
                         <Input v-model="form.task" type="text" class="mt-1 block w-full" placeholder="e.g. Send a welcome email to Tom."/>
                         <InputError :message="form.errors.task" class="mt-2" />
                     </div>
@@ -106,8 +109,24 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                     <div>
                         <Label for="form.notes" class="font-semibold">When should it be done?</Label>
-                        <Input type="date" v-model="form.due_date" class="mt-1 block w-full" placeholder=""/>
-                        <InputError :message="form.errors.notes" class="mt-2" />
+                        <Datepicker
+                            v-model="form.due_date"
+                            :enable-time-picker="false"
+                            :minDate="new Date()"
+                            :auto-apply="true"
+                        />
+                        <InputError :message="form.errors.due_date" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <Label for="form.notes" class="font-semibold">When was it done?</Label>
+                        <Datepicker
+                            v-model="form.completed_at"
+                            :enable-time-picker="false"
+                            :max-date="new Date()"
+                            :auto-apply="true"
+                        />
+                        <InputError :message="form.errors.due_date" class="mt-2" />
                     </div>
 
                     <div>
@@ -116,7 +135,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                             <div class="mt-1 relative">
                                 <ListboxButton class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <span class="flex items-center">
-                                        <span class="ml-3 block truncate">{{ form.priority }}</span>
+                                        <span class="block truncate">{{ form.priority }}</span>
                                     </span>
 
                                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -129,7 +148,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
                                         <ListboxOption as="template" v-for="priority in prioritiesList" :key="priority.id" :value="priority.name" v-slot="{ active, selected }">
                                             <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
                                                 <div class="flex items-center">
-                                                    <span :class="[selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate']">
+                                                    <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                                                         {{ priority.name }}
                                                     </span>
                                                 </div>

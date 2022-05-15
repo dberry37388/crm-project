@@ -31,7 +31,7 @@ const searchDeals =  _.debounce((async function (e) {
 
     let ownedBy = _.get(searchCreatedBy, 'id', '');
     let createdBy = _.get(searchOwnedBy, 'id', '');
-    let page = parseInt(currentPage.value)
+    let page = parseInt(currentPage.value ?? 1)
     let priority = searchPriority.value === 'Any' ? '' : searchPriority.value;
     let stage = searchStage.value === 'Any' ? '' : searchStage.value;
     let type = searchType.value === 'Any' ? '' : searchType.value;

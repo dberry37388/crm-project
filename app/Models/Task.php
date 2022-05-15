@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\TeamScope;
 use App\Traits\AssignedToAUser;
 use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +26,7 @@ class Task extends Model
         'created_at',
         'updated_at',
         'due_date',
-        'completed_at'
+        'completed_at',
     ];
 
     public function searchableAs(): string

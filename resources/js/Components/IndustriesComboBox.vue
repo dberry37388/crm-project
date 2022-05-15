@@ -29,7 +29,7 @@ let filteredIndustries = computed(() =>
 </script>
 
 <template>
-    <Combobox as="div" v-model="selectedIndustry">
+    <Combobox as="div" v-model="selectedIndustry" nullable>
         <ComboboxLabel class="block text-sm font-medium text-gray-700">
             {{ label }}
         </ComboboxLabel>

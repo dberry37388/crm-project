@@ -9,7 +9,6 @@ const emit = defineEmits(['pageChanged'])
 
 function getPage(url) {
     let urlParams = new URLSearchParams(url);
-    console.log('clicked page')
     emit('update', urlParams.get('page'))
 }
 

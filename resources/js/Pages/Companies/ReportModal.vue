@@ -1,6 +1,5 @@
 <script setup>
 
-import Modal from "../../Jetstream/Modal";
 import DialogModal from "../../Jetstream/DialogModal";
 import dayjs from "dayjs"
 import SecondaryButton from "../../Jetstream/SecondaryButton";
