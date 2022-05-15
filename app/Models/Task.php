@@ -8,14 +8,12 @@ use App\Traits\CreatedByAUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Laravel\Scout\Searchable;
 
 class Task extends Model
 {
     use AssignedToAUser;
     use CreatedByAUser;
     use HasFactory;
-    use Searchable;
 
     protected $guarded = [
         'id',

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Jetstream\HasTeams;
-use Laravel\Scout\Searchable;
 
 class Deal extends Model
 {
@@ -21,7 +20,6 @@ class Deal extends Model
     use HasFactory;
     use HasTasks;
     use HasTeams;
-    use Searchable;
 
     protected static function boot()
     {

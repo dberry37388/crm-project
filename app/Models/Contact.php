@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
@@ -24,7 +23,6 @@ class Contact extends Model
     use HasFactory;
     use HasNotes;
     use HasTasks;
-    use Searchable;
 
     protected static function boot()
     {
