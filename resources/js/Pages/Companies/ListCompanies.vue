@@ -9,9 +9,13 @@ import Company from "../../Models/Company";
 import TableHeader from "../../Components/Table/TableHeader";
 import {Switch, SwitchGroup, SwitchLabel} from "@headlessui/vue";
 import TeamUserComboBoxMulti from "../../Components/TeamUserComboBoxMulti";
+import ReportModal from "./ReportModal";
+import SecondaryButton from "../../Jetstream/SecondaryButton";
 
 export default {
     components: {
+        SecondaryButton,
+        ReportModal,
         TeamUserComboBoxMulti,
         SwitchLabel,
         Switch,
@@ -30,7 +34,8 @@ export default {
             currentOrderByDirection: '',
             searchCreatedBy: false,
             searchAssignedTo: false,
-            currentPage: 1
+            currentPage: 1,
+            showingReport: false,
 
         }
     },
@@ -57,7 +62,7 @@ export default {
 
             await Company
                 .orderBy(this.currentOrderByDirection + this.currentOrderBy)
-                .where(['name', 'city', 'state'], this.search)
+                .where('name', this.search)
                 .where('assigned_to_id', this.searchAssignedTo ? this.searchAssignedTo.id : '')
                 .where('created_by_id', this.searchCreatedBy ? this.searchCreatedBy.id : '')
                 .page(this.currentPage)
@@ -112,6 +117,10 @@ export default {
                         <div class="relative rounded-md shadow-sm w-full">
                             <TeamUserComboBoxMulti label="Created By" v-model="searchCreatedBy" />
                         </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <SecondaryButton type="button" @click="showingReport = true">Generate Report</SecondaryButton>
                     </div>
                 </div>
 
@@ -215,4 +224,13 @@ export default {
             @update="searchCompanies"
         />
     </FullWidthAppLayout>
+
+    <ReportModal
+        v-if="filteredCompanies"
+        :show="showingReport"
+        :companies="filteredCompanies"
+        @close="showingReport = false"
+        :assigned-to="searchAssignedTo"
+        :created-by="searchCreatedBy"
+    />
 </template>

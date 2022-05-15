@@ -1236,6 +1236,9 @@ select {
 .max-h-60 {
   max-height: 15rem;
 }
+.max-h-\[500px\] {
+  max-height: 500px;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1806,6 +1809,10 @@ select {
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
 }
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -1871,6 +1878,9 @@ select {
 }
 .pl-4 {
   padding-left: 1rem;
+}
+.pr-3 {
+  padding-right: 0.75rem;
 }
 .text-left {
   text-align: left;
@@ -2696,6 +2706,10 @@ select {
     max-width: 42rem;
   }
 
+  .sm\:max-w-3xl {
+    max-width: 48rem;
+  }
+
   .sm\:flex-1 {
     flex: 1 1 0%;
   }
@@ -2798,6 +2812,10 @@ select {
 
   .sm\:pr-6 {
     padding-right: 1.5rem;
+  }
+
+  .sm\:pl-5 {
+    padding-left: 1.25rem;
   }
 
   .sm\:text-left {
@@ -2904,6 +2922,11 @@ select {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+
+  .md\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 @media (min-width: 1024px) {
 
@@ -2933,6 +2956,11 @@ select {
   .lg\:px-5 {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+
+  .lg\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .lg\:pt-10 {
