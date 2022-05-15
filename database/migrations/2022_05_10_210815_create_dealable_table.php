@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('dealables', function (Blueprint $table) {
             $table->foreignId('deal_id')->constrained('deals');
-            $table->morphs('dealables');
+            $table->morphs('dealable');
         });
     }
 

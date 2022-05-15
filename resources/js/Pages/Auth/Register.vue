@@ -42,6 +42,7 @@ const submit = () => {
                     v-model="form.team_name"
                     type="text"
                     class="mt-1 block w-full"
+                    autofocus
                     required
                 />
             </div>
@@ -54,7 +55,6 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     required
-                    autofocus
                     autocomplete="name"
                 />
             </div>

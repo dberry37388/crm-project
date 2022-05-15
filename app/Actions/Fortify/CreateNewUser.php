@@ -56,5 +56,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $teamName,
             'personal_team' => false,
         ]));
+
+        $user->teams()->attach($team, ['role' => 'admin']   );
     }
 }

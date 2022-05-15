@@ -76,17 +76,19 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
+                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Log in
+                </JetButton>
+            </div>
+
+            <div class="divide-x divide-gray-400 divide-dashed mt-3 flex justify-end">
                 <Link :href="route('register')" class="underline text-sm text-gray-600 hover:text-gray-900 mr-2">
                     Need an account?
                 </Link>
 
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                <Link v-if="canResetPassword" :href="route('password.request')" class="pl-2 underline text-sm text-gray-600 hover:text-gray-900">
                     Forgot your password?
                 </Link>
-
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </JetButton>
             </div>
         </form>
     </JetAuthenticationCard>
