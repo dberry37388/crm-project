@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Deal;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -31,7 +32,19 @@ class UpdateDealRequest extends FormRequest
             'owner_id' => ['sometimes', Rule::exists('users', 'id')],
             'type' => ['sometimes', Rule::in(config('defaults.deals.types'))],
             'stage' => ['sometimes', Rule::in(config('defaults.deals.stages'))],
-            'priority' => ['sometimes', Rule::in(config('defaults.priorities'))]
+            'priority' => ['sometimes', Rule::in(config('defaults.priorities'))],
+            'close_date' => ['sometimes', 'date'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $data = [];
+
+        if (!empty($this->close_date)) {
+            $data['close_date'] = Carbon::now()->toDateString();
+        }
+
+        $this->merge(array_filter($data));
     }
 }

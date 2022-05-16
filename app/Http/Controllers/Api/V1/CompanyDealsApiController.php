@@ -69,8 +69,8 @@ class CompanyDealsApiController extends BaseApiController
     public function store(StoreDealRequest $request, Company $company)
     {
         $deal = $company->deals()->create(array_merge($request->validated(), [
-            'team_id' => Auth::id(),
-            'created_by_id' => Auth::id(),
+            'team_id' => $request->user()->current_team_id,
+            'created_by_id' => $request->user()->id,
         ]));
 
         return Redirect::back()

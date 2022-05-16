@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Deal;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,8 @@ class StoreDealRequest extends FormRequest
             'owned_by_id' => ['sometimes', Rule::exists('users', 'id')],
             'type' => ['required', Rule::in(config('defaults.deals.types'))],
             'stage' => ['required', Rule::in(config('defaults.deals.stages'))],
-            'priority' => ['sometimes', Rule::in(config('defaults.priorities'))]
+            'priority' => ['sometimes', Rule::in(config('defaults.priorities'))],
+            'close_date' => ['sometimes'],
         ];
     }
 
@@ -52,6 +54,11 @@ class StoreDealRequest extends FormRequest
 
         if (empty($this->priority)) {
             $data['priority'] = config('defaults.priorities')[0];
+        }
+
+        if (!empty($this->close_date)) {
+            dd($this->close_date);
+            $data['close_date'] = Carbon::now()->toDateString();
         }
 
         $this->merge(array_filter($data));

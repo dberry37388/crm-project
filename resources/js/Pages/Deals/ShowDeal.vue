@@ -10,6 +10,12 @@ import CompanyDisclosure from "../../Components/Companies/CompanyDisclosure";
 import ManageDealSlideover from "../../Components/Deals/ManageDealSlideover";
 import ConfirmDeleteDealModal from "../../Components/Deals/ConfirmDeleteDealModal";
 import UpdateDealSlideover from "../../Components/Deals/UpdateDealSlideover";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const props = defineProps({
     deal: {
@@ -27,6 +33,10 @@ async function refreshDeal() {
         .then((r) => {
             currentDeal.value = r.data.data;
         })
+}
+
+function formatDateTime(value) {
+    return dayjs(value).tz(dayjs.tz.guess()).format('MMMM DD, YYYY');
 }
 
 refreshDeal();
@@ -68,7 +78,7 @@ refreshDeal();
                             </div>
 
                             <div v-if="currentDeal.close_date">
-                                <span class="font-medium">Close Date: </span> {{new Date(currentDeal.close_date).toLocaleDateString()}}
+                                <span class="font-medium">Close Date: </span> {{ formatDateTime(currentDeal.close_date)}}
                             </div>
 
                             <div>
@@ -86,12 +96,21 @@ refreshDeal();
                 </div>
             </div>
 
-            <UpdateDealSlideover
+<!--            <UpdateDealSlideover-->
+<!--                v-if="currentDeal.id"-->
+<!--                :show="updatingDeal"-->
+<!--                @close="updatingDeal = false"-->
+<!--                @update="refreshDeal"-->
+<!--                :deal="currentDeal"-->
+<!--            />-->
+
+            <ManageDealSlideover
                 v-if="currentDeal.id"
+                :method-route="route('api.v1.deals.update', currentDeal.id)"
                 :show="updatingDeal"
                 @close="updatingDeal = false"
                 @update="refreshDeal"
-                :deal="currentDeal"
+                :current-deal="currentDeal"
             />
 
             <ConfirmDeleteDealModal

@@ -35,8 +35,6 @@ class CompanyNotesApiController extends BaseApiController
 
     public function destroy(Note $note)
     {
-        dd($note);
-
         return Redirect::back()
             ->with('flash.banner', "The note was successfully deleted.")
             ->with('flash.bannerStyle', 'success');

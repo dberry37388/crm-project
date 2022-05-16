@@ -34,7 +34,7 @@ let filteredIndustries = computed(() =>
             {{ label }}
         </ComboboxLabel>
         <div class="relative mt-1">
-            <ComboboxInput class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" @change="query = $event.target.value" :display-value="(industry) => industry?.name" />
+            <ComboboxInput class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" @change="query = $event.target.value" :display-value="(industry) => industry?.name" autocomplete="off"/>
             <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                 <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>

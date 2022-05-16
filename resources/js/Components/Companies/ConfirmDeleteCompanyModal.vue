@@ -37,10 +37,6 @@ function verification() {
 }
 
 const closeModal = (shouldRefreshParent = false) => {
-    if (shouldRefreshParent) {
-        emit('update');
-    }
-
     emit('close');
 };
 </script>

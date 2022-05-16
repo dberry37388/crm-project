@@ -29,8 +29,8 @@ let searchType = ref('')
 const searchDeals =  _.debounce((async function (e) {
     loading.value = true;
 
-    let ownedBy = _.get(searchCreatedBy, 'id', '');
-    let createdBy = _.get(searchOwnedBy, 'id', '');
+    let ownedBy = searchOwnedBy && searchOwnedBy.id ? searchOwnedBy.id : null;
+    let createdBy = _.get(searchCreatedBy, 'id', '');
     let page = parseInt(currentPage.value ?? 1)
     let priority = searchPriority.value === 'Any' ? '' : searchPriority.value;
     let stage = searchStage.value === 'Any' ? '' : searchStage.value;
@@ -39,8 +39,8 @@ const searchDeals =  _.debounce((async function (e) {
     await Deal
         .orderBy(currentOrderByDirection.value + currentOrderBy.value)
         .where('name', search.value)
-        .where('owned_by_id', ownedBy)
-        .where('created_by_id', createdBy)
+        .where('owned_by_id', searchOwnedBy.value ? searchOwnedBy.value.id : '')
+        .where('created_by_id', searchCreatedBy.value ? searchCreatedBy.value.id : '')
         .where('priority', priority)
         .where('stage', stage)
         .where('type', type)
@@ -120,7 +120,7 @@ searchDeals()
 
                     <div>
                         <div class="relative rounded-md shadow-sm w-full">
-                            <TeamUserComboBoxMulti label="Assigned To" v-model="searchOwnedBy" />
+                            <TeamUserComboBoxMulti label="Owned By" v-model="searchOwnedBy" />
                         </div>
                     </div>
 

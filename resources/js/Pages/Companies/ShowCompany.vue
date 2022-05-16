@@ -116,7 +116,7 @@ export default {
                 :company="currentCompany"
                 v-if="currentCompany" />
 
-            <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @update="companyDeleted" />
+            <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" />
 
         </template>
 
