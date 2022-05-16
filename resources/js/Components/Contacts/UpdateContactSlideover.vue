@@ -11,6 +11,7 @@ import InputError from "../../Jetstream/InputError";
 import TeamUserComboBox from "../../Components/TeamUserComboBox";
 import {useForm} from "@inertiajs/inertia-vue3";
 import TextArea from "../../Components/TextArea";
+import { maska } from 'maska'
 
 const props = defineProps({
     show: {
@@ -118,13 +119,13 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                     <div>
                         <Label class="font-medium" for="form.postal_code">Phone Number</Label>
-                        <Input v-model="form.phone_number" type="text" class="mt-1 block w-full" placeholder="Phone Number"/>
+                        <Input v-model="form.phone_number" type="text" class="mt-1 block w-full" placeholder="Phone Number" v-maska="'+1 (###) ###-####'" />
                         <InputError :message="form.errors.phone_number" class="mt-2" />
                     </div>
 
                     <div>
                         <Label class="font-medium" for="form.timezone">Mobile Number</Label>
-                        <Input v-model="form.mobile_number" type="text" class="mt-1 block w-full" placeholder="Mobile Number"/>
+                        <Input v-model="form.mobile_number" type="text" class="mt-1 block w-full" placeholder="Mobile Number" v-maska="'+1 (###) ###-####'" />
                         <InputError :message="form.errors.mobile_number" class="mt-2" />
                     </div>
 

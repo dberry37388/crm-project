@@ -12,13 +12,15 @@ class LookupTeamUsersApiController extends BaseApiController
 {
     public function __invoke()
     {
-        $teamUsers = User::whereHas('teams', function (Builder $query) {
-            $user = Auth::user();
+//        $teamUsers = User::whereHas('teams', function (Builder $query) {
+//            $user = Auth::user();
+//
+//            $query
+//                ->where('teams.id', $user->current_team_id)
+//                ->orWhere('teams.user_id', (int) $user->id);
+//        })->get();
 
-            $query
-                ->where('teams.id', $user->current_team_id)
-                ->orWhere('teams.user_id', (int) $user->id);
-        })->get();
+        $teamUsers = Auth::user()->currentTeam->users()->get();
 
         return UserResource::collection($teamUsers);
     }

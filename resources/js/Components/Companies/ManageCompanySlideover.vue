@@ -63,7 +63,9 @@ const saveForm = () => {
 }
 
 const closeSlideover = (shouldRefreshParent = false) => {
-    form.reset();
+    if (!props.company) {
+        form.reset();
+    }
 
     if (shouldRefreshParent) {
         emit('update');

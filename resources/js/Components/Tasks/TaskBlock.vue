@@ -22,7 +22,7 @@ const props = defineProps({
 
     listType: {
         type: String,
-        default: 'All'
+        default: 'Pending'
     }
 })
 

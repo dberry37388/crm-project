@@ -121,7 +121,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                     <div>
                         <Label for="form.amount" class="font-semibold">Amount</Label>
-                        <Input type="text" v-model="form.amount" class="mt-1 block w-full" placeholder=""/>
+                        <Input type="text" v-model="form.amount" class="mt-1 block w-full" placeholder="" v-maska="'#*'"/>
                         <InputError :message="form.errors.amount" class="mt-2" />
                     </div>
 

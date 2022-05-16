@@ -30,6 +30,7 @@
         "@heroicons/vue": "^1.0.6",
         "@vuepic/vue-datepicker": "^3.2.1",
         "dayjs": "^1.11.2",
+        "maska": "^1.5.0",
         "vue-api-query": "^1.9.1"
     }
 }

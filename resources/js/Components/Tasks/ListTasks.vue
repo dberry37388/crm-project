@@ -15,7 +15,7 @@ const props = defineProps({
 let managingTask = ref(false);
 let tasks = ref('')
 let loading = ref(false)
-let listType = ref('All')
+let listType = ref('Pending')
 
 function searchTasks() {
     loading.value = true;
