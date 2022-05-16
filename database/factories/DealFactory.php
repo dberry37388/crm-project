@@ -21,9 +21,8 @@ class DealFactory extends Factory
         return [
             'name' => $this->faker->sentence,
             'amount' => $this->faker->numberBetween(1000, 20000),
-            'owner_id' => User::factory(),
+            'owned_by_id' => User::factory(),
             'created_by_id' => User::factory(),
-            'company_id' => Company::factory(),
             'type' => $this->faker->randomElement(config('defaults.deals.types')),
             'stage' => $this->faker->randomElement(config('defaults.deals.stages')),
             'priority' => $this->faker->randomElement(config('defaults.priorities')),

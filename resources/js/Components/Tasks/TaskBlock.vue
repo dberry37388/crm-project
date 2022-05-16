@@ -19,6 +19,11 @@ const props = defineProps({
         type: Object,
         required: true
     },
+
+    listType: {
+        type: String,
+        default: 'All'
+    }
 })
 
 const emit = defineEmits(['update'])
@@ -44,16 +49,32 @@ let loading = ref(false)
 const modelRoute = route('api.v1.tasks.update', props.task.id)
 
 function formatDateTime(value) {
-    return dayjs(value).tz(dayjs.tz.guess()).format('MMMM DD, YYYY');
+    return dayjs(value).tz(dayjs.tz.guess()).format('MMMM DD, YYYY h:mm a');
+}
+
+function shouldShow(task) {
+    if (props.listType === 'All') {
+        return true;
+    }
+
+    if (props.listType === 'Pending' && !task.is_done) {
+        return true;
+    }
+
+    if (props.listType === 'Completed' && task.is_done) {
+        return true;
+    }
+
+    return false;
 }
 
 </script>
 
 <template>
-    <div class="bg-white p-5 shadow-sm" :class="isDoneBlockClass">
+    <div class="bg-white p-5 shadow-sm" :class="isDoneBlockClass" v-if="shouldShow(task)">
         <div class="flex items-center justify-between gap-4 text-sm">
             <div>
-                <span class="font-semibold">Assigned to: </span> {{ task.assigned_to.name }}
+                <span class="font-semibold">Assigned to: </span> {{ task.assigned_to.name }}. Last updated {{ formatDateTime(task.updated_at) }}
             </div>
 
             <div class="flex items-center justify-end gap-3">
@@ -95,7 +116,7 @@ function formatDateTime(value) {
 
         <div class="mt-4 flex items-center gap-3">
             <div>
-                <div class="bg-red-2 font-bold text-xs px-3 py-2 rounded-lg" v-if="task.priority === 'High'">
+                <div class="bg-red-200 font-bold text-xs px-3 py-2 rounded-lg" v-if="task.priority === 'High'">
                     High Priority
                 </div>
 

@@ -20,10 +20,10 @@ class NoteFactory extends Factory
     public function definition()
     {
         return [
-            'noteable_id' => Company::factory(),
-            'noteable_type' => function (array $attributes) {
-                return Company::find($attributes['noteable_id'])->type;
-            },
+//            'noteable_id' => Company::factory(),
+//            'noteable_type' => function (array $attributes) {
+//                return Company::find($attributes['noteable_id'])->type;
+//            },
             'created_by_id' => User::factory(),
             'note' => $this->faker->paragraph
         ];

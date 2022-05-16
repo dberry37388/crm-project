@@ -18,7 +18,10 @@ class DealTasksApiController extends BaseApiController
      */
     public function index(Request $request, Deal $deal)
     {
-        return new TaskResourceCollection($deal->tasks()->orderBy('updated_at', 'desc')->get());
+        return new TaskResourceCollection(
+            $deal->tasks()->orderBy(
+                'updated_at', 'desc'
+            )->get());
     }
 
     public function store(StoreTaskRequest $request, Deal $deal)

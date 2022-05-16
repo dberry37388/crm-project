@@ -34,7 +34,7 @@ class Task extends Model
         return 'tasks_index';
     }
 
-    public function noteable(): MorphTo
+    public function taskable(): MorphTo
     {
         return $this->morphTo();
     }
