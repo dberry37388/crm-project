@@ -56,7 +56,11 @@ export default {
 
         companyDeleted() {
             window.location.href = route('companies.list');
-        }
+        },
+
+        get(theObject, path, defaultValue = '') {
+            return _.get(theObject, path, defaultValue);
+        },
     }
 }
 </script>
@@ -92,27 +96,27 @@ export default {
                 </div>
 
                 <div class="flex flex-col gap-4 p-5">
-                    <SidebarAttribute label="Assigned To" :content="currentCompany.assigned_to ? currentCompany.assigned_to.name : ''" />
-                    <SidebarAttribute label="Created By" :content="currentCompany.created_by.name" />
-                    <SidebarAttribute label="Industry" :content="currentCompany.industry ? currentCompany.industry.name : ''" />
-                    <SidebarAttribute label="City" :content="currentCompany.city" />
-                    <SidebarAttribute label="State" :content="currentCompany.state" />
-                    <SidebarAttribute label="Postal Code" :content="currentCompany.postal_code" />
-                    <SidebarAttribute label="Timezone" :content="currentCompany.timezone" />
-                    <SidebarAttribute label="Number of Employees" :content="currentCompany.number_of_employees" />
-                    <SidebarAttribute label="Description" :content="currentCompany.description" class="max-w-" />
+                    <SidebarAttribute label="Assigned To" :content="get(currentCompany, 'assigned_to.name', '--')" />
+                    <SidebarAttribute label="Created By" :content="get(currentCompany, 'created_by.name')" />
+                    <SidebarAttribute label="Industry" :content="get(currentCompany, 'industry.name', '--')" />
+                    <SidebarAttribute label="City" :content="get(currentCompany, 'city')" />
+                    <SidebarAttribute label="State" :content="get(currentCompany,'state')" />
+                    <SidebarAttribute label="Postal Code" :content="get(currentCompany, 'postal_code')" />
+                    <SidebarAttribute label="Timezone" :content="get(currentCompany, 'timezone')" />
+                    <SidebarAttribute label="Number of Employees" :content="get(currentCompany, 'number_of_employees')" />
+                    <SidebarAttribute label="Description" :content="get(currentCompany, 'description')" class="max-w-" />
                 </div>
             </div>
 
             <ManageCompanySlideover
                 :show="updatingCompany"
-                :model-route="route('api.v1.companies.store')"
+                :model-route="route('api.v1.companies.update', currentCompany.id)"
                 @close="updatingCompany = false"
                 @update="refreshCompany"
                 :company="currentCompany"
                 v-if="currentCompany" />
 
-            <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @updated="companyDeleted" />
+            <ConfirmDeleteCompanyModal v-if="deletingCompany" :show="deletingCompany" @close="deletingCompany = false" :company="currentCompany" @update="companyDeleted" />
 
         </template>
 

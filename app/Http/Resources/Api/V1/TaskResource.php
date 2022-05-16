@@ -4,7 +4,6 @@ namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use JetBrains\PhpStorm\ArrayShape;
 
 class TaskResource extends JsonResource
 {
@@ -20,8 +19,8 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'due_date' => $this->due_date,
-            'completed_at' => $this->completed_at,
+            'due_date' => ! empty($this->due_date) ? $this->due_date->toW3cString() : '',
+            'completed_at' => ! empty($this->completed_at) ? $this->completed_at->toW3cString() : '',
             'task' => $this->task,
             'created_by' => new UserResource($this->createdBy),
             'assigned_to' => new UserResource($this->assignedTo),

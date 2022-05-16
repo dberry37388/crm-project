@@ -158,7 +158,7 @@ export default {
                                                 </a>
                                             </td>
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                                <div class="flex">
+                                                <div class="flex" v-if="company.assigned_to">
                                                     <div class="h-10 w-10 flex-shrink-0">
                                                         <img class="h-10 w-10 rounded-full" :src="company.assigned_to.profile_photo_url" alt="{{ company.assigned_to.name }}" />
                                                     </div>
@@ -167,6 +167,8 @@ export default {
                                                         <div class="text-gray-500">{{ company.assigned_to.email }}</div>
                                                     </div>
                                                 </div>
+
+                                                <div v-else>--</div>
                                             </td>
                                             <td class="whitespace-nowrap p-4 text-sm text-gray-500">
                                                 <div class="flex">

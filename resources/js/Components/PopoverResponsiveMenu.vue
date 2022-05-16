@@ -3,6 +3,7 @@ import {Popover, PopoverButton, PopoverOverlay, PopoverPanel, TransitionChild, T
 import ResponsiveNavLink from "../Jetstream/ResponsiveNavLink";
 import { BellIcon, XIcon, } from '@heroicons/vue/outline'
 import ApplicationMark from "../Jetstream/ApplicationMark";
+import ApplicationLogo from "../Jetstream/ApplicationLogo";
 export default {
     props: {
         show: {
@@ -12,6 +13,7 @@ export default {
     },
 
     components: {
+        ApplicationLogo,
         ApplicationMark,
         BellIcon,
         Popover,
@@ -49,7 +51,7 @@ export default {
                             <div class="pt-3 pb-2">
                                 <div class="flex items-center justify-between px-4">
                                     <div>
-                                        <ApplicationMark class="block h-8 w-auto text-indigo-700" />
+                                        <ApplicationLogo class="block h-8 w-auto text-gray-900" />
                                     </div>
                                     <div class="-mr-2">
                                         <PopoverButton
@@ -65,12 +67,16 @@ export default {
                                         Dashboard
                                     </ResponsiveNavLink>
 
-                                    <ResponsiveNavLink :href="route('dashboard')">
+                                    <ResponsiveNavLink :href="route('companies.list')">
                                         Companies
                                     </ResponsiveNavLink>
 
-                                    <ResponsiveNavLink :href="route('dashboard')">
-                                        Tasks
+                                    <ResponsiveNavLink :href="route('contacts.list')">
+                                        Contacts
+                                    </ResponsiveNavLink>
+
+                                    <ResponsiveNavLink :href="route('deals.list')">
+                                        Deals
                                     </ResponsiveNavLink>
                                 </div>
                             </div>

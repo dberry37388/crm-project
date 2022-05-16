@@ -41,8 +41,8 @@ class StoreContactRequest extends FormRequest
     {
         $data = [];
 
-        if (empty($this->assigned_to)) {
-            $data['assigned_to_id'] = Auth::user()->id;
+        if (!empty($this->assigned_to)) {
+            $data['assigned_to_id'] = $this->assigned_to['id'];
         }
 
         $this->merge($data);

@@ -31,10 +31,10 @@ class Contact extends Model
         self::addGlobalScope(new TeamScope);
 
         self::deleting(function (Contact $contact) {
-            $contact->companies()->sync([]);
+            $contact->companies()->detach();
             $contact->notes()->delete();
             $contact->tasks()->delete();
-            $contact->deals()->sync([]);
+            $contact->deals()->detach();
         });
     }
 

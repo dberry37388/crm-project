@@ -18,7 +18,7 @@ return new class extends Migration
             $table->morphs('taskable');
             $table->string('task', 3000);
             $table->longText('notes')->nullable();
-            $table->dateTime('due_date')->nullable();
+            $table->dateTimeTz('due_date')->nullable();
             $table->enum('priority', ['Low', 'Medium', 'High'])->default('Low');
             $table->foreignId('created_by_id')->nullable()->constrained('users');
             $table->foreignId('assigned_to_id')->nullable()->constrained('users');

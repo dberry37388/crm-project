@@ -36,42 +36,45 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div class="mt-4">
-                <JetLabel for="team_name" value="Team Name" />
+                <JetLabel for="team_name" value="Team Name" :required="true" />
                 <JetInput
                     id="team_name"
                     v-model="form.team_name"
                     type="text"
                     class="mt-1 block w-full"
+                    autofocus
                     required
+                    placeholder="The name of your company or organization e.g. Acme Inc."
                 />
             </div>
 
             <div class="mt-4">
-                <JetLabel for="name" value="Name" />
+                <JetLabel for="name" value="Name" :required="true"  />
                 <JetInput
                     id="name"
                     v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
                     required
-                    autofocus
                     autocomplete="name"
+                    placeholder="e.g. John Doe"
                 />
             </div>
 
             <div class="mt-4">
-                <JetLabel for="email" value="Email" />
+                <JetLabel for="email" value="Email" :required="true"  />
                 <JetInput
                     id="email"
                     v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
                     required
+                    placeholder="e.g. me@you.com"
                 />
             </div>
 
             <div class="mt-4">
-                <JetLabel for="password" value="Password" />
+                <JetLabel for="password" value="Password" :required="true"  />
                 <JetInput
                     id="password"
                     v-model="form.password"
@@ -83,7 +86,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <JetLabel for="password_confirmation" value="Confirm Password" />
+                <JetLabel for="password_confirmation" value="Confirm Password" :required="true"  />
                 <JetInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"

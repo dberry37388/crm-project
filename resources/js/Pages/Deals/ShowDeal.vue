@@ -19,13 +19,12 @@ const props = defineProps({
 })
 
 let currentDeal = ref(props.deal)
-const updatingDeal = ref(false)
-const deletingDeal = ref(false)
+let updatingDeal = ref(false)
+let deletingDeal = ref(false)
 
 async function refreshDeal() {
     await axios.get(route('api.v1.deals.show', props.deal.data.id))
         .then((r) => {
-            console.log('we are here');
             currentDeal.value = r.data.data;
         })
 }
@@ -68,7 +67,7 @@ refreshDeal();
                                 <span class="font-medium">Amount: </span> {{currentDeal.amount}}
                             </div>
 
-                            <div>
+                            <div v-if="currentDeal.close_date">
                                 <span class="font-medium">Close Date: </span> {{new Date(currentDeal.close_date).toLocaleDateString()}}
                             </div>
 

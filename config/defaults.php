@@ -15,7 +15,7 @@ return [
 
         'stages' => [
             'Appointment scheduled',
-            'Qualified to buy,',
+            'Qualified to buy',
             'Presentation scheduled',
             'Decision maker brought-in',
             'Contract sent',

@@ -40,6 +40,7 @@ const emit = defineEmits(['close', 'update']);
 
 const form = useForm({
     processing: false,
+    _method: props.company ? 'PUT' : 'POST',
     name: props.company ? props.company.name : '',
     city: props.company ? props.company.city : '',
     state: props.company ? props.company.state : '',
@@ -112,7 +113,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                 <div class="flex flex-col gap-4">
                     <div>
-                        <Label for="form.name">Company Name</Label>
+                        <Label for="form.name" :required="true" required>Company Name</Label>
                         <Input v-model="form.name" type="text" class="mt-1 block w-full" placeholder="Company Name"/>
                         <InputError :message="form.errors.name" class="mt-2" />
                     </div>

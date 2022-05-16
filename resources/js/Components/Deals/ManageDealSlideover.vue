@@ -109,7 +109,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
             <div class="space-y-6 pt-6 pb-5">
                 <div class="flex flex-col gap-6">
                     <div>
-                        <Label for="form.name" class="font-semibold">Deal name</Label>
+                        <Label for="form.name" class="font-semibold" :required="true">Deal name</Label>
                         <Input v-model="form.name" type="text" class="mt-1 block w-full" placeholder="e.g. Send a welcome email to Tom."/>
                         <InputError :message="form.errors.name" class="mt-2" />
                     </div>

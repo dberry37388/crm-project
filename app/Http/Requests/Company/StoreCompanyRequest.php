@@ -48,8 +48,6 @@ class StoreCompanyRequest extends FormRequest
 
         if (!empty($this->assigned_to)) {
             $data['assigned_to_id'] = $this->assigned_to['id'];
-        } else {
-            $data['assigned_to_id'] = Auth::id();
         }
 
         $this->merge($data);

@@ -36,7 +36,7 @@ class Company extends Model
             $company->contacts()->sync([]);
             $company->notes()->delete();
             $company->tasks()->delete();
-            $company->deals()->sync([]);
+            $company->deals()->detach();
         });
     }
 
