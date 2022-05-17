@@ -17,7 +17,7 @@ horizon.log
 _ide_helper.php
 _ide_helper_models.php
 /storage/debugbar
-
+.DS_Store
 public/css/app.css
 public/js/app.js
 public/mix-manifest.json
