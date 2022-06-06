@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Company extends Model
 {
@@ -24,28 +26,42 @@ class Company extends Model
     use HasFactory;
     use HasNotes;
     use HasTasks;
+    use LogsActivity;
     use SoftDeletes;
 
     protected static function boot()
     {
         parent::boot();
 
-        self::addGlobalScope(new TeamScope);
-
         self::deleting(function (Company $company) {
             $company->contacts()->sync([]);
             $company->notes()->delete();
             $company->tasks()->delete();
             $company->deals()->detach();
+            $company->activities()->delete();
         });
     }
 
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+    protected $fillable = [
+        'assigned_to_id',
+        'name',
+        'description',
+        'city',
+        'state',
+        'postal_code',
+        'number_of_employees',
+        'timezone',
+        'industry_id'
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('companies')
+            ->logOnly(['assigned_to.name', 'name', 'description', 'city', 'state', 'postal_code', 'number_of_employees', 'timezone', 'industry.name'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     /**
      * Get the name of the index associated with the model.

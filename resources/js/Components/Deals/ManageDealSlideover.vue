@@ -43,7 +43,7 @@ const form = useForm({
     type: props.currentDeal ? props.currentDeal.type : 'New Business',
     stage: props.currentDeal ? props.currentDeal.stage : 'Appointment scheduled',
     amount: props.currentDeal ? props.currentDeal.amount : '0.00',
-    owner: props.currentDeal ? props.currentDeal.owner : null,
+    owned_by_id: props.currentDeal ? props.currentDeal.owned_by : null,
     priority: props.currentDeal ? props.currentDeal.priority : 'Low',
     close_date: props.currentDeal ? props.currentDeal.close_date : null,
 })
@@ -85,8 +85,6 @@ const closeSlideover = (shouldRefreshParent = false) => {
     }
 
     emit('close');
-
-    form.reset();
 };
 
 </script>
@@ -118,12 +116,12 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                     <div>
                         <Label for="form.owner" class="font-semibold">Who owns this deal?</Label>
-                        <TeamUserComboBox v-model="form.owner" />
+                        <TeamUserComboBox v-model="form.owned_by_id" />
                     </div>
 
                     <div>
                         <Label for="form.amount" class="font-semibold">Amount</Label>
-                        <Input type="text" v-model="form.amount" class="mt-1 block w-full" placeholder="" v-maska="'#*'"/>
+                        <Input type="number" v-model="form.amount" class="mt-1 block w-full" placeholder=""/>
                         <InputError :message="form.errors.amount" class="mt-2" />
                     </div>
 

@@ -24,9 +24,18 @@ class CompanyNotesApiController extends BaseApiController
 
     public function store(StoreNoteRequest $request, Company $company)
     {
-        $company->notes()->create(array_merge($request->validated(), [
+        $note = $company->notes()->create(array_merge($request->validated(), [
             'created_by_id' => Auth::id()
         ]));
+
+        activity()->performedOn($company)
+            ->causedBy(Auth::user())
+            ->withProperties([
+                'model_type' => 'App\Note',
+                'model_id' => $note->id,
+                'content' => $note->note,
+            ])
+            ->log('added a new note');
 
         return Redirect::back()
             ->with('flash.banner', "A New note has been added to {$company->name}.")

@@ -130,6 +130,7 @@ export default {
                     :note-store-route="route('api.v1.company.store-note', currentCompany.id)"
                     :task-list-route="route('api.v1.company.tasks.list', currentCompany.id)"
                     :task-store-route="route('api.v1.company.tasks.store', currentCompany.id)"
+                    :activity-list-route="route('api.v1.company.activities.list', currentCompany.id)"
                 />
             </div>
         </template>

@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Contact extends Model
 {
@@ -23,6 +25,7 @@ class Contact extends Model
     use HasFactory;
     use HasNotes;
     use HasTasks;
+    use LogsActivity;
 
     protected static function boot()
     {
@@ -35,6 +38,7 @@ class Contact extends Model
             $contact->notes()->delete();
             $contact->tasks()->delete();
             $contact->deals()->detach();
+            $contact->activities()->delete();
         });
     }
 
@@ -43,6 +47,15 @@ class Contact extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('contacts')
+            ->logOnly(['assigned_to.name', 'first_name', 'last_name', 'email', 'job_title', 'phone_number', 'mobile_number', 'description', 'created_by_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     /**
      * Get the name of the index associated with the model.

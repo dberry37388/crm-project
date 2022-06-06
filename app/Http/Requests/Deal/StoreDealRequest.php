@@ -57,7 +57,6 @@ class StoreDealRequest extends FormRequest
         }
 
         if (!empty($this->close_date)) {
-            dd($this->close_date);
             $data['close_date'] = Carbon::now()->toDateString();
         }
 

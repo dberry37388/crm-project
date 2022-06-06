@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Jetstream\HasTeams;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Deal extends Model
 {
@@ -20,6 +22,7 @@ class Deal extends Model
     use HasFactory;
     use HasTasks;
     use HasTeams;
+    use LogsActivity;
 
     protected static function boot()
     {
@@ -46,6 +49,15 @@ class Deal extends Model
         'created_at',
         'close_date',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('deals')
+            ->logOnly(['createdBy.name', 'ownedBy.name', 'type', 'state', 'priority', 'name', 'amount', 'close_date'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     public function searchableAs(): string
     {

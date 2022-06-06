@@ -96,14 +96,6 @@ refreshDeal();
                 </div>
             </div>
 
-<!--            <UpdateDealSlideover-->
-<!--                v-if="currentDeal.id"-->
-<!--                :show="updatingDeal"-->
-<!--                @close="updatingDeal = false"-->
-<!--                @update="refreshDeal"-->
-<!--                :deal="currentDeal"-->
-<!--            />-->
-
             <ManageDealSlideover
                 v-if="currentDeal.id"
                 :method-route="route('api.v1.deals.update', currentDeal.id)"
@@ -130,6 +122,7 @@ refreshDeal();
                     :note-store-route="route('api.v1.deal.store-note', deal.data.id)"
                     :task-list-route="route('api.v1.deal.tasks.list', deal.data.id)"
                     :task-store-route="route('api.v1.deal.tasks.store', deal.data.id)"
+                    :activity-list-route="route('api.v1.deal.activities.list', deal.data.id)"
                 />
             </div>
         </template>

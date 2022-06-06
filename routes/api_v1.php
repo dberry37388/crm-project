@@ -1,15 +1,18 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CompanyActivitiesApiController;
 use App\Http\Controllers\Api\V1\CompanyApiController;
 use App\Http\Controllers\Api\V1\CompanyContactsApiController;
 use App\Http\Controllers\Api\V1\CompanyDealsApiController;
 use App\Http\Controllers\Api\V1\CompanyNotesApiController;
 use App\Http\Controllers\Api\V1\CompanyTasksApiController;
+use App\Http\Controllers\Api\V1\ContactActivitiesApiController;
 use App\Http\Controllers\Api\V1\ContactApiController;
 use App\Http\Controllers\Api\V1\ContactCompaniesApiController;
 use App\Http\Controllers\Api\V1\ContactDealsApiController;
 use App\Http\Controllers\Api\V1\ContactNotesApiController;
 use App\Http\Controllers\Api\V1\ContactTasksApiController;
+use App\Http\Controllers\Api\V1\DealActivitiesApiController;
 use App\Http\Controllers\Api\V1\DealApiController;
 use App\Http\Controllers\Api\V1\DealCompaniesApiController;
 use App\Http\Controllers\Api\V1\DealContactsApiController;
@@ -75,6 +78,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/', CompanyTasksApiController::class . '@index')->name('list');
             Route::post('/', CompanyTasksApiController::class . '@store')->name('store');
         });
+
+        Route::get('activities', CompanyActivitiesApiController::class . '@index')->name('activities.list');
     });
 
     Route::prefix('contacts/{contact}')->name('contact.')->group(function () {
@@ -101,6 +106,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/', ContactTasksApiController::class . '@index')->name('list');
             Route::post('/', ContactTasksApiController::class . '@store')->name('store');
         });
+
+        Route::get('activities', ContactActivitiesApiController::class . '@index')->name('activities.list');
     });
 
     /* section Deal API */
@@ -133,6 +140,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/', DealTasksApiController::class . '@index')->name('list');
             Route::post('/', DealTasksApiController::class . '@store')->name('store');
         });
+
+        Route::get('activities', DealActivitiesApiController::class . '@index')->name('activities.list');
     });
 
     /* section Lookups */
