@@ -8,6 +8,8 @@ class BelongsToTeamModelObserver
 {
     public function saving($model): void
     {
-        $model->team_id = Auth::user()->current_team_id;
+        if (empty($model->team_id) && Auth::check()) {
+            $model->team_id = Auth::user()->current_team_id;
+        }
     }
 }

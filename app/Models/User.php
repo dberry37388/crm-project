@@ -23,6 +23,7 @@ class User extends Authenticatable
     use HasNoPersonalTeams {
         HasNoPersonalTeams::ownsTeam insteadof HasTeams;
         HasNoPersonalTeams::isCurrentTeam insteadof HasTeams;
+        HasNoPersonalTeams::personalTeam insteadof HasTeams;
     }
     use HasTeams;
     use Notifiable;

@@ -2,6 +2,8 @@
 
 namespace App\Traits\Jetstream;
 
+use App\Models\Team;
+
 trait HasNoPersonalTeams
 {
 
@@ -27,6 +29,16 @@ trait HasNoPersonalTeams
     {
         // return $team->id === $this->currentTeam->id;
         return optional($team)->id === $this->currentTeam->id;
+    }
+
+    /**
+     * Get the user's "personal" team.
+     *
+     * @return Team
+     */
+    public function personalTeam()
+    {
+        return $this->ownedTeams()->first() ?? $this->teams()->first();
     }
 
     /**

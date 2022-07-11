@@ -54,13 +54,12 @@ class CreateNewUser implements CreatesNewUsers
         $team = $user->ownedTeams()->save(Team::forceCreate([
             'user_id' => $user->id,
             'name' => $teamName,
-            'personal_team' => false,
+            'personal_team' => true,
         ]));
 
-        $user->update([
-            'current_team_id' => $team->id
-        ]);
+        $user->current_team_id = $team->id;
+        $user->save();
 
-        $user->teams()->attach($team, ['role' => 'admin']   );
+        $user->teams()->attach($team, ['role' => 'admin']);
     }
 }
