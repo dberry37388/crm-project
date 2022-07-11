@@ -74,7 +74,7 @@ const logout = () => {
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <div class="ml-3 relative">
                                 <!-- Teams Dropdown -->
-                                <JetDropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                <JetDropdown v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team_id" align="right" width="60">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="navbar-dropdown-button">
@@ -95,7 +95,7 @@ const logout = () => {
                                     <template #content>
                                         <div class="w-60">
                                             <!-- Team Management -->
-                                            <template v-if="$page.props.jetstream.hasTeamFeatures">
+                                            <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team_id">
                                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                                     Manage Team
                                                 </div>

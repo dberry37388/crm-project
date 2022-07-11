@@ -42,16 +42,10 @@ class Company extends Model
         });
     }
 
-    protected $fillable = [
-        'assigned_to_id',
-        'name',
-        'description',
-        'city',
-        'state',
-        'postal_code',
-        'number_of_employees',
-        'timezone',
-        'industry_id'
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
     ];
 
     public function getActivitylogOptions(): LogOptions

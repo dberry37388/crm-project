@@ -7,6 +7,7 @@ import {ChevronDownIcon, ChevronUpIcon, CogIcon} from "@heroicons/vue/solid"
 import ManageDealSlideover from "./ManageDealSlideover";
 import AttachDealToResource from "./AttachDealToResource";
 import ConfirmDetachDealModal from "./ConfirmDetachDealModal";
+import dayjs from "dayjs";
 // import ConfirmDetachDealModal from "./ConfirmDetachDealModal";
 // import AttachDealToResource from "./AttachDealToResource";
 
@@ -47,6 +48,10 @@ function searchResources() {
         })
 
     loading.value = false;
+}
+
+function formatDateTime(value) {
+    return dayjs(value).tz(dayjs.tz.guess()).format('MMMM DD, YYYY');
 }
 
 searchResources();
@@ -139,7 +144,7 @@ searchResources();
                                     </div>
 
                                     <div v-if="deal.close_date" class="text-sm text-gray-500 mb-1">
-                                        <span>Amount:</span> {{ deal.close_date ?? '--'}}
+                                        <span>Close Date:</span> {{ formatDateTime(deal.close_date) ?? '--'}}
                                     </div>
 
                                     <div v-show="deal.stage" class="text-sm text-gray-500 mb-1">

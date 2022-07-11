@@ -60,7 +60,7 @@ class CompanyApiController extends BaseApiController
     {
         $company = Company::create(array_merge($request->validated(), [
             'team_id' => $request->user()->current_team_id,
-            'created_by_id' => $request->user()->id,
+            'created_by_id' => Auth::user()->id,
         ]));
 
         if ($request->has('contact_id') && !empty($request->get('contact_id'))) {
