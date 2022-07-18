@@ -5,7 +5,7 @@ const props = defineProps({
     links: Object,
 })
 
-const emit = defineEmits(['pageChanged'])
+const emit = defineEmits(['update'])
 
 function getPage(url) {
     let urlParams = new URLSearchParams(url);

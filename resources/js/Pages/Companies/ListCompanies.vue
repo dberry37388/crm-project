@@ -75,7 +75,7 @@ export default {
 
         changePage(page) {
             this.currentPage = parseInt(page);
-            this.searchContacts();
+            this.searchCompanies();
         },
 
         sort(s) {
@@ -217,7 +217,7 @@ export default {
             </div>
         </div>
 
-        <FixedFooterPagination v-if="!loading && filteredCompanies.meta" :meta="filteredCompanies.meta" />
+        <FixedFooterPagination v-if="!loading && filteredCompanies.meta" :meta="filteredCompanies.meta" @update="changePage" />
 
         <ManageCompanySlideover
             :show="creatingCompany"
