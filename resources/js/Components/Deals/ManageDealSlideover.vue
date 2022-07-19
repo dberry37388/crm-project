@@ -11,8 +11,6 @@ import InputError from "../../Jetstream/InputError";
 import {useForm} from "@inertiajs/inertia-vue3";
 import Input from "../../Jetstream/Input";
 import TeamUserComboBox from "../TeamUserComboBox"
-import Datepicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
 
 const props = defineProps({
     show: {
@@ -127,11 +125,7 @@ const closeSlideover = (shouldRefreshParent = false) => {
 
                     <div>
                         <Label for="form.close_date" class="font-semibold">Close date</Label>
-                        <Datepicker
-                            v-model="form.close_date"
-                            :enable-time-picker="false"
-                            :auto-apply="true"
-                        />
+                        <Input type="date" v-model="form.close_date" class="mt-1 block w-full" />
                         <InputError :message="form.errors.close_date" class="mt-2" />
                     </div>
 

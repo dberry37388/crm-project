@@ -9,13 +9,7 @@ import ContactDisclosure from "../../Components/Contacts/ContactDisclosure";
 import CompanyDisclosure from "../../Components/Companies/CompanyDisclosure";
 import ManageDealSlideover from "../../Components/Deals/ManageDealSlideover";
 import ConfirmDeleteDealModal from "../../Components/Deals/ConfirmDeleteDealModal";
-import UpdateDealSlideover from "../../Components/Deals/UpdateDealSlideover";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone"
-import utc from "dayjs/plugin/utc"
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
+import {UseDayJs} from "../../Comosables/UseDayJs";
 
 const props = defineProps({
     deal: {
@@ -23,6 +17,8 @@ const props = defineProps({
         required: true
     }
 })
+
+let formatDate = UseDayJs();
 
 let currentDeal = ref(props.deal)
 let updatingDeal = ref(false)
@@ -78,7 +74,7 @@ refreshDeal();
                             </div>
 
                             <div v-if="currentDeal.close_date">
-                                <span class="font-medium">Close Date: </span> {{ formatDateTime(currentDeal.close_date)}}
+                                <span class="font-medium">Close Date: </span> {{ formatDate.formatDateFromString(currentDeal.close_date)}}
                             </div>
 
                             <div>

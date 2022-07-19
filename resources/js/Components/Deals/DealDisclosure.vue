@@ -7,9 +7,8 @@ import {ChevronDownIcon, ChevronUpIcon, CogIcon} from "@heroicons/vue/solid"
 import ManageDealSlideover from "./ManageDealSlideover";
 import AttachDealToResource from "./AttachDealToResource";
 import ConfirmDetachDealModal from "./ConfirmDetachDealModal";
+import {UseDayJs} from "../../Comosables/UseDayJs";
 import dayjs from "dayjs";
-// import ConfirmDetachDealModal from "./ConfirmDetachDealModal";
-// import AttachDealToResource from "./AttachDealToResource";
 
 const props = defineProps({
     modelRoute: {
@@ -29,6 +28,8 @@ const props = defineProps({
         required: true
     }
 })
+
+let formatDate = UseDayJs();
 
 const loading = ref(false)
 const open = ref(true)
@@ -51,7 +52,13 @@ function searchResources() {
 }
 
 function formatDateTime(value) {
-    return dayjs(value).tz(dayjs.tz.guess()).format('MMMM DD, YYYY');
+    console.log(value);
+    if (value.length > 0) {
+        return dayjs(value).tz(dayjs.tz.guess()).format('MMMM DD, YYYY');
+    }
+
+    console.log(value);
+    return null;
 }
 
 searchResources();
@@ -144,7 +151,7 @@ searchResources();
                                     </div>
 
                                     <div v-if="deal.close_date" class="text-sm text-gray-500 mb-1">
-                                        <span>Close Date:</span> {{ formatDateTime(deal.close_date) ?? '--'}}
+                                        <span>Close Date:</span> {{ formatDate.formatDateFromString(deal.close_date) }}
                                     </div>
 
                                     <div v-show="deal.stage" class="text-sm text-gray-500 mb-1">

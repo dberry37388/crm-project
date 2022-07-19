@@ -36,30 +36,24 @@ class UpdateDealRequest extends FormRequest
             'type' => ['sometimes', Rule::in(config('defaults.deals.types'))],
             'stage' => ['sometimes', Rule::in(config('defaults.deals.stages'))],
             'priority' => ['sometimes', Rule::in(config('defaults.priorities'))],
-            'close_date' => ['sometimes', 'date'],
+            'close_date' => ['date', 'nullable']
         ];
 
-         return $this->filterEmptyRules($rules);
+         return $rules;
     }
 
     protected function prepareForValidation()
     {
         $data = [];
-
-        if (!empty($this->close_date)) {
-            $data['close_date'] = Carbon::now()->toDateString();
-        }
-
         if (!empty($this->owned_by_id)) {
             $data['owned_by_id'] = $this->owned_by_id['id'];
         }
 
-//        foreach ($this->keys() as $key) {
-//            if (empty($this->get($key))) {
-//                $this->request->remove($key);
-//            }
-//        }
-
         $this->merge(array_filter($data));
+
+        if (is_null($this->close_date)) {
+            $data['close_date'] = null;
+            $this->merge($data);
+        }
     }
 }

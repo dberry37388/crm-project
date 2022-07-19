@@ -27,7 +27,7 @@ class DealResource extends JsonResource
             'stage' => $this->stage,
             'priority' => $this->priority,
             'amount' => $this->amount,
-            'close_date' => ! empty($this->close_date) ? $this->close_date->toW3cString() : '',
+            'close_date' => ! empty($this->close_date) ? $this->close_date->toDateString() : '',
             'created_by' => new UserResource($this->createdBy),
             'owned_by' => new UserResource($this->ownedBy),
             'created_at' => $this->created_at,
